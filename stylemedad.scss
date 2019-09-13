@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+$darkText: #222;
+$lightText: white;
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  height:100%;
+  background-color:#2b2b2c;
+  color:$lightText;
+  padding: 0;
+  margin: 0;
+}
+
+#message{
+  font-size:1.2em;
+  font-weight:bold;
+  position: absolute;
+  width: auto;
+  padding:20px 15px 7px 15px;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top:-10px;
+  border-radius: 10px;
+  z-index: 20;
+}
+
+#loading {
+  position: fixed;
+  display: block;
+  z-index: 20;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -60%);
+}
+
+img{
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+#grey{
+  position: fixed;
+  background-color:#111;
+  opacity:0.7;
+  z-index: 19;
+  height: 100%;
+  width:100%;
+}
