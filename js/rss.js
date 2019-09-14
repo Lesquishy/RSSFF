@@ -21,7 +21,7 @@ function rssRead(item) {
       if(rawFile.status === 200 || rawFile.status == 0){
         response = rawFile.responseText;
         console.log(response);
-        window.setTimeout(rssInterpret(response),2000);
+        window.setTimeout(rssInterpret(response),4000);
         //rssInterpret(response);
       } else {
         stop = true;
@@ -33,42 +33,63 @@ function rssRead(item) {
 }
 
 function rssInterpret(info) {
-  var titles = [];
-  info.replace(/<title>(.*?)<\/title>/g, function(s, match) {titles.push(match);});
-  titles.shift();
-  console.log(titles);
 
-  var img = [];
-  info.replace(/<img src="(.*?)" alt/g, function(s, match) {img.push(match);});
-  console.log(img);
+    //This gets rid of the duplicate entries in the RSS Feed because theres a LOT
+    var unique = [];
+    info.replace(/<item>(.*?)<\/item>/gms, function(s, match) {unique.push(match);});
+    var uniqueInfo = Array.from(new Set(unique));
+    var unique = uniqueInfo.toString();
+    console.log(uniqueInfo.length);
 
-  var doubleTitle = "";
-  var doubleImg = "";
 
-  for (l = 0; l <= titles.length - 1; l++){
-      //This is because there is a double up on the RSS, added this to future proof it to remove double ups.
-      if (titles[l] === doubleTitle) {
-          continue;
-      }
-      if (img[l] === doubleImg) {
-          continue;
-      }
-    titles[l] = titles[l].replace("<![CDATA[","");
-    titles[l] = titles[l].substring(0, titles[l].indexOf('('));
+    var title = [];
+    unique.replace(/<title>(.*?)<\/title>/g, function(s, match) {title.push(match);});
 
-    var doubleTitle = titles[l];
-    var doubleImg = img[l];
+    var img = [];
+    unique.replace(/<img src="(.*?)" alt/g, function(s, match) {img.push(match);});
 
-    $('.resultsContainer').append('<div class="searchResult"><img id="' + l + '" class="resultImg" src="' + img[l] + '" /><div class="resultTitle">' + titles[l] + '</div></div>');
-    console.log(img[l]);
-    console.log(titles[l]);
-    console.log(l);
-  }
+    var desc = [];
+    unique.replace(/<br \/><br \/>(.*?)]]>/g, function(s, match) {desc.push(match);});
+
+    var time = [];
+    unique.replace(/Runtime: (.*?)<br \/>/g, function(s, match) {time.push(match);});
+
+    var genre = [];
+    unique.replace(/Genre: (.*?)<br \/>/g, function(s, match) {genre.push(match);});
+
+    var link = [];
+    unique.replace(/<link>(.*?)<\/link>/g, function(s, match) {link.push(match);});
+
+    var size = [];
+    unique.replace(/Size: (.*?)<br \/>/g, function(s, match) {size.push(match);});
+
+    var double = "";
+
+    //Display all the movies
+    for (var l = 0; l < uniqueInfo.length; l++){
+        //FOR SOME FUCK NUGGET REASON THE TITLES ARENT THE SAME ON DUPES SOMETIMES AHHHHHHHHHHHHHHH WHAT THE FUCK
+        if (img[l] === double) {continue;}
+        var double = img[l];
+
+        title[l] = title[l].replace("<![CDATA[","");
+        title[l] = title[l].substring(0, title[l].indexOf('('));
+
+        $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + img[l] + '" /><div class="resultTitle">' + title[l] + '</div></div>');
+
+    }
 }
 
 function rssDownload(rss) {
 
 }
+
+function resultExpand(id) {
+    var easy = `
+        5
+    `;
+    $('body').append('');
+}
+
 
 // adds to array
 //  titles.push(temp);

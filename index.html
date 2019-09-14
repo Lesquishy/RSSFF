@@ -15,7 +15,6 @@
       <script>
           function addTile() {
               $('.resultsContainer').append('<div class="searchResult">Extra</div>');
-              $('#1').attr('src','https://img.yts.lt/assets/images/movies/witnesses_2019/medium-cover.jpg');
           }
 
           function searchExpand() {
@@ -25,6 +24,21 @@
     </head>
 
     <body>
+        <button onclick="toggleFade()">press me</button>
+        <div class="resultFocus">
+            <div onclick="toggleFade()" class="focusExit"><i class="material-icons md-36">close</i></div>
+            <img class="focusImg" src="https://img.yts.lt/assets/images/movies/witnesses_2019/medium-cover.jpg"/>
+            <div class="focusTitleCont">
+                <strong class="focusTitle">testing for title space and shit</strong>
+                <p class="focusSubInfo">lorem ipsum or some shit</p>
+                <p class="focusSubInfo">good movie. very smart. lots of ded</p>
+            </div>
+            <div class="focusDescCont">
+                <strong class="focusSyn">testing for title space and shit</strong>
+                <p class="focusDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+        <!-- Temporary button to add tiles to the search grid -->
         <button class="searchBtn" onclick="addTile()"><i class="material-icons md-36">add</i></button>
         <!-- Temporary title for visual appeal, feel free to remove -->
         <div class="title">

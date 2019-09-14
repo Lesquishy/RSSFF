@@ -33,6 +33,11 @@ function present(){
   }
 }
 
+function toggleFade() {
+    $("#grey").fadeToggle(400);
+    $(".resultFocus").toggleClass("focusShown");
+}
+
 // Displays / hides the loading screen
 function loading() {
 
