@@ -12,9 +12,20 @@
       <script type="text/javascript" src="./js/readwrite.js"></script>
       <script type="text/javascript" src="./js/rss.js"></script>
       <title>RSSFF</title> <!-- RSS Feed Filter -->
+      <script>
+          function addTile() {
+              $('.resultsContainer').append('<div class="searchResult">Extra</div>');
+              $('#1').attr('src','https://img.yts.lt/assets/images/movies/witnesses_2019/medium-cover.jpg');
+          }
+
+          function searchExpand() {
+              $("searchContainer").toggleClass("searchExpanded");
+          }
+      </script>
     </head>
 
     <body>
+        <button class="searchBtn" onclick="addTile()"><i class="material-icons md-36">add</i></button>
         <!-- Temporary title for visual appeal, feel free to remove -->
         <div class="title">
             <strong class="titleText">Yo wassup bitch I did some work</strong>
@@ -30,22 +41,11 @@
             </div>
 
             <!-- Temporary search results to show layout, results will be generated on search -->
-            <div class="searchResult">1</div>
-            <div class="searchResult">2</div>
-            <div class="searchResult">3</div>
-            <div class="searchResult">4</div>
-            <div class="searchResult">5</div>
-            <div class="searchResult">6</div>
-            <div class="searchResult">7</div>
-            <div class="searchResult">8</div>
-            <div class="searchResult">9</div>
-            <div class="searchResult">10</div>
-            <div class="searchResult">11</div>
-            <div class="searchResult">12</div>
-            <div class="searchResult">13</div>
+            <div class="resultsContainer">
+            </div>
         </div>
-      <div id="message">Please Wait. We're Loading</div>
-      <div id="loading"><img src="./images/loading.svg"></div>
-      <div id="grey"></div>
+        <div id="message">Please Wait. We're Loading</div>
+        <div id="loading"><img src="./images/loading.svg"></div>
+        <div id="grey"></div>
     </body>
     </html>

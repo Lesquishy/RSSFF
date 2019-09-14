@@ -33,19 +33,41 @@ function rssRead(item) {
 }
 
 function rssInterpret(info) {
-
   var titles = [];
   info.replace(/<title>(.*?)<\/title>/g, function(s, match) {titles.push(match);});
+  titles.shift();
   console.log(titles);
 
+  var img = [];
+  info.replace(/<img src="(.*?)" alt/g, function(s, match) {img.push(match);});
+  console.log(img);
+
+  var doubleTitle = "";
+  var doubleImg = "";
 
   for (l = 0; l <= titles.length - 1; l++){
+      //This is because there is a double up on the RSS, added this to future proof it to remove double ups.
+      if (titles[l] === doubleTitle) {
+          continue;
+      }
+      if (img[l] === doubleImg) {
+          continue;
+      }
     titles[l] = titles[l].replace("<![CDATA[","");
     titles[l] = titles[l].substring(0, titles[l].indexOf('('));
 
+    var doubleTitle = titles[l];
+    var doubleImg = img[l];
+
+    $('.resultsContainer').append('<div class="searchResult"><img id="' + l + '" class="resultImg" src="' + img[l] + '" /><div class="resultTitle">' + titles[l] + '</div></div>');
+    console.log(img[l]);
     console.log(titles[l]);
     console.log(l);
   }
+}
+
+function rssDownload(rss) {
+
 }
 
 // adds to array
