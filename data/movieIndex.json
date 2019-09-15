@@ -1,0 +1,56 @@
+{
+  "movie ID": {
+    "title": "example",
+    "runTime": " 'hours', 'mins', 'sec' with int values. If it doesnt need hours or mins. Its 0 (Should be object)",
+    "locallyStored":"If it is stored locally on the server (Should be bool)",
+    "streamable":"If the user wants it to be streamed or not (Should be bool)",
+    "size": "size with type EG '7.3gb' ",
+    "fileLocation": "../files/movie.mp4",
+    "magnet":"magnet-link",
+    "image":"../file/posters/poster.png",
+    "desc":"The movie Description",
+    "genre":"The film genres (Should be array)",
+    "resolution":"the resolution of both dimensions 1920x1080",
+    "ratio":"the film ratio",
+    "keyWords":"Used for search. Keywords to find this movie. (Should be array)",
+    "episodic":"If its a TV show or have episodes (Should be bool)",
+    "showInfo":{
+      "seriesTitle":"name of the tv show",
+      "episode":"the episode name",
+      "episodeNum":"episode Number. (Should be int)",
+      "season":"season Number that the episode is in. (Should be int)"
+    },
+    "formatted":"If its been formatted (Should be bool)",
+    "formatInfo":{
+      "time":"(hours):(mins):(seconds)",
+      "oldFormat":"The old format before it was reformatted. EG 'mkv'"
+    }
+  },
+  "0": {
+    "title": "Deadpool",
+    "runTime": {"hours":1, "mins":22, "sec":7},
+    "locallyStored":true,
+    "size": "13gb",
+    "fileLocation": "../files/deadpool.mp4",
+    "magnet":"magnet-link",
+    "image":"../file/posters/poster.png",
+    "desc":"A murder spree with Ryan Renolds",
+    "genre":["action", "romance"],
+    "resolution":"1920x1080",
+    "ratio":"16:9",
+    "keyWords":["killing", "4k", "tornado"],
+    "episodic":true,
+    "showInfo":{
+      "seriesTitle":"Brooklyn Nine-Nine",
+      "episode":"Space Monkey Fights Back",
+      "episodeNum":2,
+      "season":2
+    },
+    "formatted":true,
+    "formatInfo":{
+      "formatted":"true",
+      "time":{"hours":2, "mins":54, "sec":7},
+      "oldFormat":"mkv"
+    }
+  }
+}
