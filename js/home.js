@@ -21,6 +21,11 @@ $(document).ready( function (){
   }
 });
 
+//So when you click the faded background it'll hide anything thats open
+function greyHide(){
+  toggleFade();
+}
+
 
 // Gets the web page ready to present
 function present(){
