@@ -38,7 +38,7 @@ function rssInterpret(info) {
     var unique = [];
     info.replace(/<item>(.*?)<\/item>/gms, function(s, match) {unique.push(match);});
     var uniqueInfo = Array.from(new Set(unique));
-    var unique = uniqueInfo.toString();
+    unique = uniqueInfo.toString();
     console.log(uniqueInfo.length);
 
 
