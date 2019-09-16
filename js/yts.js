@@ -1,0 +1,114 @@
+//YTS.js is the .js file that handles all searches and pulls preformed on the YTS site (excluding RSS)
+//It will handle searching for, displaying and processing the incoming data
+
+//https://yts.lt/api/v2/list_movies.jsonp?query_term=Endgame
+
+//runtime
+//Genre
+//quality
+//year
+
+//search, if return null search for each word and fetch results, then tell user that the search was altered:: del special characters
+//animate the search bar to drop and cover the bottom of form when on rss
+
+function ytsSearch() {
+    console.log("ytsSearch");
+    //Testing if the user has searched for anything
+    query = $(".searchInput").val();
+    if (query == "") {
+        //Nothing put in search box
+        message("Search", "Please type something in the searchbar", "m");
+        console.log("error");
+    }else {
+        //User has searched something, continue
+        query = "query_term=" + query + "&";
+
+        searchGenre = $("#genreDrop").val();
+        if (searchGenre == null) {searchGenre = "";}else {searchGenre = "genre=" + searchGenre + "&";}
+
+        searchQuality = $("#qualityDrop").val();
+        if (searchQuality == null) {searchQuality = "";}else {searchQuality = "quality=" + searchQuality + "&";}
+
+        searchSort = $("#sortDrop").val();
+        if (searchSort == null) {searchSort = "";}else {searchSort = "sort_by=" + searchSort + "&";}
+
+        searchLimit = $(".searchLimit").val();
+        console.log(searchLimit);
+        if (searchLimit == "") {searchLimit = "limit=20";}else {searchLimit = "limit=" + searchLimit;}
+
+        searchParam = ""+query+searchGenre+searchQuality+searchSort+searchLimit;
+        getData();
+    }
+}
+
+
+
+function getData() {
+    $.getJSON("https://yts.lt/api/v2/list_movies.jsonp?"+searchParam, function(result) {
+        $(".searchResult").remove();
+        console.log(result);
+        if (result.data.movie_count != 0) {
+            $(".searchNull").fadeOut(200);
+            displaySearch(result);
+        }else {
+            $(".searchNull").fadeIn(200);
+            toggleSearchLoad();
+        }
+    });
+}
+
+function displaySearch(result) {
+    for (var l = 0; l < result.data.movie_count; l++){
+        console.log(l);
+        $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + result.data.movies[l].medium_cover_image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + result.data.movies[l].title + '</div></div>');
+    }
+    toggleSearchLoad();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//For my sake
