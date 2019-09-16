@@ -38,7 +38,7 @@ function present(){
   }
 }
 
-function toggleFade() {
+function toggleInfo() {
     $("#grey").fadeToggle(400);
     $(".resultFocus").toggleClass("focusShown");
 }
