@@ -13,6 +13,8 @@
   });
 */
 
+//https://yts.lt/api/v2/list_movies.jsonp?query_term=Endgame
+
 var title = [];
 var img = [];
 var desc = [];
@@ -110,6 +112,15 @@ function setFocusResult(id) {
     $("#focusGenre").text(genre[id]);
     $("#focusLink").text(link[id]);
     $("#focusSize").text(size[id]);
+}
+
+
+//This function chnages the search between rugby's movies, yts's site, and yts's RSS Feed
+function changeSearch() {
+    toggleSearchLoad();
+    setTimeout(function() {
+
+    }, 210);
 }
 
 function resetFocusResult() {

@@ -4,11 +4,12 @@ $darkText: #222;
 $lightText: white;
 $searchCont: #333;
 $searchBox: #222;
+$background: #2b2b2c;
 
 html, body {
   font-family: 'Roboto', sans-serif;
   height:100%;
-  background-color:#2b2b2c;
+  background-color: $background;
   color:$lightText;
   padding: 0;
   margin: 0;
@@ -36,7 +37,7 @@ html, body {
   transform: translate(-50%, -60%);
 }
 
-img{
+#loading img{
   user-drag: none;
   user-select: none;
   -moz-user-select: none;
@@ -96,7 +97,9 @@ $largewidth: 1600px;
     overflow-y: scroll;
     color: #333;
     transition: color .3s ease;
+    overflow-y: hidden;
 }
+
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-thumb {
   width: 26px;
@@ -143,7 +146,6 @@ $largewidth: 1600px;
 }
 
 .searchBar {
-    background: blue;
     position: absolute;
     height: 50px;
     top: -50px;
@@ -154,7 +156,6 @@ $largewidth: 1600px;
 .searchForm {
     width: 100%;
     height: 100%;
-    background: orange;
 }
 
 .searchInput {
@@ -189,12 +190,12 @@ $largewidth: 1600px;
 .title {
     position: fixed;
     width: 60%;
-    height: 100px;
+    height: 200px;
     left: 20%;
     top: 100px;
-    background: blue;
+    background: #222;
     text-align: center;
-    line-height: 100px;
+    line-height: 200px;
 }
 
 .titleText {
@@ -276,6 +277,100 @@ $largewidth: 1600px;
     width: 250px;
 }
 
+.searchSelectContainer {
+  position: absolute;
+  height: 50px;
+  top: -100px;
+  font-family: "Oswald";
+  color: white;
+}
+
+.searchSelect, .searchSelectLeft, .searchSelectRight {
+  background-color: #333;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.1s;
+  font-size: 17px;
+  color: white;
+  height: 50px;
+}
+
+.active {
+    z-index: 10;
+    background-color: #222;
+}
+
+.searchSelect:hover, .searchSelectLeft:hover, .searchSelectRight:hover {
+  background-color: #222;
+}
+
+.searchSelectLeft {
+    border-top-left-radius: 20px;
+}
+
+.searchSelectRight {
+    border-top-right-radius: 20px;
+}
+
+.searchSelectRight:hover:after {
+    background: #222;
+}
+
+.searchSelectRight:after {
+    content: "";
+    background: #333;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -20px;
+    bottom: 0px;
+    z-index: 100;
+    transition: 0.1s;
+}
+
+
+.searchSelectContainer:after {
+    content: "";
+    background: $background;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: -40px;
+    bottom: 0px;
+    border-radius: 100px;
+    z-index: 101;
+}
+
+.searchLoad {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #333;
+    z-index: 100;
+    display: none;
+    -webkit-box-shadow: inset 0px 0px 87px -39px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 87px -39px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 87px -39px rgba(0,0,0,0.75);
+}
+
+.searchLoading {
+    position: absolute;
+    display: none;
+    height: 200px;
+    width: 200px;
+    top: calc(50% - 100px;);
+    left: calc(50% - 100px;);
+}
+
+.testBtn {
+    position: fixed;
+    background: #222;
+    color: white;
+    font-size: 40px;
+}
 
 
 
