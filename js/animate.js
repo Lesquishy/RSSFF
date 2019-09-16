@@ -1,3 +1,5 @@
+//The file used to animate or change the look of anything on the front end. It lives here
+
 var resultDisplayed = false;
 
 //Toggles the "Expanded" result, manages the visual function calls and the rss function calls
