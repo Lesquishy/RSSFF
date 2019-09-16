@@ -12,6 +12,16 @@
   });
 */
 
+var title = [];
+var img = [];
+var desc = [];
+var time = [];
+var genre = [];
+var link = [];
+var size = [];
+var imageNULL = false;
+var imageNULLId = -1;
+
 function rssRead(item) {
   var responce;
   var rawFile = new XMLHttpRequest();
@@ -42,26 +52,27 @@ function rssInterpret(info) {
     console.log(uniqueInfo.length);
 
 
-    var title = [];
+    title = [];
     unique.replace(/<title>(.*?)<\/title>/g, function(s, match) {title.push(match);});
 
-    var img = [];
+    img = [];
     unique.replace(/<img src="(.*?)" alt/g, function(s, match) {img.push(match);});
 
-    var desc = [];
+    desc = [];
     unique.replace(/<br \/><br \/>(.*?)]]>/g, function(s, match) {desc.push(match);});
 
-    var time = [];
+    time = [];
     unique.replace(/Runtime: (.*?)<br \/>/g, function(s, match) {time.push(match);});
 
-    var genre = [];
+    genre = [];
     unique.replace(/Genre: (.*?)<br \/>/g, function(s, match) {genre.push(match);});
 
-    var link = [];
+    link = [];
     unique.replace(/<link>(.*?)<\/link>/g, function(s, match) {link.push(match);});
 
-    var size = [];
+    size = [];
     unique.replace(/Size: (.*?)<br \/>/g, function(s, match) {size.push(match);});
+    console.log("nigger nigger" + img[0]);
 
     var double = "";
 
@@ -74,9 +85,34 @@ function rssInterpret(info) {
         title[l] = title[l].replace("<![CDATA[","");
         title[l] = title[l].substring(0, title[l].indexOf('('));
 
-        $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + img[l] + '" /><div class="resultTitle">' + title[l] + '</div></div>');
+        $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + img[l] + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + title[l] + '</div></div>');
 
     }
+}
+
+function imgError(image, i) {
+    $(image).attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
+    imageNULLId = i;
+    return true;
+}
+
+function setFocusResult(id) {
+    console.log(id);
+    console.log(img[1]);
+    //To not override the 404 image
+    if (imageNULLId == id) {
+        $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
+    }else {$("#focusImg").attr("src",img[id]);}
+    $("#focusTitle").text(title[id]);
+    $("#focusDesc").text(desc[id]);
+    $("#focusTime").text(time[id]);
+    $("#focusGenre").text(genre[id]);
+    $("#focusLink").text(link[id]);
+    $("#focusSize").text(size[id]);
+}
+
+function resetFocusResult() {
+
 }
 
 function rssDownload(rss) {

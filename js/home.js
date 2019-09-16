@@ -69,12 +69,12 @@ function message(where, why, level){
   } else {
     var output;
     if(level == "h"){
-      output = "There was a problem " + where + ". Because " + why;
+      output = "There was a problem at " + where + ". Because " + why;
       $("#message").text(output);
       $("#message").css('background-color', 'red');
       $("#message").slideDown(anispeed);
     } else if (level == "m"){
-      output = "There was a problem " + where + ". Because " + why + ". This shouldn't effect the operation of the site";
+      output = "There was a problem aT " + where + ". Because " + why + ". This shouldn't effect the operation of the site";
       $("#message").text(output);
       $("#message").css('background-color', 'orange');
       $("#message").slideDown(anispeed);
