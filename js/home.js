@@ -18,6 +18,7 @@ var searchSort = "";
 var searchLimit = "";
 var result;
 var searchType = "";
+var searchParam = "";
 
 // The info for the file locations
 var sourceFile = "./data/sources.txt";
