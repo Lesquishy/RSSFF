@@ -4,12 +4,13 @@ $darkText: #222;
 $lightText: white;
 $searchCont: #333;
 $searchBox: #222;
+$background: #2b2b2c;
 
 html, body {
   font-family: 'Roboto', sans-serif;
   height:100%;
-  background-color:#2b2b2c;
-  color:$lightText;
+  background-color: $background;
+  color: $lightText;
   padding: 0;
   margin: 0;
 }
@@ -36,7 +37,7 @@ html, body {
   transform: translate(-50%, -60%);
 }
 
-img{
+#loading img{
   user-drag: none;
   user-select: none;
   -moz-user-select: none;
@@ -96,7 +97,69 @@ $largewidth: 1600px;
     overflow-y: scroll;
     color: #333;
     transition: color .3s ease;
+    overflow-y: scroll;
 }
+
+.testy {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    color: #333;
+    transition: color .3s ease;
+}
+
+.swipeCont {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.swipeContSub {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 100%;
+}
+
+.swipe {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 500px 500px;
+    border-color: transparent transparent #111 transparent;
+    z-index: 98;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+
+.swipe2 {
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    position: absolute;
+    background: #333;
+    bottom: 0px;
+    right: -500px;
+}
+
+.swipe3 {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 460px 460px;
+    border-color: transparent transparent #333 transparent;
+    z-index: 99;
+    position: absolute;
+    bottom: 0px;
+    left: 40px;
+}
+
+
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-thumb {
   width: 26px;
@@ -143,18 +206,17 @@ $largewidth: 1600px;
 }
 
 .searchBar {
-    background: blue;
     position: absolute;
-    height: 50px;
-    top: -50px;
+    height: 100px;
+    top: -100px;
     left: 0px;
     width: 100%;
+    z-index: 100;
 }
 
 .searchForm {
     width: 100%;
     height: 100%;
-    background: orange;
 }
 
 .searchInput {
@@ -175,6 +237,7 @@ $largewidth: 1600px;
     height: 50px;
     position: absolute;
     right: 0px;
+    top: 0px;
     background: #222;
     border: 0px;
     color: white;
@@ -189,12 +252,12 @@ $largewidth: 1600px;
 .title {
     position: fixed;
     width: 60%;
-    height: 100px;
+    height: 200px;
     left: 20%;
     top: 100px;
-    background: blue;
+    background: #222;
     text-align: center;
-    line-height: 100px;
+    line-height: 200px;
 }
 
 .titleText {
@@ -276,8 +339,174 @@ $largewidth: 1600px;
     width: 250px;
 }
 
+.searchSelectContainer {
+  position: absolute;
+  height: 50px;
+  top: -150px;
+  font-family: "Oswald";
+  color: white;
+}
+
+.searchSelect, .searchSelectLeft, .searchSelectRight {
+  background-color: #333;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.1s;
+  font-size: 17px;
+  color: white;
+  height: 50px;
+}
+
+.active {
+    z-index: 10;
+    background-color: #222;
+}
+
+.searchSelect:hover, .searchSelectLeft:hover, .searchSelectRight:hover {
+  background-color: #222;
+}
+
+.searchSelectLeft {
+    border-top-left-radius: 20px;
+}
+
+.searchSelectRight {
+    border-top-right-radius: 20px;
+}
+
+.searchSelectRight:hover:after {
+    background: #222;
+}
+
+.searchSelectRight:after {
+    content: "";
+    background: #333;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -20px;
+    bottom: 0px;
+    z-index: 100;
+    transition: 0.1s;
+}
 
 
+.searchSelectContainer:after {
+    content: "";
+    background: $background;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: -40px;
+    bottom: 0px;
+    border-radius: 100px;
+    z-index: 101;
+}
+
+.searchLoad {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #333;
+    z-index: 100;
+    display: none;
+    -webkit-box-shadow: inset 0px 0px 87px -39px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 87px -39px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 87px -39px rgba(0,0,0,0.75);
+}
+
+.searchLoading {
+    position: absolute;
+    display: none;
+    height: 200px;
+    width: 200px;
+    top: calc(50% - 100px;);
+    left: calc(50% - 100px;);
+}
+
+.testBtn {
+    position: fixed;
+    background: #222;
+    color: white;
+    font-size: 40px;
+}
+
+.lowerSearch {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    bottom: 0px;
+    background: #222;
+    border-top: 2px solid #111;
+}
+
+.limitText {
+    z-index: 1000;
+    height: 100px;
+    line-height: 50px;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.searchLimit {
+    height: 25px;
+    width: 50px;
+    background: #333;
+    border: none;
+    border-bottom: 4px solid #111;
+    font-size: 16px;
+    margin-left: 5px;
+    color: white;
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+
+.searchLimit:focus {outline:none;}
+
+.searchDrop {
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 10px;
+    color: white;
+    background: #333;
+    border: 0px;
+    float: left;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.searchDrop:focus {outline:none;}
+
+
+.selectContainer {
+    position: absolute;
+    height: 50px;
+    top: 0px;
+    left: 130px;
+    color: white;
+}
+
+.searchNull {
+    z-index: 9999;
+    background: #222;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: calc(50% - 50px;);
+    display: none;
+}
+
+.searchNullResponse {
+    margin: 0px;
+    line-height: 100px;
+    font-size: 48px;
+    color: white;
+}
 
 
 
