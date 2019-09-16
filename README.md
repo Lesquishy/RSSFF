@@ -5,6 +5,15 @@ Expect Nothing great. There are a lot of moving parts that have to work together
 
 Used to view and auto collect movies for torrent. Using customizeable RSS feeds from your favorite sites. With keywords to look out for, It'll auto save movies from their title and store them to collect later. Using a separate script it'll also show you all your previously downloaded films for a movie database all in one place.
 
+Its main purpose is to view manage all my movies. It has the added benifit of being able to search for movies from external sites. It'll also manage episodic shows.
+
+It's based on 2 stages (so far). 
+One to manage the inflow of movies. This includes checking their format and file name, Then it'll add the processed movies to the index.
+
+The other stage is the site. It'll use the previously mentioned index to display all the local movies. While using exsisting API's or RSS feeds to find new movies. 
+
+Idealy, You could do the first stage from the site. Start a download, Rename and reformat the new movie, add it to the index to be displayed on the site
+
 ## To do for site
 Tasks
 - Settings menu with lock. (User? Just password defined?)
