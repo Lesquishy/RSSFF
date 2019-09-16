@@ -39,11 +39,6 @@ function present(){
   }
 }
 
-function toggleInfo() {
-    $("#grey").fadeToggle(anispeed);
-    $(".resultFocus").toggleClass("focusShown");
-}
-
 // Displays / hides the loading screen
 function loading() {
 

@@ -83,14 +83,6 @@ function rssDownload(rss) {
 
 }
 
-function resultExpand(id) {
-    toggleInfo();
-    var easy = `
-        5
-    `;
-    $('body').append('');
-}
-
 
 // adds to array
 //  titles.push(temp);
