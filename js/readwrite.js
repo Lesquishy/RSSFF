@@ -1,5 +1,5 @@
 
-function readTextFile(file) {
+function readSources(file) {
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET", file, false);
   rawFile.onreadystatechange = function () {

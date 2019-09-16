@@ -5,6 +5,7 @@ var errorColor = "red";
 var loadstate = 1;
 var stop = false;
 var sources;
+var anispeed = 400;
 
 // How the startup order will run
 // HTML Ready
@@ -14,7 +15,7 @@ $(document).ready( function (){
 
  // Page ready
   window.onload = function(){
-    readTextFile(sourceFile);
+    readSources(sourceFile);
 
 
     present();
@@ -39,7 +40,7 @@ function present(){
 }
 
 function toggleFade() {
-    $("#grey").fadeToggle(400);
+    $("#grey").fadeToggle(anispeed);
     $(".resultFocus").toggleClass("focusShown");
 }
 
@@ -48,11 +49,11 @@ function loading() {
 
   if(loadstate == 1){ // If its already showing
     greyOut("hide");
-    $("#loading").fadeOut(400);
+    $("#loading").fadeOut(anispeed);
     loadstate = 0;
   } else { // If its not shown
     greyOut("show");
-    $("#loading").fadeIn(400);
+    $("#loading").fadeIn(anispeed);
     loadstate = 1
   }
 }
@@ -67,7 +68,7 @@ function message(where, why, level){
   if([where, why, level].indexOf() == null){
     $("#message").css('background-color', errorColor);
     $("#message").text("No error message, But theres a problem");
-    $("#message").slideDown();
+    $("#message").slideDown(anispeed);
     greyOut("show");
 
   } else {
@@ -76,17 +77,17 @@ function message(where, why, level){
       output = "There was a problem " + where + ". Because " + why;
       $("#message").text(output);
       $("#message").css('background-color', 'red');
-      $("#message").slideDown();
+      $("#message").slideDown(anispeed);
     } else if (level == "m"){
       output = "There was a problem " + where + ". Because " + why + ". This shouldn't effect the operation of the site";
       $("#message").text(output);
       $("#message").css('background-color', 'orange');
-      $("#message").slideDown();
+      $("#message").slideDown(anispeed);
     } else {
       output = where;
       $("#message").text(output);
       $("#message").css('background-color', 'grey');
-      $("#message").slideDown();
+      $("#message").slideDown(anispeed);
     }
   }
 }
@@ -94,9 +95,9 @@ function message(where, why, level){
 // Greys out the background so you cant interact with it.
 function greyOut(action) {
   if (action == "show"){
-    $("#grey").fadeIn(400);
+    $("#grey").fadeIn(anispeed);
   } else if (action == "hide"){
-    $("#grey").fadeOut(400);
+    $("#grey").fadeOut(anispeed);
   } else {
     console.log("greyOut Fade invalid input");
   }
