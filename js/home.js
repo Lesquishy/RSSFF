@@ -41,7 +41,7 @@ function present(){
 
 function toggleFade() {
     $("#grey").fadeToggle(anispeed);
-    $(".resultFocus").toggleClass("focusShown");
+    $(".resultFocus").toggleClass("focusShown").fadeIn(300);
 }
 
 // Displays / hides the loading screen
