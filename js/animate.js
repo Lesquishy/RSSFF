@@ -30,6 +30,12 @@ function displayInfo() {
     $(".resultFocus").slideToggle(anispeed);
 }
 
+function toggleSearchLoad() {
+
+    $(".searchLoading").slideToggle(200);
+    $(".searchLoad").fadeToggle(200);
+}
+
 /*
 function resultExpand(id) {
     toggleInfo();

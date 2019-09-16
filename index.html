@@ -22,6 +22,7 @@
     </head>
 
     <body>
+        <button onclick="toggleSearchLoad();" class="testBtn">Test Button</button>
         <div class="resultFocus">
             <img id="focusImg" class="focusImg" src="https://img.yts.lt/assets/images/movies/witnesses_2019/medium-cover.jpg"/>
             <div class="focusTitleCont">
@@ -37,24 +38,33 @@
             </div>
         </div>
         <!-- Temporary button to add tiles to the search grid -->
-        <button class="searchBtn" onclick="addTile()"><i class="material-icons md-36">add</i></button>
+        <!--<button class="searchBtn" onclick="addTile()"><i class="material-icons md-36">add</i></button>-->
         <!-- Temporary title for visual appeal, feel free to remove -->
         <div class="title">
-            <strong class="titleText">Yo wassup bitch I did some work</strong>
+            <strong class="titleText">Rugby's Movies!</strong>
         </div>
         <!-- Search container, holds the results and the search form -->
         <div class="searchContainer">
-            <div class="searchBar">
-                <!-- This will be changed later to auto search as you type -->
-                <form class="searchForm" action="index.html">
-                    <input class="searchInput" type="text" placeholder="Search here nig..." name="search">
-                    <button class="searchBtn" type="submit"><i class="material-icons md-36">search</i></button>
-                </form>
-            </div>
+                <div class="searchSelectContainer">
+                    <button id="1" class="searchSelectLeft active" onclick="changeSearch(this.id);"><div class=""></div>Rugby</button>
+                    <button id="2" class="searchSelect" onclick="changeSearch(this.id);">YTS.lt</button>
+                    <button id="3" class="searchSelectRight" onclick="changeSearch(this.id);">YTS RRS</button>
+                </div>
+                <div class="searchBar">
+                    <!-- This will be changed later to auto search as you type -->
+                    <form class="searchForm" action="index.html">
+                        <input class="searchInput" type="text" placeholder="Search here nig..." name="search">
+                        <button class="searchBtn" type="submit"><i class="material-icons md-36">search</i></button>
+                    </form>
+                </div>
 
-            <!-- Temporary search results to show layout, results will be generated on search -->
-            <div class="resultsContainer">
-            </div>
+                <!-- Temporary search results to show layout, results will be generated on search -->
+                <div class="resultsContainer">
+                </div>
+
+                <div class="searchLoad">
+                    <img class="searchLoading" src="./images/loading.svg" />
+                </div>
         </div>
         <div id="message">Please Wait. We're Loading</div>
         <div id="loading"><img src="./images/loading.svg"></div>
