@@ -1,4 +1,5 @@
-
+// This is for managing and editing the file outputs either from rss or from the locally stored files
+// so things like putting the outputs into variables, Filtering the outputs. Whatever. Its all done here.
 
 /*function rssRead(item) {
   $.get(item, function (data) {
