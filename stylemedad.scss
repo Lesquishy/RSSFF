@@ -52,6 +52,7 @@ img{
   z-index: 19;
   height: 100%;
   width:100%;
+  cursor: pointer;
 }
 
 $largewidth: 1600px;
@@ -121,6 +122,7 @@ $largewidth: 1600px;
 .resultImg {
     width: 100%;
     height: calc(100% - 25px;);
+    cursor: pointer;
 }
 
 .resultTitle {
@@ -217,7 +219,7 @@ $largewidth: 1600px;
 }
 
 .focusShown {
-    display: block;
+    transition: opacity 0.5s;
     opacity: 1;
 }
 
@@ -273,8 +275,6 @@ $largewidth: 1600px;
     position: absolute;
     width: 250px;
 }
-
-
 
 
 

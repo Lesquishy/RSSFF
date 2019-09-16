@@ -46,6 +46,7 @@ img {
   z-index: 19;
   height: 100%;
   width: 100%;
+  cursor: pointer;
 }
 
 .searchContainer {
@@ -123,6 +124,7 @@ img {
 .resultImg {
   width: 100%;
   height: calc(100% - 25px);
+  cursor: pointer;
 }
 
 .resultTitle {
@@ -230,7 +232,7 @@ img {
 }
 
 .focusShown {
-  display: block;
+  transition: opacity 0.5s;
   opacity: 1;
 }
 
