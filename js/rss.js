@@ -84,6 +84,7 @@ function rssDownload(rss) {
 }
 
 function resultExpand(id) {
+    toggleInfo();
     var easy = `
         5
     `;

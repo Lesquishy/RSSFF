@@ -211,13 +211,14 @@ $largewidth: 1600px;
     left: calc(50% - 300px;);
     color: white;
     font-family: "Oswald";
+    opacity: 0;
     display: none;
-    transition: all 2.0s ease-in;
+    transition: all 2.0s;
 }
 
 .focusShown {
-    transition: all 2.0s ease-in;
     display: block;
+    opacity: 1;
 }
 
 .focusExit {
