@@ -1,5 +1,5 @@
 {
-  "movie ID": {
+  "movieID": {
     "title": "example",
     "runTime": " 'hours', 'mins', 'sec' with int values. If it doesnt need hours or mins. Its 0 (Should be object)",
     "locallyStored":"If it is stored locally on the server (Should be bool)",
