@@ -213,7 +213,7 @@ $largewidth: 1600px;
     font-family: "Oswald";
     opacity: 0;
     display: none;
-    transition: all 2.0s;
+    transition: opacity 0.5s;
 }
 
 .focusShown {
