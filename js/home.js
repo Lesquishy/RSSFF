@@ -1,3 +1,6 @@
+//The Main JS script. For all the code that doesnt have a file for somewhere else
+
+
 // The info for the file locations
 var sourceFile = "./data/sources.txt";
 
