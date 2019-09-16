@@ -48,18 +48,24 @@ function getData() {
         $(".searchResult").remove();
         console.log(result);
         if (result.data.movie_count != 0) {
+            console.log("at least 1 movie");
             $(".searchNull").fadeOut(200);
             displaySearch(result);
         }else {
+            console.log("not a single movie");
             $(".searchNull").fadeIn(200);
             toggleSearchLoad();
         }
     });
 }
 
+//FIX THIS SHIT WHYYYYYY IT DO THIS
+
 function displaySearch(result) {
-    for (var l = 0; l < result.data.movie_count; l++){
+    for (var l = 0; l < result.data.movies.length; l++){
         console.log(l);
+        console.log(result.data.movie_count);
+        console.log(result.data.movies[l].medium_cover_image);
         $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + result.data.movies[l].medium_cover_image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + result.data.movies[l].title + '</div></div>');
     }
     toggleSearchLoad();
