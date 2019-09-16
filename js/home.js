@@ -39,7 +39,7 @@ function present(){
   }
 }
 
-function toggleFade() {
+function toggleInfo() {
     $("#grey").fadeToggle(anispeed);
     $(".resultFocus").toggleClass("focusShown").fadeIn(300);
 }
