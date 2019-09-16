@@ -32,6 +32,7 @@
     "locallyStored":true,
     "size": "13gb",
     "fileLocation": "../files/deadpool.mp4",
+    "fileName":"deadpool.mp4",
     "magnet":"magnet-link",
     "image":"../file/posters/poster.png",
     "desc":"A murder spree with Ryan Renolds",
@@ -40,6 +41,7 @@
     "ratio":"16:9",
     "keyWords":["killing", "4k", "tornado"],
     "episodic":true,
+    "framerate":"23.98",
     "showInfo":{
       "seriesTitle":"Brooklyn Nine-Nine",
       "episode":"Space Monkey Fights Back",
