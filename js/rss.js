@@ -63,7 +63,7 @@ function rssInterpret(info) {
     unique.replace(/Size: (.*?)<br \/>/g, function(s, match) {size.push(match);});
 
     var double = "";
-
+    $(".searchResult").remove();
     //Display all the movies
     for (var l = 0; l < uniqueInfo.length; l++){
         //FOR SOME FUCK NUGGET REASON THE TITLES ARENT THE SAME ON DUPES SOMETIMES AHHHHHHHHHHHHHHH WHAT THE FUCK
