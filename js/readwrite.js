@@ -1,3 +1,4 @@
+//Used to read or write to files. Doesnt have to really do anything with it. Its just how we'll access the files
 
 function readSources(file) {
   var rawFile = new XMLHttpRequest();
