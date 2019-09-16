@@ -1,6 +1,24 @@
 //The Main JS script. For all the code that doesnt have a file for somewhere else
 
 
+//Movie variables for the searches
+var title = [];
+var img = [];
+var desc = [];
+var time = [];
+var genre = [];
+var link = [];
+var size = [];
+var imageNULL = false;
+var imageNULLId = -1;
+var query = "";
+var searchGenre = "";
+var searchQuality = "";
+var searchSort = "";
+var searchLimit = "";
+var result;
+var searchType = "";
+
 // The info for the file locations
 var sourceFile = "./data/sources.txt";
 
@@ -18,7 +36,6 @@ $(document).ready( function (){
 
  // Page ready
   window.onload = function(){
-    readSources(sourceFile);
 
 
     present();
@@ -28,6 +45,10 @@ $(document).ready( function (){
 //So when you click the faded background it'll hide anything thats open
 function greyHide(){
   toggleFade();
+}
+
+function nigger() {
+    readSources(sourceFile);
 }
 
 
@@ -55,6 +76,30 @@ function loading() {
     loadstate = 1
   }
 }
+
+function startSearch() {
+    if ($("#1").hasClass("active") == true) {
+        console.log("Search Locally");
+    }else if ($("#2").hasClass("active") == true) {
+        console.log("Search the YTS Website");
+        toggleSearchLoad();
+        setTimeout(function() {
+            ytsSearch();
+        }, 200);
+    }else if ($("#3").hasClass("active") == true) {
+        toggleSearchLoad();
+        setTimeout(function() {
+            console.log("trsttegegeg");
+            nigger();
+        }, 200);
+    }
+}
+
+$( window ).keypress(function(e){
+    if ( $("input").is( ':focus' ) && e.keyCode == 13 ) {
+        startSearch();
+    }
+});
 
 // Error Wil display the error message
 // level is represented by 'n', 'm', 'h' for Notification, Medium, High respectively

@@ -36,6 +36,31 @@ function toggleSearchLoad() {
     $(".searchLoad").fadeToggle(200);
 }
 
+function changeSearch(id) {
+    if (id == 2) {
+        swipe();
+    }else if (id == 3){
+        toggleSearchLoad();
+        setTimeout(function() {
+            console.log("trsttegegeg");
+            nigger();
+        }, 200);
+    }
+    if ($("#" + id + "").hasClass("active") == true) {}else {
+        $(".active").removeClass("active");
+        $("#" + id + "").addClass("active");
+    }
+}
+
+function swipe() {
+    $(".swipeContSub").animate({
+        left: "-50%"
+    }, 400, function() {
+        $(".searchResult").remove();
+        $(".swipeContSub").css("left", "100%");
+    });
+}
+
 /*
 function resultExpand(id) {
     toggleInfo();

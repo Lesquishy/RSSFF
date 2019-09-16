@@ -13,18 +13,6 @@
   });
 */
 
-//https://yts.lt/api/v2/list_movies.jsonp?query_term=Endgame
-
-var title = [];
-var img = [];
-var desc = [];
-var time = [];
-var genre = [];
-var link = [];
-var size = [];
-var imageNULL = false;
-var imageNULLId = -1;
-
 function rssRead(item) {
   var responce;
   var rawFile = new XMLHttpRequest();
@@ -33,7 +21,6 @@ function rssRead(item) {
     if(rawFile.readyState === 4){
       if(rawFile.status === 200 || rawFile.status == 0){
         response = rawFile.responseText;
-        console.log(response);
         window.setTimeout(rssInterpret(response),4000);
         //rssInterpret(response);
       } else {
@@ -52,7 +39,6 @@ function rssInterpret(info) {
     info.replace(/<item>(.*?)<\/item>/gms, function(s, match) {unique.push(match);});
     var uniqueInfo = Array.from(new Set(unique));
     unique = uniqueInfo.toString();
-    console.log(uniqueInfo.length);
 
 
     title = [];
@@ -75,7 +61,6 @@ function rssInterpret(info) {
 
     size = [];
     unique.replace(/Size: (.*?)<br \/>/g, function(s, match) {size.push(match);});
-    console.log("nigger nigger" + img[0]);
 
     var double = "";
 
@@ -91,6 +76,7 @@ function rssInterpret(info) {
         $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + img[l] + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + title[l] + '</div></div>');
 
     }
+    toggleSearchLoad();
 }
 
 function imgError(image, i) {
@@ -112,15 +98,6 @@ function setFocusResult(id) {
     $("#focusGenre").text(genre[id]);
     $("#focusLink").text(link[id]);
     $("#focusSize").text(size[id]);
-}
-
-
-//This function chnages the search between rugby's movies, yts's site, and yts's RSS Feed
-function changeSearch() {
-    toggleSearchLoad();
-    setTimeout(function() {
-
-    }, 210);
 }
 
 function resetFocusResult() {
