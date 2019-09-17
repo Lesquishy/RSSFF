@@ -251,19 +251,17 @@ $largewidth: 1600px;
 
 .title {
     position: fixed;
-    width: 60%;
-    height: 200px;
-    left: 20%;
-    top: 100px;
+    width: 100%;
+    height: 100px;
     background: #222;
     text-align: center;
-    line-height: 200px;
 }
 
 .titleText {
     color: white;
-    font-size: 60px;
+    font-size: 3em;
     font-family: "Oswald";
+    margin-top:10px;
 }
 
 .resultFocus {
@@ -432,6 +430,7 @@ $largewidth: 1600px;
     background: #222;
     color: white;
     font-size: 40px;
+    z-index:2;
 }
 
 .lowerSearch {
