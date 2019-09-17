@@ -1,6 +1,8 @@
 //The Main JS script. For all the code that doesnt have a file for somewhere else
 
 
+//cookie for local point, so thjat get from different pc
+
 //Movie variables for the searches
 var title = [];
 var img = [];
@@ -19,6 +21,20 @@ var searchLimit = "";
 var result;
 var searchType = "";
 var searchParam = "";
+var reSearch;
+var resultLength;
+var rss;
+var nigger;
+var uniqueInfo;
+var reRSS;
+
+//for bug testing to find issues
+var homeError = [];
+var ytsError = [];
+var rssError = [];
+var animateError = [];
+var localError = [];
+
 
 // The info for the file locations
 var sourceFile = "./data/sources.txt";
@@ -47,11 +63,6 @@ $(document).ready( function (){
 function greyHide(){
   toggleFade();
 }
-
-function nigger() {
-    readSources(sourceFile);
-}
-
 
 // Gets the web page ready to present
 function present(){
@@ -91,7 +102,7 @@ function startSearch() {
         toggleSearchLoad();
         setTimeout(function() {
             console.log("trsttegegeg");
-            nigger();
+            rssSearch();
         }, 200);
     }
 }
@@ -101,6 +112,21 @@ $( window ).keypress(function(e){
         startSearch();
     }
 });
+
+function setFocusResult(id) {
+    console.log(id);
+    console.log(img[1]);
+    //To not override the 404 image
+    if (imageNULLId == id) {
+        $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
+    }else {$("#focusImg").attr("src",img[id]);}
+    $("#focusTitle").text(title[id]);
+    $("#focusDesc").text(desc[id]);
+    $("#focusTime").text(time[id]);
+    $("#focusGenre").text(genre[id]);
+    $("#focusLink").text(link[id]);
+    $("#focusSize").text(size[id]);
+}
 
 // Error Wil display the error message
 // level is represented by 'n', 'm', 'h' for Notification, Medium, High respectively
