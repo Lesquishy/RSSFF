@@ -36,17 +36,49 @@ function toggleSearchLoad() {
     $(".searchLoad").fadeToggle(200);
 }
 
-function changeSearch(id) {
-    if (id == 2) {
+async function changeSearch(id) {
+    $(".searchNull").fadeOut(0);
+    if (id == 1) {
+
+    }else if (id == 2) {
         swipe();
+        if (reSearch == null) {
+            //display please search something
+            console.log("Not searched before")
+            setTimeout(function() {
+                $(".searchNull").empty();
+                if ($(".searchNull").children().length > 0) {
+                    $(".searchNull").fadeIn();
+                }else {
+                    $(".searchNull").append('<p class="searchNullResponse">Search the whole library!</p>');
+                    $(".searchNull").fadeIn();
+                }
+            }, 410);
+
+        }else {
+            //run code
+            setTimeout(function() {
+                console.log("Running again");
+                displaySearch(reSearch);
+                toggleSearchLoad();
+            }, 410);
+        }
     }else if (id == 3){
         toggleSearchLoad();
         setTimeout(function() {
             console.log("trsttegegeg");
-            nigger();
+            readSources(sourceFile);
         }, 200);
     }
-    if ($("#" + id + "").hasClass("active") == true) {}else {
+    if ($("#" + id + "").hasClass("active") == true) {
+
+    }else if (id == 3) {
+        console.log("should be colored");
+        $(".active").removeClass("active");
+        $("#" + id + "").addClass("active");
+        $(".searchSelectRight").setPseudo(":after", "background", "#222")
+
+    }else {
         $(".active").removeClass("active");
         $("#" + id + "").addClass("active");
     }
