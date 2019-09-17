@@ -13,6 +13,7 @@
       <script type="text/javascript" src="./js/rss.js"></script>
       <script type="text/javascript" src="./js/animate.js"></script>
       <script type="text/javascript" src="./js/yts.js"></script>
+      <script type="text/javascript" src="./js/psudo.js"></script>
       <title>RSSFF</title> <!-- RSS Feed Filter -->
       <script>
           function addTile() {
@@ -25,7 +26,7 @@
     <body>
         <button onclick="testMe();" class="testBtn">Test Button</button>
         <div class="resultFocus">
-            <img id="focusImg" class="focusImg" src="https://img.yts.lt/assets/images/movies/witnesses_2019/medium-cover.jpg"/>
+            <img id="focusImg" class="focusImg" src=""/>
             <div class="focusTitleCont">
                 <strong id="focusTitle" class="focusTitle">testing for title space and shit</strong>
                 <p id="focusGenre" class="focusSubInfo">lorem ipsum or some shit</p>
@@ -49,7 +50,8 @@
                 <div class="searchSelectContainer">
                     <button id="1" class="searchSelectLeft active" onclick="changeSearch(this.id);"><div class=""></div>Local</button>
                     <button id="2" class="searchSelect" onclick="changeSearch(this.id);">YTS.lt</button>
-                    <button id="3" class="searchSelectRight" onclick="changeSearch(this.id);">YTS RRS</button>
+                    <button id="3" class="searchSelectRight" onclick="changeSearch(this.id);">YTS RSS</button>
+                    <button class="blockOverflow"></button>
                 </div>
                 <div class="searchBar">
                     <div class="searchForm">

@@ -41,6 +41,30 @@ function ytsSearch() {
     }
 }
 
+function displaySearch(result) {
+    if (result == null) {//havent already loaded
+        console.log("result is none");
+    }else {
+        reSearch = result;
+        console.log("result is something defined");
+        if (resultLength == null ) {
+            console.log("resultLength null");
+            $(".searchNull").empty();
+            $(".searchNull").append('<p class="searchNullResponse">Sorry! Your search did not return any results :(</p>');
+            $(".searchNull").fadeIn();
+        }else {
+            console.log("resultLength correct");
+            console.log(result);
+            console.log(resultLength);
+            for (var l = 0; l < resultLength; l++){
+                console.log("runs display");
+                $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + result.data.movies[l].medium_cover_image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + result.data.movies[l].title + '</div></div>');
+            }
+        }
+        toggleSearchLoad();
+    }
+}
+
 
 
 function getData() {
@@ -50,26 +74,20 @@ function getData() {
         if (result.data.movie_count != 0) {
             console.log("at least 1 movie");
             $(".searchNull").fadeOut(200);
+            resultLength = result.data.movies.length;
             displaySearch(result);
         }else {
             console.log("not a single movie");
-            $(".searchNull").fadeIn(200);
+            reSearch = result;
+            $(".searchNull").empty();
+            $(".searchNull").append('<p class="searchNullResponse">Sorry! Your search did not return any results :(</p>');
+            $(".searchNull").fadeIn();
             toggleSearchLoad();
         }
     });
 }
 
 //FIX THIS SHIT WHYYYYYY IT DO THIS
-
-function displaySearch(result) {
-    for (var l = 0; l < result.data.movies.length; l++){
-        console.log(l);
-        console.log(result.data.movie_count);
-        console.log(result.data.movies[l].medium_cover_image);
-        $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + result.data.movies[l].medium_cover_image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + result.data.movies[l].title + '</div></div>');
-    }
-    toggleSearchLoad();
-}
 
 
 
