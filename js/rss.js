@@ -14,7 +14,7 @@
 */
 
 function rssRead(item) {
-  var responce;
+  var response;
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET", item, false);
   rawFile.onreadystatechange = function () {
@@ -62,21 +62,28 @@ function rssInterpret(info) {
     size = [];
     unique.replace(/Size: (.*?)<br \/>/g, function(s, match) {size.push(match);});
 
-    var double = "";
-    $(".searchResult").remove();
-    //Display all the movies
-    for (var l = 0; l < uniqueInfo.length; l++){
-        //FOR SOME FUCK NUGGET REASON THE TITLES ARENT THE SAME ON DUPES SOMETIMES AHHHHHHHHHHHHHHH WHAT THE FUCK
-        if (img[l] === double) {continue;}
-        var double = img[l];
+    displayRSS(uniqueInfo);
+}
 
-        title[l] = title[l].replace("<![CDATA[","");
-        title[l] = title[l].substring(0, title[l].indexOf('('));
+function displayRSS(uniqueInfo) {
+    
+        var double = "";
+        $(".searchResult").remove();
+        //Display all the movies
+        for (var l = 0; l < uniqueInfo.length; l++){
+            console.log("runnnu")
+            //FOR SOME FUCK NUGGET REASON THE TITLES ARENT THE SAME ON DUPES SOMETIMES AHHHHHHHHHHHHHHH WHAT THE FUCK
+            if (img[l] === double) {continue;}
+            var double = img[l];
 
-        $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + img[l] + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + title[l] + '</div></div>');
+            title[l] = title[l].replace("<![CDATA[","");
+            title[l] = title[l].substring(0, title[l].indexOf('('));
 
-    }
-    toggleSearchLoad();
+            $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + img[l] + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + title[l] + '</div></div>');
+
+        }
+        toggleSearchLoad();
+
 }
 
 function imgError(image, i) {
