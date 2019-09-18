@@ -90,15 +90,15 @@ function loading() {
 }
 
 function startSearch() {
-    if ($("#1").hasClass("active") == true) {
+    if ($("#tab1").hasClass("active") == true) {
         console.log("Search Locally");
-    }else if ($("#2").hasClass("active") == true) {
+    }else if ($("#tab2").hasClass("active") == true) {
         console.log("Search the YTS Website");
         toggleSearchLoad();
         setTimeout(function() {
             ytsSearch();
         }, 200);
-    }else if ($("#3").hasClass("active") == true) {
+    }else if ($("#tab3").hasClass("active") == true) {
         toggleSearchLoad();
         setTimeout(function() {
             console.log("trsttegegeg");
@@ -112,21 +112,6 @@ $( window ).keypress(function(e){
         startSearch();
     }
 });
-
-function setFocusResult(id) {
-    console.log(id);
-    console.log(img[1]);
-    //To not override the 404 image
-    if (imageNULLId == id) {
-        $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
-    }else {$("#focusImg").attr("src",img[id]);}
-    $("#focusTitle").text(title[id]);
-    $("#focusDesc").text(desc[id]);
-    $("#focusTime").text(time[id]);
-    $("#focusGenre").text(genre[id]);
-    $("#focusLink").text(link[id]);
-    $("#focusSize").text(size[id]);
-}
 
 // Error Wil display the error message
 // level is represented by 'n', 'm', 'h' for Notification, Medium, High respectively

@@ -14,6 +14,7 @@
       <script type="text/javascript" src="./js/animate.js"></script>
       <script type="text/javascript" src="./js/yts.js"></script>
       <script type="text/javascript" src="./js/psudo.js"></script>
+      <script type="text/javascript" src="./js/focus.js"></script>
       <title>RSSFF</title> <!-- RSS Feed Filter -->
       <script>
           function addTile() {
@@ -31,7 +32,7 @@
                 <strong id="focusTitle" class="focusTitle">testing for title space and shit</strong>
                 <p id="focusGenre" class="focusSubInfo">lorem ipsum or some shit</p>
                 <p id="focusTime" class="focusSubInfo">good movie. very smart. lots of ded</p>
-                <p id="focusLink" class="focusSubInfo">lorem ipsum or some shit</p>
+                <a id="focusLink" class="focusSubInfo">Click here to download</a>
                 <p id="focusSize" class="focusSubInfo">good movie. very smart. lots of ded</p>
             </div>
             <div class="focusDescCont">
@@ -43,14 +44,14 @@
         <!--<button class="searchBtn" onclick="addTile()"><i class="material-icons md-36">add</i></button>-->
         <!-- Temporary title for visual appeal, feel free to remove -->
         <div class="title">
-            <p class="titleText">Rugby's Movies</p>
+            <p class="titleText">Rugby's Movies!</p>
         </div>
         <!-- Search container, holds the results and the search form -->
         <div class="searchContainer">
                 <div class="searchSelectContainer">
-                    <button id="1" class="searchSelectLeft active" onclick="changeSearch(this.id);"><div class=""></div>Local</button>
-                    <button id="2" class="searchSelect" onclick="changeSearch(this.id);">YTS.lt</button>
-                    <button id="3" class="searchSelectRight" onclick="changeSearch(this.id);">YTS RSS</button>
+                    <button id="tab1" class="searchSelectLeft active" onclick="changeSearch(this.id);"><div class=""></div>Local</button>
+                    <button id="tab2" class="searchSelect" onclick="changeSearch(this.id);">YTS.lt</button>
+                    <button id="tab3" class="searchSelectRight" onclick="changeSearch(this.id);">YTS RSS</button>
                     <button class="blockOverflow"></button>
                 </div>
                 <div class="searchBar">
