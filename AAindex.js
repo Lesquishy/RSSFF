@@ -101,9 +101,16 @@ async function translate(name, duration, size, width, height, framefRate, ratio)
         frameRate = roundTo(a / b, 2);
     }
 
+    // Check if its a episodic show
+    if (name.includes( (e[0-9]|s[0-9]){1}/g ) ) {
 
-    
+    }
 
+    // One liner variables
+    const locallyStored = true;
+    var fileName = name;
+    var fileLocation = "./" + name;
+    var title = name.slice(0, -4);
     // check its not already used
     var s = 0;
     while(true){
@@ -122,9 +129,6 @@ async function translate(name, duration, size, width, height, framefRate, ratio)
     // NOTE: add more data to write to the file
     /*
     that includes
-        - locallyStored
-        - file Location
-        - title (not name. the var name is the fileName)
         - Detect if its episodic and the proceeding info
         - formatting info
     site will need to be able to
