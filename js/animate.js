@@ -76,10 +76,11 @@ async function changeSearch(id) {
         console.log("should be colored");
         $(".active").removeClass("active");
         $("#" + id + "").addClass("active");
-        $(".searchSelectRight").setPseudo(":after", "background", "#222")
+        $(".blockOverflow").addClass("activated");
 
     }else {
         $(".active").removeClass("active");
+        $(".blockOverflow").removeClass("activated");
         $("#" + id + "").addClass("active");
     }
 }
