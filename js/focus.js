@@ -47,7 +47,6 @@ function setFocusResult(id) {
         console.log("max Val" + maxVal);
         var max = testMax.indexOf(maxVal);
         console.log("max is:" + max);
-        $("#focusLink").text("Click here to download");
         $("#focusLink").attr("href", reSearch.data.movies[id].torrents[max].url);
         $("#focusSize").text(reSearch.data.movies[id].torrents[max].size);
     }else if ($("#tab3").hasClass("active") == true) {
@@ -78,7 +77,6 @@ function resetFocusResult() {
         $("#focusDesc").text("There was an error displaying this value");
         $("#focusTime").text("There was an error displaying this value");
         $("#focusGenre").text("There was an error displaying this value");
-        $("#focusLink").text("There was an error displaying this value");
         $("#focusSize").text("There was an error displaying this value");
     }, 200);
 }
