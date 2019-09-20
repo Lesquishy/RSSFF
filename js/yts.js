@@ -16,9 +16,11 @@ function ytsSearch() {
     //Testing if the user has searched for anything
     query = $(".searchInput").val();
     if (query == "") {
-        //Nothing put in search box
-        message("Search", "Please type something in the searchbar", "m");
-        console.log("error");
+        //Auto Search for latest releases
+        setTimeout(function() {
+            searchParam = "";
+            getData();
+        }, 200);
     }else {
         //User has searched something, continue
         query = "query_term=" + query + "&";
@@ -34,7 +36,7 @@ function ytsSearch() {
 
         searchLimit = $(".searchLimit").val();
         console.log(searchLimit);
-        if (searchLimit == "") {searchLimit = "limit=20";}else {searchLimit = "limit=" + searchLimit;}
+        if (searchLimit == "") {searchLimit = "limit=25";}else {searchLimit = "limit=" + searchLimit;}
 
         searchParam = ""+query+searchGenre+searchQuality+searchSort+searchLimit;
         getData();

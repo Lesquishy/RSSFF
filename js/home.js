@@ -27,6 +27,7 @@ var rss;
 var nigger;
 var uniqueInfo;
 var reRSS;
+var doneBefore = false;
 
 //for bug testing to find issues
 var homeError = [];
@@ -34,6 +35,13 @@ var ytsError = [];
 var rssError = [];
 var animateError = [];
 var localError = [];
+
+var mediaPlayer;
+var volume;
+
+//This code calculated the distance from the center of the movie div to ther corner of it
+
+
 
 
 // The info for the file locations
@@ -50,13 +58,13 @@ var anispeed = 400;
 console.log("Welcome to the SOS panel");
 console.log("type 'help()' to learn more")
 $(document).ready( function (){
-
- // Page ready
-  window.onload = function(){
+    mediaPlayer();
+    // Page ready
+    window.onload = function(){
 
 
     present();
-  }
+    }
 });
 
 //So when you click the faded background it'll hide anything thats open
@@ -146,6 +154,37 @@ function message(where, why, level){
     }
   }
 }
+
+
+function mediaPlayer() {
+    mediaPlayer = document.querySelector('.mediaPlayer')
+    volume = document.querySelector('#volume');
+}
+
+function togglePause() {
+    var btn = document.querySelector('#playPause');
+    if (mediaPlayer.paused || mediaPlayer.ended) {
+        btn.innerHTML = '<i class="material-icons md-36">pause</i>';
+        mediaPlayer.play();
+    }
+    else {
+        btn.innerHTML = '<i class="material-icons md-36">play_arrow</i>';
+        mediaPlayer.pause();
+    }
+}
+
+function changeVolume(vol) {
+    console.log(vol);
+}
+
+
+
+
+
+
+
+
+
 
 // Greys out the background so you cant interact with it.
 function greyOut(action) {

@@ -17,15 +17,8 @@ async function changeSearch(id) {
         if (reSearch == null) {
             //display please search something
             console.log("Not searched before")
-            setTimeout(function() {
-                $(".searchNull").empty();
-                if ($(".searchNull").children().length > 0) {
-                    $(".searchNull").fadeIn();
-                }else {
-                    $(".searchNull").append('<p class="searchNullResponse">Search the whole library!</p>');
-                    $(".searchNull").fadeIn();
-                }
-            }, 410);
+            toggleSearchLoad();
+            ytsSearch()
 
         }else {
             //run code
@@ -64,6 +57,39 @@ function swipe() {
         $(".searchResult").remove();
         $(".swipeContSub").css("left", "100%");
     });
+}
+
+function watchMovie() {
+    $("#grey2").fadeToggle(anispeed);
+    if (doneBefore == true) {
+        setTimeout(function() {
+            $(".watchBackground1").toggleClass("watch");
+            $(".watchBackground2").toggleClass("watch");
+        }, 500);
+        setTimeout(function() {
+            $(".watchBar1").toggleClass("watch");
+            $(".watchBar2").toggleClass("watch");
+        }, 1000);
+        setTimeout(function() {
+            $(".watchContainer").toggle();
+        }, 1510);
+        $(".watchInternal").fadeToggle(200);
+        doneBefore = false;
+    }else {
+        $(".watchContainer").toggle();
+        setTimeout(function() {
+            $(".watchBackground1").toggleClass("watch");
+            $(".watchBackground2").toggleClass("watch");
+        }, 500);
+        setTimeout(function() {
+            $(".watchInternal").fadeToggle(200);
+        }, 1000);
+        setTimeout(function() {
+            $(".watchBar1").toggleClass("watch");
+            $(".watchBar2").toggleClass("watch");
+        }, 10);
+        doneBefore = true;
+    }
 }
 
 /*
