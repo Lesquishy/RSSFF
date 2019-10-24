@@ -3,10 +3,11 @@ var ffmpeg = require('fluent-ffmpeg');
 const readLine = require('readline');
 var Metalib = require('fluent-ffmpeg').Metadata;
 
-const dir = '.\\';
+const dir = './tempvid/';
+const output = "./testoutput/"
 var blacklist = ["index.js"];
-var extBlack = ["txt", "mkv"];
-var movieIndex = JSON.parse(fs.readFileSync('./AAmovieIndex.json', 'utf8'));
+var extBlack = ["txt", "mkv", "php", "css", "scss", "json", "md", "js"];
+var movieIndex = JSON.parse(fs.readFileSync('./data/AAmovieIndex.json', 'utf8'));
 
 var output = [];
 var loop = 0;
@@ -102,7 +103,7 @@ async function translate(name, duration, size, width, height, framefRate, ratio)
     }
 
     // Check if its a episodic show
-    if (name.includes( (e[0-9]|s[0-9]){1}/g ) ) {
+    if (name.includes( /(e[0-9]|s[0-9]){1}/g ) ) {
 
     }
 
