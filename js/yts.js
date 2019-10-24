@@ -16,9 +16,11 @@ function ytsSearch() {
     //Testing if the user has searched for anything
     query = $(".searchInput").val();
     if (query == "") {
-        //Nothing put in search box
-        message("Search", "Please type something in the searchbar", "m");
-        console.log("error");
+        //Auto Search for latest releases
+        setTimeout(function() {
+            searchParam = "";
+            getData();
+        }, 200);
     }else {
         //User has searched something, continue
         query = "query_term=" + query + "&";
@@ -34,7 +36,7 @@ function ytsSearch() {
 
         searchLimit = $(".searchLimit").val();
         console.log(searchLimit);
-        if (searchLimit == "") {searchLimit = "limit=20";}else {searchLimit = "limit=" + searchLimit;}
+        if (searchLimit == "") {searchLimit = "limit=25";}else {searchLimit = "limit=" + searchLimit;}
 
         searchParam = ""+query+searchGenre+searchQuality+searchSort+searchLimit;
         getData();
@@ -42,6 +44,7 @@ function ytsSearch() {
 }
 
 function displaySearch(result) {
+    var doubleup
     if (result == null) {//havent already loaded
         console.log("result is none");
     }else {
@@ -57,7 +60,8 @@ function displaySearch(result) {
             console.log(result);
             console.log(resultLength);
             for (var l = 0; l < resultLength; l++){
-                console.log("runs display");
+                if (result.data.movies[l].medium_cover_image === doubleup) {continue;}
+                doubleup = result.data.movies[l].medium_cover_image;
                 $('.resultsContainer').append('<div class="searchResult"><img onclick="resultExpand(this.id)" id="' + l + '" class="resultImg" src="' + result.data.movies[l].medium_cover_image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + result.data.movies[l].title + '</div></div>');
             }
         }

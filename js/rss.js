@@ -66,7 +66,7 @@ function rssInterpret(info) {
 }
 
 function displayRSS(uniqueInfo) {
-    
+
         var double = "";
         $(".searchResult").remove();
         //Display all the movies
@@ -83,32 +83,12 @@ function displayRSS(uniqueInfo) {
 
         }
         toggleSearchLoad();
-
 }
 
 function imgError(image, i) {
     $(image).attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
     imageNULLId = i;
     return true;
-}
-
-function setFocusResult(id) {
-    console.log(id);
-    console.log(img[1]);
-    //To not override the 404 image
-    if (imageNULLId == id) {
-        $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
-    }else {$("#focusImg").attr("src",img[id]);}
-    $("#focusTitle").text(title[id]);
-    $("#focusDesc").text(desc[id]);
-    $("#focusTime").text(time[id]);
-    $("#focusGenre").text(genre[id]);
-    $("#focusLink").text(link[id]);
-    $("#focusSize").text(size[id]);
-}
-
-function resetFocusResult() {
-
 }
 
 function rssDownload(rss) {

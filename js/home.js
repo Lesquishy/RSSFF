@@ -27,6 +27,7 @@ var rss;
 var nigger;
 var uniqueInfo;
 var reRSS;
+var doneBefore = false;
 
 //for bug testing to find issues
 var homeError = [];
@@ -34,6 +35,13 @@ var ytsError = [];
 var rssError = [];
 var animateError = [];
 var localError = [];
+
+var mediaPlayer;
+var volume;
+
+//This code calculated the distance from the center of the movie div to ther corner of it
+
+
 
 
 // The info for the file locations
@@ -50,13 +58,13 @@ var anispeed = 400;
 console.log("Welcome to the SOS panel");
 console.log("type 'help()' to learn more")
 $(document).ready( function (){
-
- // Page ready
-  window.onload = function(){
+    mediaPlayer();
+    // Page ready
+    window.onload = function(){
 
 
     present();
-  }
+    }
 });
 
 //So when you click the faded background it'll hide anything thats open
@@ -90,15 +98,15 @@ function loading() {
 }
 
 function startSearch() {
-    if ($("#1").hasClass("active") == true) {
+    if ($("#tab1").hasClass("active") == true) {
         console.log("Search Locally");
-    }else if ($("#2").hasClass("active") == true) {
+    }else if ($("#tab2").hasClass("active") == true) {
         console.log("Search the YTS Website");
         toggleSearchLoad();
         setTimeout(function() {
             ytsSearch();
         }, 200);
-    }else if ($("#3").hasClass("active") == true) {
+    }else if ($("#tab3").hasClass("active") == true) {
         toggleSearchLoad();
         setTimeout(function() {
             console.log("trsttegegeg");
@@ -112,21 +120,6 @@ $( window ).keypress(function(e){
         startSearch();
     }
 });
-
-function setFocusResult(id) {
-    console.log(id);
-    console.log(img[1]);
-    //To not override the 404 image
-    if (imageNULLId == id) {
-        $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
-    }else {$("#focusImg").attr("src",img[id]);}
-    $("#focusTitle").text(title[id]);
-    $("#focusDesc").text(desc[id]);
-    $("#focusTime").text(time[id]);
-    $("#focusGenre").text(genre[id]);
-    $("#focusLink").text(link[id]);
-    $("#focusSize").text(size[id]);
-}
 
 // Error Wil display the error message
 // level is represented by 'n', 'm', 'h' for Notification, Medium, High respectively
@@ -161,6 +154,37 @@ function message(where, why, level){
     }
   }
 }
+
+
+function mediaPlayer() {
+    mediaPlayer = document.querySelector('.mediaPlayer')
+    volume = document.querySelector('#volume');
+}
+
+function togglePause() {
+    var btn = document.querySelector('#playPause');
+    if (mediaPlayer.paused || mediaPlayer.ended) {
+        btn.innerHTML = '<i class="material-icons md-36">pause</i>';
+        mediaPlayer.play();
+    }
+    else {
+        btn.innerHTML = '<i class="material-icons md-36">play_arrow</i>';
+        mediaPlayer.pause();
+    }
+}
+
+function changeVolume(vol) {
+    console.log(vol);
+}
+
+
+
+
+
+
+
+
+
 
 // Greys out the background so you cant interact with it.
 function greyOut(action) {
