@@ -28,6 +28,8 @@ var nigger;
 var uniqueInfo;
 var reRSS;
 var doneBefore = false;
+var was3 = false;
+
 
 //for bug testing to find issues
 var homeError = [];

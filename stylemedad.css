@@ -68,22 +68,21 @@ html, body {
 .searchContainer {
   background: #333;
   position: fixed;
-  min-height: 400px;
-  max-height: 600px;
+  height: 500px;
   width: 1600px;
   bottom: 50px;
   padding-bottom: none;
   font-family: "Oswald";
   position: fixed;
   left: calc(50% - 800px);
+  transition: 0.2s all;
 }
 
 @media screen and (max-width: 1921px) {
   .searchContainer {
     background: #333;
     position: fixed;
-    min-height: 400px;
-    max-height: 600px;
+    height: 500px;
     max-width: 1500px;
     bottom: 50px;
     padding-bottom: none;
@@ -224,7 +223,7 @@ html, body {
 .searchBar {
   position: absolute;
   height: 100px;
-  top: -100px;
+  bottom: 100%;
   left: 0px;
   width: 100%;
   z-index: 100;
@@ -426,6 +425,11 @@ html, body {
   top: -150px;
   font-family: "Oswald";
   color: white;
+  transition: 0.2s all;
+}
+
+.activeExpand {
+  top: -50px;
 }
 
 .searchSelect, .searchSelectLeft, .searchSelectRight {
