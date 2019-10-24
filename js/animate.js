@@ -11,9 +11,20 @@ function toggleSearchLoad() {
 async function changeSearch(id) {
     $(".searchNull").fadeOut(0);
     if (id == "tab1") {
+        if (was3 == true) {
+            $(".searchBar").slideDown(200);
+            $(".searchSelectContainer").removeClass("activeExpand");
+            was3 = false;
+        }
+
 
     }else if (id == "tab2") {
         swipe();
+        if (was3 == true) {
+            $(".searchBar").slideDown(200);
+            $(".searchSelectContainer").removeClass("activeExpand");
+            was3 = false;
+        }
         if (reSearch == null) {
             //display please search something
             console.log("Not searched before")
@@ -30,6 +41,9 @@ async function changeSearch(id) {
         }
     }else if (id == "tab3"){
         toggleSearchLoad();
+        $(".searchBar").slideUp(200);
+        $(".searchSelectContainer").addClass("activeExpand");
+        was3 = true;
         setTimeout(function() {
             console.log("trsttegegeg");
             readSources(sourceFile);
