@@ -4,15 +4,31 @@ const readLine = require('readline');
 var Metalib = require('fluent-ffmpeg').Metadata;
 
 const dir = './tempvid/';
-const output = "./testoutput/"
-var blacklist = ["index.js"];
-var extBlack = ["txt", "mkv", "php", "css", "scss", "json", "md", "js"];
+const outputFolder = "./outputTest/"
+var blacklist = ["index.js", "placeholder.mp4"];
+var extBlack = ["txt", "php", "css", "scss", "json", "md", "js"];
 var movieIndex = JSON.parse(fs.readFileSync('./data/AAmovieIndex.json', 'utf8'));
 
 var output = [];
 var loop = 0;
 var start;
 var fileNames = [];
+
+//Colors
+reset = "\x1b[0m"
+black = "\x1b[30m"
+red = "\x1b[31m"
+green = "\x1b[32m"
+yellow = "\x1b[33m"
+blue = "\x1b[34m"
+magenta = "\x1b[35m"
+cyan = "\x1b[36m"
+white = "\x1b[37m"
+
+//Start Message
+console.log(magenta + "\nStarting to Scan\n" + reset)
+//console.log(red + "This could take a while\n" + reset)
+//console.log("Please Wait...\n")
 
 //Get the size of the movieIndex
 Object.size = function(obj) {
@@ -64,10 +80,10 @@ fs.readdirSync(dir).forEach(title => {
 
 var l = Object.size(movieIndex) + 1
 var pos = l
-for(var f = 0; fileNames.length - 1 >= f; f++ ){
-    ffmpeg.ffprobe(fileNames[f], function(err, data) {
+for(var f = 0; fileNames.length -1  >= f; f++ ){
+    ffmpeg.ffprobe(dir + fileNames[f], function(err, data) {
         //error catching
-        if(err) { return; }
+        if(err) { console.log(err);return; }
         translate(data.format.filename, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio)
 
         //output
@@ -76,7 +92,18 @@ for(var f = 0; fileNames.length - 1 >= f; f++ ){
 
 
 
-async function translate(name, duration, size, width, height, framefRate, ratio){
+async function translate(name, duration, size, width, height, frameRate, ratio){
+
+    // One liner variables
+    const locallyStored = true; // We're searching locally so this doesnt change
+    var fileName = name.split('/')[(name.split('/').length-1)]; // Trim dir
+    var fileLocation = name;
+    var title = name.split('/')[(name.split('/').length-1)].slice(0, -4) // Trim the dir and extension
+    size = roundTo(size / 1073741823.9999983, 2); // Size to gb
+    //default values
+    var showInfo = false;
+    var episodic = false;
+
 
     // Duration to hous mins sec
     // Calculation
@@ -89,9 +116,6 @@ async function translate(name, duration, size, width, height, framefRate, ratio)
     // Combine the time to string
     var runTime = {"hours":hours, "mins":mins, "secs":secs};
 
-    //size to gb
-    size = roundTo(size / 1073741823.9999983, 2);
-
 
     //width and height to 0000x0000
     var resolution = width  + "x" + height;
@@ -103,15 +127,30 @@ async function translate(name, duration, size, width, height, framefRate, ratio)
     }
 
     // Check if its a episodic show
-    if (name.includes( /(e[0-9]|s[0-9]){1}/g ) ) {
+    //if (name.includes( /([e|s][0-9]|[0-9]|[e|s][0-9]|[0-9]){1,}/g) ) {}
 
+    var nameProcess = name.split('/')[(name.split('/').length-1)];
+    var episodeFind = nameProcess.match(/(e[0-9][0-9]|e[0-9]){1,}/g)
+    var episode;
+
+    if(episodeFind.length >= 1) {
+        var episodic = true;
+        var season = nameProcess.match(/(s[0-9][0-9]|s[0-9]){1,}/g)
+        if(season.length >= 1){
+            var seriesTitle;
+            console.log("Found Show. Searching for exsiting series" + reset)
+            for(var i=0; Object.size(movieIndex) > i; i++){
+                if(movieIndex[i].episodic == true){
+                    console.log("horray")
+                }
+                //console.log(movieIndex[i].showInfo["seriesTitle"])
+            }
+            episode = episodeFind[0].replace('e','');
+            showInfo = {seriesTitle, episode}
+        }
     }
 
-    // One liner variables
-    const locallyStored = true;
-    var fileName = name;
-    var fileLocation = "./" + name;
-    var title = name.slice(0, -4);
+
     // check its not already used
     var s = 0;
     while(true){
@@ -119,7 +158,7 @@ async function translate(name, duration, size, width, height, framefRate, ratio)
             console.log(name + " already exists. Skipping...");
             break;
         } else if (s == Object.size(movieIndex) - 1){
-            var tempOut = {name, runTime, size, resolution, frameRate};
+            var tempOut = {title, locallyStored, runTime, size, fileLocation, fileName, resolution, frameRate, episodic, showInfo};
             output[pos] = tempOut;
             break;
         } else {
@@ -146,8 +185,7 @@ async function translate(name, duration, size, width, height, framefRate, ratio)
     // NOTE: rename the files
     // NOTE: reformat the files
     // NOTE: easily changeable input and output directories
-
-
+    console.log(output[pos])
     //pos is the id number
     pos++;
 }
@@ -185,4 +223,8 @@ function readTextFile(file){
         console.log('OK: ' + file);
         return data;
     });
+}
+
+function isNumber(number){
+    return !isNaN(number);
 }
