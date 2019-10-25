@@ -34,7 +34,7 @@
     "locallyStored":true,
     "size": "13gb",
     "fileLocation": "./sao s01e25 - the world seed (720p eng) v2.mp4",
-    "fileName":"something",
+    "fileName":"deadpool.mp4",
     "magnet":"magnet-link",
     "image":"../file/posters/poster.png",
     "desc":"A murder spree with Ryan Renolds",
@@ -42,8 +42,8 @@
     "resolution":"1920x1080",
     "ratio":"16:9",
     "keyWords":["killing", "4k", "tornado"],
-    "episodic":true,
     "framerate":"23.98",
+    "episodic":true,
     "showInfo":{
       "seriesTitle":"Brooklyn Nine-Nine",
       "episode":"Space Monkey Fights Back",
@@ -57,4 +57,5 @@
       "oldFormat":"mkv"
     }
 }
+
 }
