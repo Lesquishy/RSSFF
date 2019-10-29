@@ -1,7 +1,6 @@
-var fs = require("fs");
-var ffmpeg = require('fluent-ffmpeg');
-const readLine = require('readline');
-var Metalib = require('fluent-ffmpeg').Metadata;
+const fs = require("fs");
+const ffmpeg = require('fluent-ffmpeg');
+const readline = require('readline');
 
 const dir = './tempvid/';
 const outputFolder = "./outputTest/"
@@ -94,6 +93,9 @@ for(var f = 0; fileNames.length -1  >= f; f++ ){
 
 async function translate(name, duration, size, width, height, frameRate, ratio){
 
+    // NOTE: We're gonna have to break down the file name in here somewhere.
+
+
     // One liner variables
     const locallyStored = true; // We're searching locally so this doesnt change
     var fileName = name.split('/')[(name.split('/').length-1)]; // Trim dir
@@ -103,6 +105,10 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     //default values
     var showInfo = false;
     var episodic = false;
+
+    //get the ratio
+    var r = gcd (width, height);
+    var ratio = width/r + ":" + height/r;
 
 
     // Duration to hous mins sec
@@ -131,22 +137,19 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
 
     var nameProcess = name.split('/')[(name.split('/').length-1)];
     var episodeFind = nameProcess.match(/(e[0-9][0-9]|e[0-9]){1,}/g)
+    var seasonFind = nameProcess.match(/(s[0-9][0-9]|s[0-9]){1,}/g)
+    var season;
     var episode;
 
     if(episodeFind.length >= 1) {
         var episodic = true;
         var season = nameProcess.match(/(s[0-9][0-9]|s[0-9]){1,}/g)
         if(season.length >= 1){
-            var seriesTitle;
-            console.log("Found Show. Searching for exsiting series" + reset)
-            for(var i=0; Object.size(movieIndex) > i; i++){
-                if(movieIndex[i].episodic == true){
-                    console.log("horray")
-                }
-                //console.log(movieIndex[i].showInfo["seriesTitle"])
-            }
-            episode = episodeFind[0].replace('e','');
-            showInfo = {seriesTitle, episode}
+            console.log("Found series in file name. Searching for exsiting series" + reset)
+            var seriesTitle = await findShow(nameProcess);
+            episodeNum = episodeFind[0].replace('e','');
+            season = seasonFind[0].replace('s','')
+            showInfo = {seriesTitle, episodeNum, season};
         }
     }
 
@@ -158,7 +161,7 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
             console.log(name + " already exists. Skipping...");
             break;
         } else if (s == Object.size(movieIndex) - 1){
-            var tempOut = {title, locallyStored, runTime, size, fileLocation, fileName, resolution, frameRate, episodic, showInfo};
+            var tempOut = {title, locallyStored, runTime, size, fileLocation, fileName, resolution, ratio, frameRate, episodic, showInfo};
             output[pos] = tempOut;
             break;
         } else {
@@ -195,9 +198,65 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
 
 
 
+function gcd (a, b) {
+  return (b == 0) ? a : gcd (b, a%b);
+}
 
+async function findShow(nameProcess){
+    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3);
+    for(var i=0; Object.size(movieIndex) > i; i++){
+        if(movieIndex[i].episodic == true){
+            var tally = 0;
+            strippedSeriesName = movieIndex[i].showInfo["seriesTitle"].match(/[A-Z0-9]{1,}/ig)
+            for(var a=0; strippedSeriesName.length > a; a++){
+                if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
+                    //match a number of times
+                    tally++;
+                } else {
+                    break;
+                }
+            }
+            if(tally == strippedSeriesName.length){
+                console.log("Found existing series");
+                return movieIndex[i].showInfo["seriesTitle"];
+                break;
+            } else {
+                console.log(red + "No existing series found")
+                const showSearch = await userInput("Please input series name: ");
+                console.log(reset);
+                return customSearch(nameProcess, showSearch);
+            }
+        }
+        //console.log(movieIndex[i].showInfo["seriesTitle"])
+    }
+}
 
-
+function customSearch(nameProcess, showSearch){
+    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3);
+    for(var i=0; Object.size(movieIndex) > i; i++){
+        if(movieIndex[i].episodic == true){
+            var tally = 0;
+            strippedSeriesName = showSearch.match(/[A-Z0-9]{1,}/ig)
+            for(var a=0; strippedSeriesName.length > a; a++){
+                if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
+                    //match a number of times
+                    tally++;
+                } else {
+                    break;
+                }
+            }
+            if(tally == strippedSeriesName.length){
+                console.log("Found existing show");
+                return movieIndex[i].showInfo["seriesTitle"];
+                break;
+            } else {
+                console.log(magenta + "Search Failed, Setting '" + showSearch + "' As show name" + reset);
+                return showSearch;
+            }
+        }
+        //console.log(movieIndex[i].showInfo["seriesTitle"])
+    }
+}
 
 function roundTo(n, digits) {
     var negative = false;
@@ -225,6 +284,14 @@ function readTextFile(file){
     });
 }
 
-function isNumber(number){
-    return !isNaN(number);
+function userInput(query) {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+
+    return new Promise(resolve => rl.question(query, ans => {
+        rl.close();
+        resolve(ans);
+    }))
 }
