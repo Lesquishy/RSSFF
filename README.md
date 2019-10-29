@@ -7,10 +7,10 @@ Used to view and auto collect movies for torrent. Using customizeable RSS feeds 
 
 Its main purpose is to view manage all my movies. It has the added benifit of being able to search for movies from external sites. It'll also manage episodic shows.
 
-It's based on 2 stages (so far). 
+It's based on 2 stages (so far).
 One to manage the inflow of movies. This includes checking their format and file name, Then it'll add the processed movies to the index.
 
-The other stage is the site. It'll use the previously mentioned index to display all the local movies. While using exsisting API's or RSS feeds to find new movies. 
+The other stage is the site. It'll use the previously mentioned index to display all the local movies. While using exsisting API's or RSS feeds to find new movies.
 
 Idealy, You could do the first stage from the site. Start a download, Rename and reformat the new movie, add it to the index to be displayed on the site
 
@@ -34,7 +34,7 @@ Tasks
 In progress / known problems
 - Movie tiles with info from searched results
 - Change name banner
-- Search filters improvements 
+- Search filters improvements
 - reload YTS tab on focus change
 - Fix result limiter
 - Script to add movies to database, rename files and refomat files
@@ -62,7 +62,7 @@ In progress / known problems
   - title (not name. the var name is the fileName)
   - Detect if its episodic and the proceeding info
   - formatting info
-  
+
 Done
 - Collect information from metadata
   - Name
