@@ -14,15 +14,15 @@ var start;
 var fileNames = [];
 
 //Colors
-reset = "\x1b[0m"
-black = "\x1b[30m"
-red = "\x1b[31m"
-green = "\x1b[32m"
-yellow = "\x1b[33m"
-blue = "\x1b[34m"
-magenta = "\x1b[35m"
-cyan = "\x1b[36m"
-white = "\x1b[37m"
+const reset = "\x1b[0m"
+const black = "\x1b[30m"
+const red = "\x1b[31m"
+const green = "\x1b[32m"
+const yellow = "\x1b[33m"
+const blue = "\x1b[34m"
+const magenta = "\x1b[35m"
+const cyan = "\x1b[36m"
+const white = "\x1b[37m"
 
 //Start Message
 console.log(magenta + "\nStarting to Scan\n" + reset)
@@ -203,7 +203,7 @@ function gcd (a, b) {
 }
 
 async function findShow(nameProcess){
-    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3);
+    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3).toLowerCase();
     for(var i=0; Object.size(movieIndex) > i; i++){
         if(movieIndex[i].episodic == true){
             var tally = 0;
@@ -232,7 +232,7 @@ async function findShow(nameProcess){
 }
 
 function customSearch(nameProcess, showSearch){
-    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3);
+    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3).toLowerCase();
     for(var i=0; Object.size(movieIndex) > i; i++){
         if(movieIndex[i].episodic == true){
             var tally = 0;
@@ -241,11 +241,13 @@ function customSearch(nameProcess, showSearch){
                 if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
                     //match a number of times
                     tally++;
+                    console.log()
                 } else {
                     break;
                 }
             }
             if(tally == strippedSeriesName.length){
+
                 console.log("Found existing show");
                 return movieIndex[i].showInfo["seriesTitle"];
                 break;
