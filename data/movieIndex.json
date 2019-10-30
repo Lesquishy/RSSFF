@@ -15,6 +15,8 @@
     "ratio":"the film ratio",
     "keyWords":"Used for search. Keywords to find this movie. (Should be array)",
     "framerate":"23.98",
+    "dateAdded":"27.03.2019",
+    "searchable":"if the movie should come up in the search results (should be bool)",
     "episodic":"If its a TV show or have episodes (Should be bool)",
     "showInfo":{
       "seriesTitle":"name of the tv show",
@@ -43,6 +45,8 @@
     "ratio":"16:9",
     "keyWords":["killing", "4k", "tornado"],
     "framerate":"23.98",
+    "dateAdded":"27.03.2019",
+    "searchable":"true",
     "episodic":true,
     "showInfo":{
       "seriesTitle":"Brooklyn Nine-Nine",
