@@ -57,10 +57,6 @@ Tasks
 
 In progress / known problems
 - add more data to write to the index
-  - locallyStored
-  - file Location
-  - title (not name. the var name is the fileName)
-  - Detect if its episodic and the proceeding info
   - formatting info
 
 Done
@@ -71,6 +67,10 @@ Done
   - Resolution
   - Ratio
   - Framerate
+  - locallyStored
+  - file Location
+  - title (not name. the var name is the fileName)
+  - Detect if its episodic and the proceeding info
 - Process the metadata
   - Duration
   - Size
