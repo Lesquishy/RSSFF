@@ -4,8 +4,9 @@ const readline = require('readline');
 
 const dir = './tempvid/';
 const outputFolder = "./outputTest/"
-var blacklist = ["index.js", "placeholder.mp4"];
-var extBlack = ["txt", "php", "css", "scss", "json", "md", "js"];
+const blacklist = ["index.js", "placeholder.mp4"];
+const extBlack = ["txt", "php", "css", "scss", "json", "md", "js"];
+const extwhite = ["mkv", "avi"];
 var movieIndex = JSON.parse(fs.readFileSync('./data/AAmovieIndex.json', 'utf8'));
 
 var output = [];
@@ -14,87 +15,150 @@ var start;
 var fileNames = [];
 
 //Colors
-const reset = "\x1b[0m"
-const black = "\x1b[30m"
-const red = "\x1b[31m"
-const green = "\x1b[32m"
-const yellow = "\x1b[33m"
-const blue = "\x1b[34m"
-const magenta = "\x1b[35m"
-const cyan = "\x1b[36m"
-const white = "\x1b[37m"
+const reset = "\x1b[0m";
+const black = "\x1b[30m";
+const red = "\x1b[31m";
+const green = "\x1b[32m";
+const yellow = "\x1b[33m";
+const blue = "\x1b[34m";
+const magenta = "\x1b[35m";
+const cyan = "\x1b[36m";
+const white = "\x1b[37m";
+var pos;
+var os;
 
-//Start Message
-console.log(magenta + "\nStarting to Scan\n" + reset)
 //console.log(red + "This could take a while\n" + reset)
 //console.log("Please Wait...\n")
 
-//Get the size of the movieIndex
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size-1;
-};
 
-// For every title in the folder
-fs.readdirSync(dir).forEach(title => {
-    var i = 0;
+oneTime();
 
-    title = title.toLowerCase();
+function oneTime(){
+    console.log(magenta + "\nWarming Up" + reset)
+    //commands we only need once
+    os = process.platform;
 
-    //Blacklist filter
-    while(true) {
-        blacklist[i] = blacklist[i].toLowerCase();
-        if(blacklist[i] == title){
-            break;
-        } else if (blacklist.length - 1 == i){
-            fileNames.push(title);
-            i++;
-            break;
-        } else {
-            i++;
-        }
-    }
-    //blacklist extensions
-    var a = 0;
+    //check the directories exsist
+    var resume = 0;
     while(true){
-        if(title.includes(extBlack[a])){
-            fileNames.splice(fileNames.length - 1, 1);
+        var check = dirExists(dir);
+        if(check == true){
+            console.log(dir + " Exists");
+            resume++;
             break;
-        } else if (extBlack.length - 1 == a){
-            a++;
-            break
-        } else {
-            a++;
+        } else if(check == false){
+            break;
         }
     }
 
-    loop++;
-});
+    while(true){
+        var check = dirExists(outputFolder);
+        if(check == true){
+            console.log(outputFolder + " Exists");
+            resume++;
+            break;
+        } else if(check == false){
+            break;
+        }
+    }
 
+    if (resume == 2){
+        console.log(magenta + "Warmup Done \n" + reset);
+        run();
+    }
+}
 
-// collect, process and save the movie metadata
+function dirExists(folder, repeat) {
+    if(repeat !== true){
+        if(fs.existsSync(folder)) {
+            return true;
+        };
+        if(!fs.existsSync(folder)) {
+          fs.mkdirSync(folder);
+          setTimeout(dirExists(folder, true), 1000);
+        }
+    } else {
+        console.log(red + "Error creating folder" + folder)
+        console.log("Script Stopping. Create dir and try again" + reset)
+        return false;
+    }
+}
 
-var l = Object.size(movieIndex) + 1
-var pos = l
-for(var f = 0; fileNames.length -1  >= f; f++ ){
-    ffmpeg.ffprobe(dir + fileNames[f], function(err, data) {
-        //error catching
-        if(err) { console.log(err);return; }
-        translate(data.format.filename, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio)
+async function run(){
+    // NOTE: Loop these
+    var toFormat = [];
+    await filter();
+    await collectMetaData();
+}
 
-        //output
+async function filter(){
+    // Read all the items in the directory
+    // For every title in the folder
+    console.log(magenta + "Starting to Scan" + reset)    // Start Message
+    fs.readdirSync(dir).forEach(title => {
+        var i = 0;
+
+        title = title.toLowerCase();
+
+        //Blacklist filter
+        while(true) {
+            blacklist[i] = blacklist[i].toLowerCase();
+            if(blacklist[i] == title){
+                break;
+            } else if (blacklist.length - 1 == i){
+                fileNames.push(title);
+                i++;
+                break;
+            } else {
+                i++;
+            }
+        }
+        //blacklist extensions
+        var a = 0;
+        while(true){
+            if(title.includes(extBlack[a])){
+                fileNames.splice(fileNames.length - 1, 1);
+                break;
+            } else if (extBlack.length - 1 == a){
+                a++;
+                break
+            } else {
+                a++;
+            }
+        }
+
+        loop++;
     });
+}
+
+async function collectMetaData() {
+    // Collect, process and save the movie metadata
+    // This collects the movie data
+    var l = Object.size(movieIndex) + 1
+    pos = l
+    console.log(fileNames.length)
+    for(var f = 0; fileNames.length -1  >= f; f++ ){
+        ffmpeg.ffprobe(dir + fileNames[f], function(err, data) {
+            //error catching
+            if(err) { console.log(err);return; }
+
+            if(fileName.substr(fileName.length - 3) == "mp4" ){ // If extension is mkv
+                translate(data.format.filename, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio)
+            } else {
+                for(var f = 0; fileNames.length -1  >= f; f++ ){
+
+                }
+            }
+        });
+    }
 }
 
 
 
+//Process the Movie Data
 async function translate(name, duration, size, width, height, frameRate, ratio){
 
     // NOTE: We're gonna have to break down the file name in here somewhere.
-
 
     // One liner variables
     const locallyStored = true; // We're searching locally so this doesnt change
@@ -102,6 +166,8 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     var fileLocation = name;
     var title = name.split('/')[(name.split('/').length-1)].slice(0, -4) // Trim the dir and extension
     size = roundTo(size / 1073741823.9999983, 2); // Size to gb
+    var extension = fileName.substr(fileName.length - 3);
+    console.log(extension)
     //default values
     var showInfo = false;
     var episodic = false;
@@ -133,8 +199,6 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     }
 
     // Check if its a episodic show
-    //if (name.includes( /([e|s][0-9]|[0-9]|[e|s][0-9]|[0-9]){1,}/g) ) {}
-
     var nameProcess = name.split('/')[(name.split('/').length-1)];
     var episodeFind = nameProcess.match(/(e[0-9][0-9]|e[0-9]){1,}/g)
     var seasonFind = nameProcess.match(/(s[0-9][0-9]|s[0-9]){1,}/g)
@@ -153,12 +217,16 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
         }
     }
 
+    //titleProcess
+    if(episodic == true){
+        title = seriesTitle.replace(' ','_') + "_E" + episodeNum + "_S" + season
+    }
 
-    // check its not already used
+    // check its not already in the index
     var s = 0;
     while(true){
         if (movieIndex[s].fileName == name){
-            console.log(name + " already exists. Skipping...");
+            console.log(name + "Already in the Database. Is the Movie already stored? (Skipping...)");
             break;
         } else if (s == Object.size(movieIndex) - 1){
             var tempOut = {title, locallyStored, runTime, size, fileLocation, fileName, resolution, ratio, frameRate, episodic, showInfo};
@@ -169,16 +237,13 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
         }
     }
 
+
+
     // NOTE: add more data to write to the file
     /*
     that includes
-        - Detect if its episodic and the proceeding info
         - formatting info
     site will need to be able to
-        - add descriptions
-        - add genres
-        - add keyWords
-        - add poster images?
     */
 
 
@@ -187,8 +252,9 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     // NOTE: backup this file before doing these and make sure everything above is done
     // NOTE: rename the files
     // NOTE: reformat the files
-    // NOTE: easily changeable input and output directories
-    console.log(output[pos])
+
+    console.log("temp");
+
     //pos is the id number
     pos++;
 }
@@ -232,23 +298,21 @@ async function findShow(nameProcess){
 }
 
 function customSearch(nameProcess, showSearch){
-    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3).toLowerCase();
     for(var i=0; Object.size(movieIndex) > i; i++){
         if(movieIndex[i].episodic == true){
+            var strippedName = movieIndex[i].showInfo["seriesTitle"].replace(/[^A-Z0-9]+/ig, '').slice(0, -3).toLowerCase();
             var tally = 0;
             strippedSeriesName = showSearch.match(/[A-Z0-9]{1,}/ig)
             for(var a=0; strippedSeriesName.length > a; a++){
                 if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
                     //match a number of times
                     tally++;
-                    console.log()
                 } else {
                     break;
                 }
             }
             if(tally == strippedSeriesName.length){
-
-                console.log("Found existing show");
+                console.log("Found existing show: " + strippedSeriesName);
                 return movieIndex[i].showInfo["seriesTitle"];
                 break;
             } else {
@@ -259,6 +323,22 @@ function customSearch(nameProcess, showSearch){
         //console.log(movieIndex[i].showInfo["seriesTitle"])
     }
 }
+
+
+
+
+
+
+
+
+//Get the size of the movieIndex
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size-1;
+};
 
 function roundTo(n, digits) {
     var negative = false;
