@@ -5,6 +5,7 @@
 //Then when called again (to close) it will call displayInfo() to hide it, and set the values back to the "[blank] not found"
 
 function resultExpand(id) {
+    resultDisplayTest = true;
     console.log("Result Expand Run");
     if (resultDisplayed === true) {//If the result is already expanded
         resetFocusResult();
@@ -18,6 +19,15 @@ function resultExpand(id) {
         message("toggleInfo", "resultDisplayed returned incorrect value", "m");
     }
 }
+
+function removeExpand() {
+    if (resultDisplayed === true) {//If the result is already expanded
+        resetFocusResult();
+        displayInfo();
+        resultDisplayed = false;
+    }
+}
+
 
 
 //This sets the info in the focus popup

@@ -1,0 +1,133 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Oswald";
+}
+
+body {
+    background: white;
+}
+
+.loginForm {
+    width: 400px;
+    height: 360px;
+    background: #eee;
+    position: fixed;
+    top: calc(50% - 200px);
+    left: calc(50% - 200px);
+}
+
+.loginContainer {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 23px 9px rgba(184,184,184,1);
+    -moz-box-shadow: 0px 0px 23px 9px rgba(184,184,184,1);
+    box-shadow: 0px 0px 23px 9px rgba(184,184,184,1);
+    z-index: 10;
+}
+
+.loginMsg {
+    color: black;
+    font-size: 40px;
+    background: #ddd;
+    height: 100px;
+    padding-top: 30px;
+    color: black;
+}
+
+.loginInput {
+    display: block;
+    width: 355px;
+    height: 40px;
+    margin-left: 20px;
+    font-size: 18px;
+    border: none;
+    padding-left: 5px;
+    margin-top: 10px;
+    background: #ddd;
+}
+
+.loginSubmit {
+    width: 360px;
+    height: 40px;
+    background: #ddd;
+    color: black;
+    font-size: 20px;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.errorMsg {
+    width: 100%;
+    height: 40px;
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    z-index: 9;
+}
+
+
+/* Admin page */
+
+.movieMenu {
+    width: 400px;
+    height: calc(100% - 150px);
+    position: fixed;
+    background: #ccc;
+    left: 0px;
+    bottom: 0px;
+}
+
+.menuBtn {
+    width: 100%;
+    height: 40px;
+    display: block;
+    background: #aaa;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.contentViewer {
+    width: calc(100% - 400px);
+    height: calc(100% - 150px);
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    background: yellow;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*easier to code */
