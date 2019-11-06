@@ -11,20 +11,22 @@
       <script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
       <script type="text/javascript" src="./newjs/main.js"></script>
       <script type="text/javascript" src="./newjs/extract.js"></script>
+      <script type="text/javascript" src="./newjs/setup.js"></script>
+      <script type="text/javascript" src="./newjs/var.js"></script>
       <title>RSSFF</title> <!-- RSS Feed Filter -->
     </head>
 
     <body>
-        <div onclick="test()" class="testBtn">Test</div>
+        <div onclick="" class="testBtn">Test</div>
         <!-- Main container for most of the site -->
         <div class="mainContainer">
             <!-- The navigation panel on the left side of the screen containing links to different areas of the site -->
             <div class="sideNav">
                 <div class="tileNav">
                     <a class="navTile" data-title="Reload the page."><i class="material-icons md-48">replay</i></a>
-                    <a onclick="loadContent(this.id)" id="1" class="navTile" data-title="Local movies."><i class="material-icons md-48">local_movies</i></a>
-                    <a onclick="loadContent(this.id)" id="2" class="navTile" data-title="Search the whole library."><i class="material-icons md-48">movie</i></a>
-                    <a onclick="loadContent(this.id)" id="3" class="navTile" data-title="Upcoming movies."><i class="material-icons md-48">movie_filter</i></a>
+                    <a onclick="checkLoad(this.id)" id="local" href="#local" class="navTile" data-title="Local movies."><i class="material-icons md-48">local_movies</i></a>
+                    <a onclick="checkLoad(this.id)" id="yts" href="#yts" class="navTile" data-title="Search the whole library."><i class="material-icons md-48">movie</i></a>
+                    <a onclick="checkLoad(this.id)" id="rss" href="#rss" class="navTile" data-title="Upcoming movies."><i class="material-icons md-48">movie_filter</i></a>
                 </div>
             </div>
 
@@ -85,11 +87,16 @@
                         <div class="resultsContainer">
 
                         </div>
+                        <div class="loading2"><img src="./images/loading.svg"></div>
                     </div>
 
 
 
                 </div>
+            </div>
+
+            <div class="welcomeScreen">
+                <p class="welcomeText">This is a home screen!</p>
             </div>
 
             <div class="loading"><img src="./images/loading.svg"></div>
