@@ -7,8 +7,8 @@
     "size": "size with type EG '7.3gb' ",
     "fileLocation": "../files/movie.mp4",
     "fileName":"Name of the file. No path to where it is. Has extension",
-    "magnet":"magnet-link (If one doesnt exsist. Use the magnet link )",
-    "image":"../file/posters/poster.png",
+    "magnet":"magnet-link",
+    "image":"../images/not-found.jpg",
     "desc":"The movie Description",
     "genre":"The film genres (Should be array)",
     "resolution":"the resolution of both dimensions 1920x1080",
@@ -31,15 +31,15 @@
     }
   },
   "0":{
-    "title": "Deadpool",
-    "runTime": {"hours":1, "mins":22, "sec":7},
+    "title": "Coffee Press",
+    "runTime": {"hours":67, "mins":22, "sec":7},
     "locallyStored":true,
-    "size": "13gb",
-    "fileLocation": "./sao s01e25 - the world seed (720p eng) v2.mp4",
-    "fileName":"deadpool.mp4",
-    "magnet":"magnet-link",
-    "image":"../file/posters/poster.png",
-    "desc":"A murder spree with Ryan Renolds",
+    "size": "13mb",
+    "fileLocation": "../files/Coffee-Press.mp4",
+    "fileName":"Coffee-Press.mp4",
+    "magnet": "false",
+    "image":"./images/not-found.jpg",
+    "desc":"Something about coffee",
     "genre":["action", "romance"],
     "resolution":"1920x1080",
     "ratio":"16:9",
@@ -47,7 +47,7 @@
     "framerate":"23.98",
     "dateAdded":"27.03.2019",
     "searchable":"true",
-    "episodic":true,
+    "episodic": false,
     "showInfo":{
       "seriesTitle":"Brooklyn Nine-Nine",
       "episode":"Space Monkey Fights Back",
@@ -59,6 +59,164 @@
       "time":{"hours":2, "mins":54, "sec":7},
       "oldFormat":"mkv"
     }
+},
+"1":{
+  "title": "Double Espresso",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/Double_Espresso.mp4",
+  "fileName":"Double_Espresso.mp4",
+  "magnet":"false",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "episodic": false,
+  "showInfo":{
+    "seriesTitle":"Brooklyn Nine-Nine",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":2,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+"2":{
+  "title": "Drip Coffee",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/Drip_coffee.mp4",
+  "fileName":"Drip_coffee.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "episodic": false,
+  "showInfo":{
+    "seriesTitle":"Brooklyn Nine-Nine",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":2,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"3":{
+  "title": "Espresso",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/Espresso.mp4",
+  "fileName":"Espresso.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "episodic": false,
+  "showInfo":{
+    "seriesTitle":"Brooklyn Nine-Nine",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":2,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+"4":{
+  "title": "Lulu latte",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/Lulu_latte.mp4",
+  "fileName":"Lulu_latte.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "episodic":true,
+  "showInfo":{
+    "seriesTitle":"Brooklyn Nine-Nine",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":2,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"5":{
+  "title": "One Sugar",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "episodic": false,
+  "showInfo":{
+    "seriesTitle":"Brooklyn Nine-Nine",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":2,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
 }
+
 
 }
