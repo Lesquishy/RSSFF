@@ -12,6 +12,7 @@ var movieIndex = JSON.parse(fs.readFileSync('./data/AAmovieIndex.json', 'utf8'))
 var output = [];
 var loop = 0;
 var start;
+//test
 var fileNames = [];
 
 //Colors
