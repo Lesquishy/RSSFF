@@ -7,7 +7,7 @@
     "size": "size with type EG '7.3gb' ",
     "fileLocation": "../files/movie.mp4",
     "fileName":"Name of the file. No path to where it is. Has extension",
-    "magnet":"magnet-link",
+    "magnet":"magnet-link (If one doesnt exsist. Use the magnet link )",
     "image":"../file/posters/poster.png",
     "desc":"The movie Description",
     "genre":"The film genres (Should be array)",
@@ -56,7 +56,6 @@
     },
     "formatted":true,
     "formatInfo":{
-      "formatted":"true",
       "time":{"hours":2, "mins":54, "sec":7},
       "oldFormat":"mkv"
     }

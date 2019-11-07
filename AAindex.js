@@ -2,9 +2,9 @@ const fs = require("fs");
 const ffmpeg = require('fluent-ffmpeg');
 const readline = require('readline');
 
-const dir = './tempvid/';
+const dir = './files/';
 const outputFolder = "./outputTest/"
-const blacklist = ["index.js", "placeholder.mp4"];
+const blacklist = ["index.js", "placeholder.mp4", "posters"];
 const extBlack = ["txt", "php", "css", "scss", "json", "md", "js"];
 const extwhite = ["mkv", "avi"];
 var movieIndex = JSON.parse(fs.readFileSync('./data/AAmovieIndex.json', 'utf8'));
@@ -137,18 +137,16 @@ async function collectMetaData() {
     var l = Object.size(movieIndex) + 1
     pos = l
     console.log(fileNames.length)
-    for(var f = 0; fileNames.length -1  >= f; f++ ){
+    console.log(fileNames)
+    for(var f = 0; fileNames.length-1 >= f; f++ ){
         ffmpeg.ffprobe(dir + fileNames[f], function(err, data) {
             //error catching
-            if(err) { console.log(err);return; }
-
-            if(fileName.substr(fileName.length - 3) == "mp4" ){ // If extension is mkv
-                translate(data.format.filename, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio)
-            } else {
-                for(var f = 0; fileNames.length -1  >= f; f++ ){
-
-                }
+            if(err) {
+                console.log(err);return;
             }
+
+                translate(data.format.filename, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio)
+
         });
     }
 }
