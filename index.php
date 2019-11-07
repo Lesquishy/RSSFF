@@ -45,27 +45,19 @@
 
 
         <div class="watchContainer">
-            <div class="backgroundContainer">
-                <div class="watchInternal">
-                    <div class="playerContainer">
-                        <video class="mediaPlayer">
-                            <source src="./tempvid/placeholder.mp4" type="video/mp4">
-                            Sorry there was an error
-                        </video>
-                        <div class="mediaControls">
-                            <button class="mediaBtn" id="playPause" class='play' title='play'onclick='togglePause();'><i class="material-icons md-36">play_arrow</i></button>
-                            <button id="showVolume" class="mediaBtn"><i class="material-icons md-36">volume_down</i>
-                                <div class="volumeCont"><input id="volume" orient="vertical" oninput="changeVolume(this.value)" type="range" min="1" max="100" step="1" value="10"></div>
-                            </button>
+            <div class="playerContainer">
+                <video class="mediaPlayer">
+                    <source src="./files/placeholder.mp4" type="video/mp4">
+                    Sorry there was an error
+                </video>
+                <div class="mediaControls">
+                    <button class="mediaBtn" id="playPause" class='play' title='play'onclick='togglePause();'><i class="material-icons md-36">play_arrow</i></button>
+                    <button id="showVolume" class="mediaBtn"><i class="material-icons md-36">volume_down</i>
+                        <div class="volumeCont"><input id="volume" orient="vertical" oninput="changeVolume(this.value)" type="range" min="1" max="100" step="1" value="10"></div>
+                    </button>
 
-                        </div>
-                    </div>
                 </div>
-                <div class="watchBackground1"></div>
-                <div class="watchBackground2"></div>
             </div>
-            <div class="watchBar1"><div class="watchBar1Bar"></div><div class="watchBar1Angle"></div></div>
-            <div class="watchBar2"><div class="watchBar2Bar"></div><div class="watchBar2Angle"></div></div>
         </div>
 
 
@@ -148,9 +140,14 @@
                     <p class="searchNullResponse">Sorry! Your search did not return any results :(</p>
                 </div>
         </div>
+        
+        <footer class="footer">
+            © 2019-2020 Rugby Beentjes, Tim Edwards All Rights Reserved
+        </footer>
+
         <div id="message">Please Wait. We're Loading</div>
         <div id="loading"><img src="./images/loading.svg"></div>
-        <div id="grey" onclick="resultExpand()"></div>
+        <div id="grey" onclick="removeExpand()"></div>
         <div id="grey2" onclick="watchMovie()"></div>
     </body>
     </html>

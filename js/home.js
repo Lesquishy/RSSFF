@@ -29,6 +29,7 @@ var uniqueInfo;
 var reRSS;
 var doneBefore = false;
 var was3 = false;
+var resultDisplayTest = false;
 
 
 //for bug testing to find issues
@@ -40,6 +41,7 @@ var localError = [];
 
 var mediaPlayer;
 var volume;
+
 
 //This code calculated the distance from the center of the movie div to ther corner of it
 
