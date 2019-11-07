@@ -104,9 +104,9 @@ function ytsSearch() {
 }
 
 function ytsData(searchParam) {
+    console.log("ytsData()");
     $.getJSON("https://yts.lt/api/v2/list_movies.jsonp?"+searchParam, function(result) {
         $(".searchResult").remove();
-        console.log(result);
         if (result.data.movie_count != 0) {
             console.log("at least 1 movie");
             $(".searchNull").fadeOut(200);
@@ -124,7 +124,7 @@ function ytsData(searchParam) {
 }
 
 function ytsParse(result) {
-
+    console.log("ytsParse()");
     //sets/resets the data object
     var data = {}
 
