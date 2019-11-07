@@ -17,13 +17,13 @@
     </head>
 
     <body>
-        <div onclick="" class="testBtn">Test</div>
+        <div onclick="test()" class="testBtn">Test</div>
         <!-- Main container for most of the site -->
         <div class="mainContainer">
             <!-- The navigation panel on the left side of the screen containing links to different areas of the site -->
             <div class="sideNav">
                 <div class="tileNav">
-                    <a class="navTile" data-title="Reload the page."><i class="material-icons md-48">replay</i></a>
+                    <a href="" class="navTile" id="home"  data-title="Home page."><i class="material-icons md-48">home</i></a>
                     <a onclick="checkLoad(this.id)" id="local" href="#local" class="navTile" data-title="Local movies."><i class="material-icons md-48">local_movies</i></a>
                     <a onclick="checkLoad(this.id)" id="yts" href="#yts" class="navTile" data-title="Search the whole library."><i class="material-icons md-48">movie</i></a>
                     <a onclick="checkLoad(this.id)" id="rss" href="#rss" class="navTile" data-title="Upcoming movies."><i class="material-icons md-48">movie_filter</i></a>
