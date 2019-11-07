@@ -83,11 +83,21 @@
                         </div>
                     </div>
 
+                    <!-- This is the results window, the search results will be displayed here -->
                     <div class="resultsWindow">
                         <div class="resultsContainer">
 
                         </div>
                         <div class="loading2"><img src="./images/loading.svg"></div>
+                    </div>
+
+                    <div class="localFocus">
+                        
+                    </div>
+
+                    <div class="ytsFocus">
+
+
                     </div>
 
 
