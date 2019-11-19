@@ -166,7 +166,6 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     var title = name.split('/')[(name.split('/').length-1)].slice(0, -4) // Trim the dir and extension
     size = roundTo(size / 1073741823.9999983, 2); // Size to gb
     var extension = fileName.substr(fileName.length - 3);
-    console.log(extension)
     //default values
     var showInfo = false;
     var episodic = false;
@@ -204,10 +203,10 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     var season;
     var episode;
 
-    if(episodeFind.length >= 1) {
+    if(episodeFind !== null){
         var episodic = true;
         var season = nameProcess.match(/(s[0-9][0-9]|s[0-9]){1,}/g)
-        if(season.length >= 1){
+        if(seasonFind !== null){
             console.log("Found series in file name. Searching for exsiting series" + reset)
             var seriesTitle = await findShow(nameProcess);
             episodeNum = episodeFind[0].replace('e','');
@@ -251,8 +250,6 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     // NOTE: backup this file before doing these and make sure everything above is done
     // NOTE: rename the files
     // NOTE: reformat the files
-
-    console.log("temp");
 
     //pos is the id number
     pos++;
