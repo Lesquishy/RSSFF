@@ -31,10 +31,16 @@ $(document).ready( function (){
 });
 
 
+//This changes the 'active' tab
+function changeActive(id) {
+    $(".active").removeClass("active");
+    $("#" + id).toggleClass("active");
+}
+
+
 //The test button, used to test features before fully implementing them
 function test() {
-    console.log("Test Function Run")
-    $("#local").toggleClass("active");
+    $("#Home").toggleClass("active");
 }
 
 function message(msg) {
