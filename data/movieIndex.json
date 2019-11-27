@@ -17,6 +17,7 @@
     "framerate":"23.98",
     "dateAdded":"27.03.2019",
     "searchable":"if the movie should come up in the search results (should be bool)",
+    "viewCount":"Counts how many times people have watched (Should be int)",
     "episodic":"If its a TV show or have episodes (Should be bool)",
     "showInfo":{
       "seriesTitle":"name of the tv show",
@@ -47,6 +48,7 @@
     "framerate":"23.98",
     "dateAdded":"27.03.2019",
     "searchable":"true",
+    "viewCount":3,
     "episodic": false,
     "showInfo":{
       "seriesTitle":"Brooklyn Nine-Nine",
@@ -77,6 +79,7 @@
   "framerate":"23.98",
   "dateAdded":"27.03.2019",
   "searchable":"true",
+  "viewCount":3,
   "episodic": false,
   "showInfo":{
     "seriesTitle":"Brooklyn Nine-Nine",
@@ -108,6 +111,7 @@
   "framerate":"23.98",
   "dateAdded":"27.03.2019",
   "searchable":"true",
+  "viewCount":3,
   "episodic": false,
   "showInfo":{
     "seriesTitle":"Brooklyn Nine-Nine",
@@ -140,6 +144,7 @@
   "framerate":"23.98",
   "dateAdded":"27.03.2019",
   "searchable":"true",
+  "viewCount":3,
   "episodic": false,
   "showInfo":{
     "seriesTitle":"Brooklyn Nine-Nine",
@@ -171,6 +176,7 @@
   "framerate":"23.98",
   "dateAdded":"27.03.2019",
   "searchable":"true",
+  "viewCount":3,
   "episodic":true,
   "showInfo":{
     "seriesTitle":"Brooklyn Nine-Nine",
@@ -203,6 +209,7 @@
   "framerate":"23.98",
   "dateAdded":"27.03.2019",
   "searchable":"true",
+  "viewCount":3,
   "episodic": false,
   "showInfo":{
     "seriesTitle":"Brooklyn Nine-Nine",
