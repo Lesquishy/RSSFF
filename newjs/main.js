@@ -8,24 +8,25 @@ $(document).ready( function (){
         }, 100);
     }
 
-    if (url.includes("#local") || url.includes("#yts") || url.includes("#rss")) {
+    if (url.includes("#browse") || url.includes("#upcoming")) {
         console.log("not on the home screen");
         //on a page already, just load the search container and continue
         homeScreen = false;
 
         searchLoad();
         unload = true;
-        if (url.includes("#local")) {localSearch();activeTab("#local");}else
-        if (url.includes("#yts")) {ytsSearch();activeTab("#yts");}else
-        if (url.includes("#rss")) {rssSearch();activeTab("#rss");}
+        if (url.includes("#browse")) {loadBrowse();activeTab("#browse");}else
+        if (url.includes("#upcoming")) {loadUpcoming();activeTab("#upcoming");}
         else {
             //This should not be possible.
         }
     }else {
         console.log("on the home screen");
         //load the home page
+
         $(".welcomeScreen").visible();
         activeTab("#home");
+        loadHome();
         homeScreen = true;
     }
 });
@@ -55,30 +56,40 @@ function searchLoad() {
 
 //Displays the result from the search in the resultsContainer
 function displaySearch(result) {
+    console.log("Display Search Run");
 
     var length = Object.keys(result).length;
 
     for (var l = 0; l < length; l++){
-
+        reload++;
         //check if there is an image (There may not be)
         if (result[l].image == "") {
             image = "../images/not-found.jpg";
         }else {
             image = result[l].image;
-        }
-        $('.resultsContainer').append('<div class="searchResult"><img onclick="checkFocus(this.id)" id="' + l + '" class="resultImg" src="' + image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + result[l].title + '</div></div>');
-    }
+        }//DO DATA.REMOTE or something to say wether or not it is a local search
+        if (reload != l) {
+            $('.resultsContainer').append('<div class="searchResult"><img onclick="checkFocus(this.id)" id="' + reload + '" class="resultImg" src="' + image + '" onerror="imgError(this, ' + reload + ');" /><div class="resultTitle">' + result[l].title + '</div><div class="remote"</div>');
 
-    if (unload == true) {
-        setTimeout(function() {
-            searchLoad();
-        }, 100);
+        }else {
+            $('.resultsContainer').append('<div class="searchResult"><img onclick="checkFocus(this.id)" id="' + reload + '" class="resultImg" src="' + image + '" onerror="imgError(this, ' + reload + ');" /><div class="resultTitle">' + result[l].title + '</div></div>');
+        }
     }
     loadingSearch = false;
+    if (loadingLocal == true) {
+        loadBrowse();
+    }else {
+        if (unload == true) {
+            setTimeout(function() {
+                searchLoad();
+            }, 100);
+        }
+    }
 }
 
 //This function unloads the current search box and shows the loading icon
 function unloadSearch() {
+    console.log("REMOVED PREV SEARCH")
     $('.resultsContainer').empty();
 }
 
