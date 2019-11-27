@@ -7,13 +7,14 @@ const outputFolder = "./outputTest/"
 const blacklist = ["index.js", "placeholder.mp4", "posters"];
 const extBlack = ["txt", "php", "css", "scss", "json", "md", "js"];
 const extwhite = ["mkv", "avi"];
+const knownExt = [".mp4"]
 var movieIndex = JSON.parse(fs.readFileSync('./data/AAmovieIndex.json', 'utf8'));
 
 var output = [];
 var loop = 0;
 var start;
-//test
 var fileNames = [];
+var folders = [];
 
 //Colors
 const reset = "\x1b[0m";
@@ -95,9 +96,23 @@ async function run(){
 async function filter(){
     // Read all the items in the directory
     // For every title in the folder
-    console.log(magenta + "Starting to Scan" + reset)    // Start Message
+    console.log(magenta + "Starting Scan" + reset)    // Start Message
 
-    fs.readdirSync(dir).forEach(title => {
+
+    //New File searching
+    var read = []
+    var e = 0;
+    console.log(read);
+    while(true){
+        read = fs.readdirSync(dir[e++]);
+        // if file
+        // if mp4 add to array
+        // if mkv add to other array
+
+        // if folder append to read var
+    }
+
+    /*fs.readdirSync(dir).forEach(title => {
         var i = 0;
 
         title = title.toLowerCase();
@@ -108,13 +123,13 @@ async function filter(){
             if(blacklist[i] == title){
                 break;
             } else if (blacklist.length - 1 == i){
-                fileNames.push(title);
                 i++;
                 break;
             } else {
                 i++;
             }
         }
+
         //blacklist extensions
         var a = 0;
         while(true){
@@ -123,17 +138,26 @@ async function filter(){
                 break;
             } else if (extBlack.length - 1 == a){
                 a++;
-                break
+                break;
             } else {
                 a++;
             }
         }
 
-        //If its a outputFolder
+        //If its a Folder
+        for(a = 0; a < extwhite.length; a++){
+            if(title.slice(0, -4).includes(knownExt[a])){
+                //
+            }
+        }
 
+        //Check it passed all the filters. If so pass to filenames variables
+        if(pass == 3){
+            //fileNames.push(title);
+        }
 
         loop++;
-    });
+    });*/
 }
 
 async function collectMetaData() {
