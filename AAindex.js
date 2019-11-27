@@ -96,6 +96,7 @@ async function filter(){
     // Read all the items in the directory
     // For every title in the folder
     console.log(magenta + "Starting to Scan" + reset)    // Start Message
+
     fs.readdirSync(dir).forEach(title => {
         var i = 0;
 
@@ -127,6 +128,9 @@ async function filter(){
                 a++;
             }
         }
+
+        //If its a outputFolder
+
 
         loop++;
     });
