@@ -5,7 +5,7 @@
     "locallyStored":"If it is stored locally on the server (Should be bool)",
     "streamable":"If the user wants it to be streamed or not (Should be bool)",
     "size": "size with type EG '7.3gb' ",
-    "fileLocation": "../files/movie.mp4",
+    "fileLocation": "./files/movie.mp4",
     "fileName":"Name of the file. No path to where it is. Has extension",
     "magnet":"magnet-link",
     "image":"../file/posters/poster.png",
@@ -32,14 +32,46 @@
     }
   },
   "0":{
-    "title": "Deadpool",
+    "title": "Something Different",
     "runTime": {"hours":1, "mins":22, "sec":7},
     "locallyStored":true,
     "size": "13gb",
-    "fileLocation": "./sao s01e25 - the world seed (720p eng) v2.mp4",
+    "fileLocation": "./files/sao s01e25 - the world seed (720p eng) v2.mp4",
     "fileName":"deadpool.mp4",
     "magnet":"magnet-link",
-    "image":"../file/posters/poster.png",
+    "image":"./file/posters/poster.png",
+    "desc":"A murder spree with Ryan Renolds",
+    "genre":["action", "romance"],
+    "resolution":"1920x1080",
+    "ratio":"16:9",
+    "keyWords":["killing", "4k", "tornado"],
+    "framerate":"23.98",
+    "dateAdded":"27.03.2019",
+    "searchable":"true",
+    "viewCount":3,
+    "episodic":false,
+    "showInfo":{
+      "seriesTitle":"",
+      "episode":"",
+      "episodeNum":0,
+      "season":0
+    },
+    "formatted":true,
+    "formatInfo":{
+      "formatted":"true",
+      "time":{"hours":2, "mins":54, "sec":7},
+      "oldFormat":"mkv"
+    }
+},
+"1":{
+    "title": "Brooklyn Nine-Nine",
+    "runTime": {"hours":1, "mins":22, "sec":7},
+    "locallyStored":true,
+    "size": "13gb",
+    "fileLocation": "./files/sao s01e25 - the world seed (720p eng) v2.mp4",
+    "fileName":"deadpool.mp4",
+    "magnet":"magnet-link",
+    "image":"./file/posters/poster.png",
     "desc":"A murder spree with Ryan Renolds",
     "genre":["action", "romance"],
     "resolution":"1920x1080",
@@ -62,6 +94,102 @@
       "time":{"hours":2, "mins":54, "sec":7},
       "oldFormat":"mkv"
     }
+},
+  "2":{
+    "title": "Brooklyn Nine-Nine",
+    "runTime": {"hours":1, "mins":22, "sec":7},
+    "locallyStored":true,
+    "size": "13gb",
+    "fileLocation": "./files/sao s01e25 - the world seed (720p eng) v2.mp4",
+    "fileName":"deadpool.mp4",
+    "magnet":"magnet-link",
+    "image":"./file/posters/poster.png",
+    "desc":"A murder spree with Ryan Renolds",
+    "genre":["action", "romance"],
+    "resolution":"1920x1080",
+    "ratio":"16:9",
+    "keyWords":["killing", "4k", "tornado"],
+    "framerate":"23.98",
+    "dateAdded":"27.03.2019",
+    "searchable":"true",
+    "viewCount":3,
+    "episodic":true,
+    "showInfo":{
+      "seriesTitle":"Brooklyn Nine-Nine",
+      "episode":"Space Monkey Fights Back",
+      "episodeNum":2,
+      "season":32
+    },
+    "formatted":true,
+    "formatInfo":{
+      "formatted":"true",
+      "time":{"hours":2, "mins":54, "sec":7},
+      "oldFormat":"mkv"
+    }
+},
+"3":{
+  "title": "Brooklyn Nine-Nine",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "./files/sao s01e25 - the world seed (720p eng) v2.mp4",
+  "fileName":"deadpool.mp4",
+  "magnet":"magnet-link",
+  "image":"./file/posters/poster.png",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic":true,
+  "showInfo":{
+    "seriesTitle":"Brooklyn Nine-Nine",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":3,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+"4":{
+  "title": "Coffee-Press",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "./files/sao s01e25 - the world seed (720p eng) v2.mp4",
+  "fileName":"deadpool.mp4",
+  "magnet":"magnet-link",
+  "image":"./file/posters/poster.png",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic":false,
+  "showInfo":{
+    "seriesTitle":"",
+    "episode":"",
+    "episodeNum":0,
+    "season":0
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
 }
 
 }
