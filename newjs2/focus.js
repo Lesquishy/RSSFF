@@ -15,6 +15,87 @@ function loadFocus(id) {
         console.log("Tv show");
         $(".focusImg").attr('src', data[id].image);
         $(".header").html(data[id].title);
+        $(".focusRuntime").html("Runtime: " + local[l].runTime.hours + "hr " + local[l].runTime.mins + "mins");
+        $(".focusSize").html("Size: " + data[id].size);
+        var genres = data[id].genres;
+        genres = genres.join(", ");
+        $(".focusGenre").html("Genre: " + genres);
+        $(".focusDesc").html("Summary: <br>" + data[id].desc);
+        console.log("firstest");
+
+        //variables for use in displaying the seasons and episodes
+        seasonContainer = {};
+
+        //Now parse the info for the episodes and seasons
+        var length = Object.keys(local).length;
+        length = length - 1;
+        for (var l = 0; l < length; l++){
+            if (local[l].showInfo.seriesTitle == title) {//Part of this show
+
+                var image = local[l].image;
+                var desc = local[l].desc;
+                var runtime = local[l].runTime.hours + "hr " + local[l].runTime.mins + "mins";
+                var genres = local[l].genre;
+                var file = local[l].fileLocation;
+                var size = local[l].size;
+
+                var season = local[l].showInfo.season;
+                var episode = local[l].showInfo.episodeNum;
+
+                if (seasonContainer[season] != undefined) {//This season exists in the object
+                    console.log("Season Exists");
+                    if (seasonContainer[season][episode] != undefined) {//This episode exists, do not add it.
+                        console.log("episode Exists");
+                    }else {//Add only the episode
+
+                        $.extend(seasonContainer[season],{
+                            [episode]: {
+                                "title": local[l].showInfo.episode,
+                                "desc": local[l].showInfo.episodeDesc,
+                                "size": size,
+                                "length": runtime,
+                                "genres": genres,
+                                "file": file
+                            }
+                        });
+                    }
+
+
+
+                }else {//Add this season and episode to the object
+
+
+                    $.extend(seasonContainer,{
+                        [season]: {
+                            [episode]: {
+                                "title": local[l].showInfo.episode,
+                                "desc": local[l].showInfo.episodeDesc,
+                                "size": size,
+                                "length": runtime,
+                                "genres": genres,
+                                "file": file
+                            },
+                        }
+                    });
+                }
+
+
+            }
+        }
+        console.log(seasonContainer);
+
+        //Display the data learned from the show, starting with the first episode
+        var length = Object.keys(seasonContainer).length;
+        console.log("Seasons: " + length);
+        for (var l = 1; l <= length; l++){
+            $( ".inner" ).append( "<p>Test</p>" );
+        }
+
+        var episodes = Object.keys(seasonContainer[1]).length;
+        console.log("Episodes: " + episodes)
+        for (var e = 1; e <= episodes; e++){
+            console.log("This is an episode");
+        }
 
     }else {//A movie
         console.log("movie");
@@ -26,8 +107,11 @@ function loadFocus(id) {
         genres = genres.join(", ");
         $(".focusGenre").html("Genre: " + genres);
         $(".focusDesc").html("Summary: <br>" + data[id].desc);
+
+        //show a stream button or something
     }
 }
+
 
 function closeFocus() {
     $(".focus").slideToggle(300);
@@ -36,9 +120,4 @@ function closeFocus() {
 
 function displayFocus() {
     //just some stuff rtemove it
-    for (var l = 0; l < length; l++){
-        if (local[l].seriesInfo.seriesTitle == title) {//Part of this show
-
-        }
-    }
 }
