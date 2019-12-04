@@ -15,7 +15,7 @@ function loadFocus(id) {
         console.log("Tv show");
         $(".focusImg").attr('src', data[id].image);
         $(".header").html(data[id].title);
-        $(".focusRuntime").html("Runtime: " + local[l].runTime.hours + "hr " + local[l].runTime.mins + "mins");
+        $(".focusRuntime").html("Runtime: " + local[id].runTime.hours + "hr " + local[id].runTime.mins + "mins");
         $(".focusSize").html("Size: " + data[id].size);
         var genres = data[id].genres;
         genres = genres.join(", ");
@@ -47,7 +47,7 @@ function loadFocus(id) {
                     if (seasonContainer[season][episode] != undefined) {//This episode exists, do not add it.
                         console.log("episode Exists");
                     }else {//Add only the episode
-
+                        console.log("log");
                         $.extend(seasonContainer[season],{
                             [episode]: {
                                 "title": local[l].showInfo.episode,
@@ -64,7 +64,7 @@ function loadFocus(id) {
 
                 }else {//Add this season and episode to the object
 
-
+                    console.log("log #2");
                     $.extend(seasonContainer,{
                         [season]: {
                             [episode]: {
@@ -85,16 +85,26 @@ function loadFocus(id) {
         console.log(seasonContainer);
 
         //Display the data learned from the show, starting with the first episode
+
+        $(".seasonUl").html("");
+        $(".episodeUl").html("");
         var length = Object.keys(seasonContainer).length;
         console.log("Seasons: " + length);
         for (var l = 1; l <= length; l++){
-            $( ".inner" ).append( "<p>Test</p>" );
+            if (l == 1) {
+                $(".seasonUl").append('<li onclick="changeSeason(this.id);" id="Season' + l + '" class="seriesBtn seasonActive"><a>Season ' + l + '</a></li>');
+
+            }else {
+                $(".seasonUl").append('<li onclick="changeSeason(this.id);" id="Season' + l + '" class="seriesBtn"><a>Season ' + l + '</a></li>');
+            }
         }
 
         var episodes = Object.keys(seasonContainer[1]).length;
         console.log("Episodes: " + episodes)
-        for (var e = 1; e <= episodes; e++){
-            console.log("This is an episode");
+        for (var l = 1; l <= episodes; l++){
+            console.log("episode loaded")
+            $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+
         }
 
     }else {//A movie
@@ -110,6 +120,27 @@ function loadFocus(id) {
 
         //show a stream button or something
     }
+}
+
+function changeSeason(id) {
+    console.log("ChangeSeason()")
+    $(".seasonActive").toggleClass("seasonActive");
+    $("#" + id).toggleClass("seasonActive");
+    var season = id.replace(/\D/g,'');
+    console.log(seasonContainer);
+    console.log(season);
+    var episodes = Object.keys(seasonContainer[season]).length;
+    $(".episodeUl").html("");
+
+    for (var l = 1; l <= episodes; l++){
+        console.log("Wow");
+        $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+    }
+}
+
+//______________________________________________________HERE_________________________________________________
+function changeEpisode(id) {
+    var episode = id.replace(/\D/g,'');
 }
 
 

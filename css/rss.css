@@ -141,6 +141,7 @@
     top: 15px;
     color: white;
     border-bottom: 2px solid white;
+    z-index: 21;
 }
 
 .searchInput {
@@ -167,6 +168,12 @@
     cursor: pointer;
     background: none;
     color: inherit;
+}
+
+.searchIcon {
+    position: absolute;
+    right: 0px;
+    top: -3px;
 }
 
 .testBtn {
@@ -391,6 +398,16 @@
     top: 50px;
     width: 425px;
     height: 500px;
+}
+
+.fire {
+    width: 400px;
+    height: 30px;
+    position: fixed;
+    background-repeat: repeat-x;
+    z-index: 20;
+    top: 15px;
+    right: 100px;
 }
 
 
