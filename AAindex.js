@@ -320,7 +320,6 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
                 omdbResult = rawFile.responseText;
             } else {
                 stop = true;
-                message("loading sources file", "Status != 200", "h");
             }
         }
     }
