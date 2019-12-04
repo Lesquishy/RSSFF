@@ -249,7 +249,7 @@
   "viewCount":3,
   "episodic": false,
   "showInfo":{
-    "seriesTitle":"Brooklyn Nine-Nine",
+    "seriesTitle":"Test Series 1",
     "episode":"Space Monkey Fights Back",
     "episodeDesc":"",
     "episodeNum":2,
@@ -398,7 +398,7 @@
     "episode":"Episode 1 :)",
     "episodeDesc":"",
     "episodeNum":1,
-    "season":4
+    "season":2
   }
 },
 
@@ -454,7 +454,7 @@
   "showInfo":{
     "seriesTitle":"Test Series 2",
     "episode":"Episode 1 :)",
-    "episodeDesc":"",
+    "episodeDesc":"Episode 1 Desc (series 2)",
     "episodeNum":1,
     "season":3
   }

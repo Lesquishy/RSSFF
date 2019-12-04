@@ -52,9 +52,11 @@
 
 .loading2 {
     display: none;
-    z-index: 9999;
+    z-index: 100;
     width: 100%;
     height: 100%;
+    top: 0px;
+    left: 0px;
     position: absolute;
     background: rgba(0,0,0,0.95);
 }
@@ -139,6 +141,7 @@
     top: 15px;
     color: white;
     border-bottom: 2px solid white;
+    z-index: 21;
 }
 
 .searchInput {
@@ -165,6 +168,12 @@
     cursor: pointer;
     background: none;
     color: inherit;
+}
+
+.searchIcon {
+    position: absolute;
+    right: 0px;
+    top: -3px;
 }
 
 .testBtn {
@@ -244,8 +253,8 @@
     position: fixed;
     height: 100%;
     width: 100%;
-    background: rgba(0, 0, 0, 0.5);
     cursor: pointer;
+    display: none;
 }
 
 .focus {
@@ -260,6 +269,16 @@
     overflow: hidden;
     border-radius: 25px;
     background: #222;
+    display: none;
+    z-index: 40;
+}
+
+.focusGray {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 39;
 }
 
 .seasonNav {
@@ -379,6 +398,16 @@
     top: 50px;
     width: 425px;
     height: 500px;
+}
+
+.fire {
+    width: 400px;
+    height: 30px;
+    position: fixed;
+    background-repeat: repeat-x;
+    z-index: 20;
+    top: 15px;
+    right: 100px;
 }
 
 
