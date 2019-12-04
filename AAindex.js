@@ -3,10 +3,7 @@
 const fs = require("fs");
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
-const fetch = require('node-fetch');
-const Bluebird = require('bluebird');
-
-fetch.Promise = Bluebird;
+const http = require('http')
 
 
 // Settings
@@ -311,29 +308,6 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
     //OMDB json Read
 
     var omdbLink = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3"
-
-
-
-
-
-
-
-
-
-
-
-
-    /*var midOmdbJson = await omdb(omdbLink)
-    console.log(midOmdbJson)
-    console.log("^Here");
-    var omdbJSON = JSON.parse(midOmdbJson)
-
-
-    let settings = { method: "Get" };
-    fetch(omdbLink, settings)
-        .then(res => res.json())
-        .then((json) => {omdbJSON = JSON.parse(json); });*/
-
 
 
     // One liner variables
