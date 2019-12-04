@@ -310,24 +310,10 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
 
     //OMDB json Read
 
-    var response;
-    var omdbLink = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", omdbLink, false);
-    rawFile.onreadystatechange = function () {
-        if(rawFile.readyState === 4){
-            if(rawFile.status === 200 || rawFile.status == 0){
-                omdbResult = rawFile.responseText;
-            } else {
-                stop = true;
-            }
-        }
-    }
-    rawFile.send(null);
+    await $.getJSON("http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3", function(omdbJSON) {
 
-    omdbJSON = JSON.parse(omdbResult);
-
-
+        
+    });
 
 
 
