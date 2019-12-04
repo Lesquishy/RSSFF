@@ -10,6 +10,8 @@ function loadBrowse() {
 async function searchLoad() {
     data = {};
     loadNumber = 0;
+    query = $(".searchInput").val();
+    $(".searchResult").remove();
 
     if (loadLocal == true && loadYts == true) {
         console.log("searchLoad");
@@ -53,40 +55,89 @@ function localParse() {
 
 
     console.log(info);
-    var local = JSON.parse(info);
+    local = JSON.parse(info);
     var length = Object.keys(local).length;
 
     // !!!!!!!!!! Add one to this number everytime you add something that isn't a movie to the json !!!!!!!!!!!!!!
     length = length - 1;
     for (var l = 0; l < length; l++){
 
-        var title = local[l].title;
-        var image = local[l].image;
-        console.log(image);
-        var desc = local[l].desc;
-        var time = local[l].runTime.hours + local[l].runTime.hours + local[l].runTime.hours;
-        var runtime = time + "m";
-        var genres = local[l].genre;
-        var file = local[l].fileLocation;
-        var size = local[l].size;
+        var keywords = local[l].keyWords;
+        var searchArray = query.split(" ");
 
-        $.extend(data,{
-            [loadNumber]: {
-                "title": title,
-                "image": image,
-                "desc": desc,
-                "runtime": runtime,
-                "genres": genres,
-                "torrent": "",
-                "size": size,
-                "file": file
+        var searched = searchArray.diff(keywords);
+        if (searched.length >= 1) { //If this movie/TV Show is what you searched for
+            //Check if it is a tv show or a movie
+            var tv = local[l].episodic;
+            if (tv == true) { //If this result is a part of a tv show
+
+                var title = local[l].showInfo.seriesTitle;
+                if (shows.includes(title)) {
+                    //This show is already in the list
+                    console.log("Already on the list");
+                }else {
+                    //This show will be added to the array and displayed on the screen
+                    shows.push(title);
+                    var image = local[l].image;
+                    console.log(image);
+                    var desc = local[l].desc;
+                    var time = local[l].runTime.hours + local[l].runTime.hours + local[l].runTime.hours;
+                    var runtime = time + "m";
+                    var genres = local[l].genre;
+                    var file = local[l].fileLocation;
+                    var size = local[l].size;
+
+
+                    $.extend(data,{
+                        [loadNumber]: {
+                            "title": title,
+                            "image": image,
+                            "desc": desc,
+                            "runtime": runtime,
+                            "genres": genres,
+                            "torrent": "",
+                            "size": size,
+                            "file": file,
+                            "episodic": true,
+                            "local": true
+                        }
+                    });
+                    loadNumber++;
+                }
+            }else {// This is a movie
+                var title = local[l].title;
+                var image = local[l].image;
+                console.log(image);
+                var desc = local[l].desc;
+                var time = local[l].runTime.hours + local[l].runTime.hours + local[l].runTime.hours;
+                var runtime = time + "m";
+                var genres = local[l].genre;
+                var file = local[l].fileLocation;
+                var size = local[l].size;
+
+
+                $.extend(data,{
+                    [loadNumber]: {
+                        "title": title,
+                        "image": image,
+                        "desc": desc,
+                        "runtime": runtime,
+                        "genres": genres,
+                        "torrent": "",
+                        "size": size,
+                        "file": file,
+                        "episodic": false,
+                        "local": true
+                    }
+                });
+                loadNumber++;
             }
-        });
-        loadNumber++;
+        }
     }
     console.log("should return");
     return(data);
 }
+
 
 
 //Handles the loading of the remote movies from yts
@@ -118,7 +169,6 @@ async function ytsSearch() {
         if (searchSort == null) {searchSort = "";}else {searchSort = "sort_by=" + searchSort + "&";}
 
         searchLimit = $(".searchLimit").val();
-        console.log(searchLimit);
         if (searchLimit == "") {searchLimit = "limit=25";}else {searchLimit = "limit=" + searchLimit;}
 
         var searchParam = ""+query+searchGenre+searchQuality+searchSort+searchLimit;
@@ -186,7 +236,9 @@ function ytsParse(result) {
                 "genres": genres,
                 "torrent": torrent,
                 "size": size,
-                "file": ""
+                "file": "",
+                "episodic": false,
+                "local": false
             }
         });
         loadNumber++;

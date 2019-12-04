@@ -44,7 +44,7 @@
     "genre":["action", "romance"],
     "resolution":"1920x1080",
     "ratio":"16:9",
-    "keyWords":["killing", "4k", "tornado"],
+    "keyWords":["coffee", "press", "tornado"],
     "framerate":"23.98",
     "dateAdded":"27.03.2019",
     "searchable":"true",
@@ -75,7 +75,7 @@
   "genre":["action", "romance"],
   "resolution":"1920x1080",
   "ratio":"16:9",
-  "keyWords":["killing", "4k", "tornado"],
+  "keyWords":["something", "4k", "tornado"],
   "framerate":"23.98",
   "dateAdded":"27.03.2019",
   "searchable":"true",
@@ -216,6 +216,303 @@
     "episode":"Space Monkey Fights Back",
     "episodeNum":2,
     "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"6":{
+  "title": "TV Show Ep #1 (uber)",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["uber", "show", "tv", "cars", "stuff"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Cars n Stuff",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":2,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"7":{
+  "title": "One Sugar",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["killing", "4k", "tornado"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": false,
+  "showInfo":{
+    "seriesTitle":"Brooklyn Nine-Nine",
+    "episode":"Space Monkey Fights Back",
+    "episodeNum":2,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"8":{
+  "title": "Test Series 1",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["Test", "Series", "1"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Test Series 1",
+    "episode":"Episode 1",
+    "episodeNum":1,
+    "season":2
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"9":{
+  "title": "Test Series 1",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["Test", "Series", "1"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Test Series 1",
+    "episode":"Ep 2 :)",
+    "episodeNum":2,
+    "season":1
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"10":{
+  "title": "Test Series 1",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["Test", "Series", "1", "Episode"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Test Series 1",
+    "episode":"Episode 1 :)",
+    "episodeNum":1,
+    "season":1
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"11":{
+  "title": "Test Series 2",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["Test", "Series", "2", "Episode"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Test Series 2",
+    "episode":"Episode 1 :)",
+    "episodeNum":1,
+    "season":1
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"12":{
+  "title": "Test Series 2",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["Test", "Series", "2", "Episode"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Test Series 2",
+    "episode":"Episode 1 :)",
+    "episodeNum":1,
+    "season":4
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"13":{
+  "title": "Test Series 2",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["Test", "Series", "2", "Episode"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Test Series 2",
+    "episode":"Episode 2 :)",
+    "episodeNum":2,
+    "season":3
+  },
+  "formatted":true,
+  "formatInfo":{
+    "formatted":"true",
+    "time":{"hours":2, "mins":54, "sec":7},
+    "oldFormat":"mkv"
+  }
+},
+
+"14":{
+  "title": "Test Series 2",
+  "runTime": {"hours":1, "mins":22, "sec":7},
+  "locallyStored":true,
+  "size": "13gb",
+  "fileLocation": "../files/One_Suger.mp4",
+  "fileName":"One_Suger.mp4",
+  "magnet":"magnet-link",
+  "image":"./images/not-found.jpg",
+  "desc":"A murder spree with Ryan Renolds",
+  "genre":["action", "romance"],
+  "resolution":"1920x1080",
+  "ratio":"16:9",
+  "keyWords":["Test", "Series", "2", "Episode"],
+  "framerate":"23.98",
+  "dateAdded":"27.03.2019",
+  "searchable":"true",
+  "viewCount":3,
+  "episodic": true,
+  "showInfo":{
+    "seriesTitle":"Test Series 2",
+    "episode":"Episode 1 :)",
+    "episodeNum":1,
+    "season":3
   },
   "formatted":true,
   "formatInfo":{

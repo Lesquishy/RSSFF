@@ -1,7 +1,7 @@
 //Displays the result from the search in the resultsContainer
 function displaySearch(result) {
-    console.log("Display Search Run");
-
+    console.log("displaySearch Run");
+    console.log(result);
     var length = Object.keys(result).length;
 
     for (var l = 0; l < length; l++){
@@ -11,10 +11,10 @@ function displaySearch(result) {
         }else {
             image = result[l].image;
         }
-        $('.resultsContainer').append('<div class="searchResult"><img onclick="checkFocus(this.id)" id="' + l + '" class="resultImg" src="' + image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle">' + result[l].title + '</div>');
+        $('.resultsContainer').append('<div class="searchResult" onclick="loadFocus(this.id)" id="' + l + '"><img class="resultImg" src="' + image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle" id="title' + l + '">' + result[l].title + '</div>');
     }
     loadingSearch = false;
-    if (loadingLocal == true) {
+    if (loadLocal == true) {
         loadBrowse();
     }else {
         if (unload == true) {
