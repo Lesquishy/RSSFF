@@ -1,207 +1,338 @@
+//Rugs the Chef Cooking up your movies
+// The requires
 const fs = require("fs");
+const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
-const readline = require('readline');
-
-const dir = './files/';
-const outputFolder = "./outputTest/"
-const blacklist = ["index.js", "placeholder.mp4", "posters"];
-const extBlack = ["txt", "php", "css", "scss", "json", "md", "js"];
-const extwhite = ["mkv", "avi"];
-const knownExt = [".mp4"]
-var movieIndex = JSON.parse(fs.readFileSync('./data/AAmovieIndex.json', 'utf8'));
-
-var output = [];
-var loop = 0;
-var start;
-var fileNames = [];
-var folders = [];
-
-//Colors
-const reset = "\x1b[0m";
-const black = "\x1b[30m";
-const red = "\x1b[31m";
-const green = "\x1b[32m";
-const yellow = "\x1b[33m";
-const blue = "\x1b[34m";
-const magenta = "\x1b[35m";
-const cyan = "\x1b[36m";
-const white = "\x1b[37m";
-var pos;
-var os;
-
-//console.log(red + "This could take a while\n" + reset)
-//console.log("Please Wait...\n")
 
 
-oneTime();
+// Settings
+const requiredFiles = ["./data/", "./files/", "./files/posters/", "./data/AAmovieIndex.json", "./data/FormatFiles.json" ]; // Required files
+const requireCleanFiles = ["./data/FormatFiles.json"]; // The files that the script needs to be empty at the start
+const jsonFile = './data/AAmovieIndex.json'; // Where the Movie metadata will be saved
+const dir = './files'; // DIR that will be scanned
+const sortExtKeepWhite = ["mp4"]; // Whitelist for streamable extensions
+const sortExtFormatWhite = ["mkv", "avi"]; // Whitelist for Formatable extesions
+const fileBlack = ["AAindex.js", "posters"]; // A file blacklist. The script will ignore the folders and files/
+const extBlack = ["txt", "php", "css", "scss", "json", "md", "js", "zip"]; // Extension blacklist. The script will ignore these file types
+const skip = true; // Choose to skip file renaming.
 
-function oneTime(){
-    console.log(magenta + "\nWarming Up" + reset)
-    //commands we only need once
-    os = process.platform;
 
-    //check the directories exsist
-    var resume = 0;
-    while(true){
-        var check = dirExists(dir);
-        if(check == true){
-            console.log(dir + " Exists");
-            resume++;
-            break;
-        } else if(check == false){
-            break;
+// Blank variable setters
+var rawFiles = [];
+var indexJSON = JSON.parse(fs.readFileSync(jsonFile, 'utf8')); // Reads the json file
+
+
+//Colors for console log
+const reset = "\x1b[0m"; // Back to normal Color
+const red = "\x1b[31m"; // Error
+const green = "\x1b[32m"; // Done
+const yellow = "\x1b[33m"; // Warning
+const blue = "\x1b[36m"; // Notification
+const magenta = "\x1b[35m"; // State Change Message
+
+
+
+// ---------------
+console.log(magenta + "Starting File Check" + reset); //State message
+// ---------------
+
+for (var i = 0; i < requiredFiles.length; i++) {
+    if (!fs.existsSync(requiredFiles[i])) {
+        // ---------------
+        console.log(yellow + "File Missing : " + requiredFiles[i] + reset); //State message
+        // ---------------
+        if (requiredFiles[i].slice(-1) == "/") {
+            fs.mkFileSync(requiredFiles[i]);
+        } else {
+            fs.writeFile(requiredFiles[i], "", function (err) {
+                if (err) throw err;
+                console.log('File is created successfully.');
+            });
         }
-    }
-
-    while(true){
-        var check = dirExists(outputFolder);
-        if(check == true){
-            console.log(outputFolder + " Exists");
-            resume++;
-            break;
-        } else if(check == false){
-            break;
-        }
-    }
-
-    if (resume == 2){
-        console.log(magenta + "Warmup Done \n" + reset);
-        run();
+        // ---------------
+        console.log(yellow + "File Created : " + requiredFiles[i] + reset); //State message
+        // ---------------
     }
 }
 
-function dirExists(folder, repeat) {
-    if(repeat !== true){
-        if(fs.existsSync(folder)) {
-            return true;
-        };
-        if(!fs.existsSync(folder)) {
-          fs.mkdirSync(folder);
-          setTimeout(dirExists(folder, true), 1000);
-        }
-    } else {
-        console.log(red + "Error creating folder" + folder)
-        console.log("Script Stopping. Create dir and try again" + reset)
-        return false;
-    }
+for (var i = 0; i < requireCleanFiles.length; i++) {
+    fs.closeSync(fs.openSync(requireCleanFiles[i], 'w'));
 }
 
-async function run(){
-    // NOTE: Loop these
-    var toFormat = [];
-    await filter();
-    await collectMetaData();
-}
-
-async function filter(){
-    // Read all the items in the directory
-    // For every title in the folder
-    console.log(magenta + "Starting Scan" + reset)    // Start Message
+// ---------------
+console.log(magenta + "Finished File Check\n" + reset); //State message
+// ---------------
 
 
-    //New File searching
-    var read = []
-    var e = 0;
-    console.log(read);
-    while(true){
-        read = fs.readdirSync(dir[e++]);
-        // if file
-        // if mp4 add to array
-        // if mkv add to other array
 
-        // if folder append to read var
-    }
 
-    /*fs.readdirSync(dir).forEach(title => {
+//New New File seatching
+//This will get every file that is in the dir
+// ---------------
+console.log(magenta + "Starting Scan" + reset); //State message
+// ---------------
+var readJSON = function(dir, done) {
+    var results = [];
+    fs.readdir(dir, function(err, list) {
+        if (err) return done(err);
         var i = 0;
+        (function next() {
+            var file = list[i++];
+            if (!file) return done(null, results);
+            file = path.resolve(dir, file);
+            fs.stat(file, function(err, stat) {
+                if (stat && stat.isDirectory()) {
+                    readJSON(file, function(err, res) {
+                        results = results.concat(res);
+                        next();
+                    });
+                } else {
+                    results.push(file);
+                    next();
+                }
+            });
+        })();
+    });
+};
 
-        title = title.toLowerCase();
+// ---------------
+console.log(magenta + "Completed Scan\n" + reset); //State message
+// ---------------
 
-        //Blacklist filter
-        while(true) {
-            blacklist[i] = blacklist[i].toLowerCase();
-            if(blacklist[i] == title){
-                break;
-            } else if (blacklist.length - 1 == i){
-                i++;
-                break;
-            } else {
-                i++;
-            }
+//This gets the results from the search
+readJSON(dir, function(err, results) {
+    // ---------------
+    console.log(magenta + "Starting to orginize" + reset); //State message
+    // ---------------
+    if (err) throw err;
+
+    //We have the output called results
+    // For every item, Cleanup the excess.
+    for(var a = 0; a <= results.length - 1; a++){
+        results[a] = results[a].substring(results[a].indexOf("\\files") + 1); // remove everything before 'files'
+        results[a] = "./" + results[a].replace(new RegExp('\\\\', 'g'), "/"); // replace all the \\ with /
+    }
+    //Send output to Check format
+    checkFormat(results);
+});
+
+// Used to check what format the files are and what to do with them.
+async function checkFormat(rawFileNames) {
+    for(var a = 0; a <= rawFileNames.length - 1; a++){
+        sortByExtension = rawFileNames[a].substr(rawFileNames[a].length - 3); // Grabs the last 3 char. Doesnt include the .
+        if(fileBlack.includes(rawFileNames[a] || extBlack.includes(sortByExtension))){
+            //We do nothing here, It stops the program from doing anything with those files and will just move on
+            console.log("Skipping File");
+        } else if(sortExtKeepWhite.includes(sortByExtension)){ // If we need to keep it for processing, It goes here.
+            await checkForDoubleUps(rawFileNames[a]);
+        } else if(sortExtFormatWhite.includes(sortByExtension)){ // If we need to format it, It'll be picked up here
+            await format(rawFileNames[a]);
         }
-
-        //blacklist extensions
-        var a = 0;
-        while(true){
-            if(title.includes(extBlack[a])){
-                fileNames.splice(fileNames.length - 1, 1);
-                break;
-            } else if (extBlack.length - 1 == a){
-                a++;
-                break;
-            } else {
-                a++;
-            }
-        }
-
-        //If its a Folder
-        for(a = 0; a < extwhite.length; a++){
-            if(title.slice(0, -4).includes(knownExt[a])){
-                //
-            }
-        }
-
-        //Check it passed all the filters. If so pass to filenames variables
-        if(pass == 3){
-            //fileNames.push(title);
-        }
-
-        loop++;
-    });*/
+    }
+    //--------------------
+    console.log(magenta + "Finished orginization\n" + reset); //State message
+    //--------------------
 }
 
-async function collectMetaData() {
+
+
+
+
+async function checkForDoubleUps(currFile, duration, size, width, height, frameRate, ratio){
+    //--------------------
+    console.log(magenta + "Starting Double Up Check" + reset); //State Message
+    console.log(blue + "Working File : " + reset + currFile); // State Message
+    //--------------------
+    // This checks the files names incase of double ups. If its already been processed, It wont be processed again
+    var cleanupForPotentialNames = currFile.split('/')[(currFile.split('/').length-1)].slice(0, -4).replace(new RegExp("\\.", 'g'), "_");
+    var potentialNames = cleanupForPotentialNames.split('_');
+    var z = 0;
+    var match = -1;
+    while (true) {
+        try {
+            var c;
+            for (var x = 0; x < potentialNames.length; x++) {
+                if (indexJSON[z.toString()].title.toLowerCase().includes(potentialNames[x].toLowerCase())) { // Compare the title with this files words
+                    //Check the words that are matching to the entirety of a show title
+                    if (c == undefined) {
+                        c = potentialNames[x].toLowerCase()
+                    } else {
+                        c = c + " " + potentialNames[x].toLowerCase()
+                    }
+                    if (indexJSON[z.toString()].title.toLowerCase() == c) {
+                        // We got a full match
+                        console.log(blue + "Existing Film Found, Checking if its a TV show" + reset);
+                        //Check for a show
+                        match = await showMatchCheck(currFile, c);
+                        if (match == 0) {
+                            // We have the show, Not the episode
+                            console.log(green + "We dont have this episode" + reset);
+                            //--------------------
+                            console.log(magenta + "Finished Double Up Check\n" + reset); //State message
+                            //--------------------
+                            await renameShow(currFile, z)
+                        } else if (match == 1) {
+                            // We have the show and the episode
+                            console.log(yellow + "We already have the Episode. Ignoring" + reset); //State message
+                        } else if (match == 2) {
+                            // We already have this Movie
+                            console.log(yellow + "We already have the Movie. Ignoring" + reset); //State message
+                        } else if (match == 3) {
+                            // Generally confused. It sees an episodic show but the matching indexJSON movie is not episodic
+                            console.log(red + "Error : " + reset + "File is episodic but the matching indexJSON movie is not episodic");
+                        } else if (match == 4) {
+                            // We found no matches
+                            console.log("match == 4 in checkForDoubleUps");
+                        } else {
+                            console.log(red + "Error : " + reset + "showMatchCheck returned nothing. ");
+                        }
+                        // Display End card
+                        if (match > 0) {
+                            //--------------------
+                            console.log(magenta + "Finished Double Up Check\n" + reset); //State message
+                            //--------------------
+                        }
+                    } else {
+                        // see if its the last item in the array
+                        // if its the last item, guess that it doesnt exsist in the database.
+                    }
+
+                }
+            }
+        } catch (e) {
+            if (match == -1) {
+                console.log(green + "Not a double up" + reset);
+                //--------------------
+                console.log(magenta + "Finished Double Up Check\n" + reset); //State message
+                //--------------------
+                //await rename(currFile)
+            }
+            break;
+        }
+        z++;
+    }
+
+}
+
+
+async function renameShow(currFile, showID){
+    //--------------------
+    console.log(magenta + "Starting Renaming Show" + reset + ); //State message
+    console.log(blue + "Working File : " + reset + currFile); // State Message
+    //--------------------
+    //Rename a file thats a show
+    var showName = indexJSON[showID].title; // Gets the name of the show
+    var episodeNum = currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].replace('e',''); // Gets the episode number
+    var season = currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].replace('s',''); // Gets the season number
+    var outputName = showName.replace(" ", "_") + "_S" + season + "E" + episodeNum + "." + currFile.substr(currFile.length - 3); // final file name
+    var fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
+
+    if (skip !== true) {
+        fs.rename(fileLocation+outputName, currFile, await function (err) {
+            if (err) throw err;
+            console.log(green + "Finished Renaming Show to : " + fileLocation+outputName + reset);
+        });
+    } else {
+        console.log(yellow + "Skipped file renaming" + reset);
+        console.log("Would have renamed to : " + fileLocation+outputName);
+    }
+
+    //--------------------
+    console.log(magenta + "Finished Renaming Show\n" + reset); //State message
+    //--------------------
+
+    // metadata
+    await collectMetaData(fileLocation+outputName, true, showName)
+}
+
+
+
+
+async function collectMetaData(currentFile, episodic, seriesTitle) {
     // Collect, process and save the movie metadata
     // This collects the movie data
-    var l = Object.size(movieIndex) + 1
-    pos = l
-    console.log(fileNames.length)
-    console.log(fileNames)
-    for(var f = 0; fileNames.length-1 >= f; f++ ){
-        ffmpeg.ffprobe(dir + fileNames[f], function(err, data) {
-            //error catching
-            if(err) {
-                console.log(err);return;
-            }
-
-                translate(data.format.filename, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio)
-
-        });
-    }
+    await ffmpeg.ffprobe(currentFile, async function(err, data) {
+        //error catching
+        if(err) {
+            console.log(err);return;
+        }
+        await metaDataExport(currentFile, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio, episodic, seriesTitle)
+    });
 }
 
 
 
-//Process the Movie Data
-async function translate(name, duration, size, width, height, frameRate, ratio){
+async function showMatchCheck(currFile, showName){
 
-    // NOTE: We're gonna have to break down the file name in here somewhere.
+    var z = 0;
+    while (true) {
+        var episodeNumFind;
+        var seasonFind;
+        var notEpisode = false;
+
+        try {
+            episodeNumFind = parseInt(currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].substr(1));
+            seasonFind = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1));
+        } catch (e) {
+            notEpisode = true
+        }
+
+        if (episodeNumFind !== null && notEpisode == false) {
+            // It is a show find if we have the episode
+            if(indexJSON[z.toString()].episodic == true && indexJSON[z.toString()].title.toLowerCase() == showName){
+                if (indexJSON[z.toString()].showInfo["episodeNum"] == episodeNumFind) {
+                    // There is a match on the Episode number
+                    if (indexJSON[z.toString()].showInfo["season"] == seasonFind) {
+                        // It is an existing tv show and we already have this episode in this season
+                        return 1;
+                        break;
+                    }
+                } else {
+                    // We have this tv show but not this episode
+                    return 0;
+                    break;
+                }
+            } else if (indexJSON[z.toString()].title.toLowerCase() == showName) {
+                // Generally confused. It sees an episodic show but the matching indexJSON movie is not episodic
+                return 3;
+                break;
+            }
+
+        } else if (showName == indexJSON[z.toString()].title.toLowerCase()) {
+            // We found a Movie with the same name
+            return 2;
+            break;
+        } else if (z == indexJSON.length){
+            return 4; // Stop. We found no matches of TV shows
+            break;
+        }
+        z++;
+    }
+}
+
+async function metaDataExport(currFile, duration, size, width, height, frameRate, ratio, episodic, seriesTitle){
+
 
     // One liner variables
     const locallyStored = true; // We're searching locally so this doesnt change
-    var fileName = name.split('/')[(name.split('/').length-1)]; // Trim dir
-    var fileLocation = name;
-    var title = name.split('/')[(name.split('/').length-1)].slice(0, -4) // Trim the dir and extension
+    var fileName = currFile.split('/')[(currFile.split('/').length-1)]; // Trim dir
+    var fileLocation = currFile;
+    //var title = currFile.split('/')[(currFile.split('/').length-1)].slice(0, -4) // Trim the dir and extension
     size = roundTo(size / 1073741823.9999983, 2); // Size to gb
-    var extension = fileName.substr(fileName.length - 3);
+    var extension = fileName.substr(fileName.length - 3); // Gets the file extension
+    var resolution = width  + "x" + height; //width and height to 0000x0000
+
     //default values
-    var showInfo = false;
-    var episodic = false;
+    var showInfo = {"seriesTitle":"","episode":"","episodeNum":0,"season":0};
 
-    //get the ratio
-    var r = gcd (width, height);
-    var ratio = width/r + ":" + height/r;
 
+    // Episodic info
+
+    if (episodic == true) {
+        var episodeNum = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1))
+        var season = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1))
+        showInfo = {seriesTitle,"episode":"",episodeNum,season};
+    }
 
     // Duration to hous mins sec
     // Calculation
@@ -210,160 +341,42 @@ async function translate(name, duration, size, width, height, frameRate, ratio){
     var mins = Math.floor(duration / 60) % 60;
     duration -= mins * 60;
     var secs = Math.round(duration % 60);
-
-    // Combine the time to string
     var runTime = {"hours":hours, "mins":mins, "secs":secs};
 
-
-    //width and height to 0000x0000
-    var resolution = width  + "x" + height;
-
-    // frame rate to fps
+    // Frame rate to FPS
     if(frameRate.indexOf('/') > -1){
         var array = frameRate.split('/'), a = array[0], b = array[1];
         frameRate = roundTo(a / b, 2);
     }
 
-    // Check if its a episodic show
-    var nameProcess = name.split('/')[(name.split('/').length-1)];
-    var episodeFind = nameProcess.match(/(e[0-9][0-9]|e[0-9]){1,}/g)
-    var seasonFind = nameProcess.match(/(s[0-9][0-9]|s[0-9]){1,}/g)
-    var season;
-    var episode;
 
-    if(episodeFind !== null){
-        var episodic = true;
-        var season = nameProcess.match(/(s[0-9][0-9]|s[0-9]){1,}/g)
-        if(seasonFind !== null){
-            console.log("Found series in file name. Searching for exsiting series" + reset)
-            var seriesTitle = await findShow(nameProcess);
-            episodeNum = episodeFind[0].replace('e','');
-            season = seasonFind[0].replace('s','')
-            showInfo = {seriesTitle, episodeNum, season};
-        }
-    }
+    // Write this data
 
-    //titleProcess
-    if(episodic == true){
-        title = seriesTitle.replace(' ','_') + "_E" + episodeNum + "_S" + season
-    }
+    //Working variables
+    // runtime          Runtime in Hours, Mins, Seconds
+    // locallyStored    If its locally stored
+    // fileName         Just file Name with extension
+    // fileLocation     The directory path to the video
+    // size             File size in Gigabytes
+    // extension        File Extension
+    // episodic         If its Episodic
+    // showInfo         The show info in seriesTitle, episode, episodeNum, season
+    // ratio            The ratio of the video
+    // resolution       The Resolution of the film in 'hieght x width'
 
-    // check its not already in the index
-    var s = 0;
-    while(true){
-        if (movieIndex[s].fileName == name){
-            console.log(name + "Already in the Database. Is the Movie already stored? (Skipping...)");
-            break;
-        } else if (s == Object.size(movieIndex) - 1){
-            var tempOut = {title, locallyStored, runTime, size, fileLocation, fileName, resolution, ratio, frameRate, episodic, showInfo};
-            output[pos] = tempOut;
-            break;
-        } else {
-            s++;
-        }
-    }
+}
 
 
 
-    // NOTE: add more data to write to the file
-    /*
-    that includes
-        - formatting info
-    site will need to be able to
-    */
-
-
-    // NOTE: write to the json file without replaceing everything on it
-
-    // NOTE: backup this file before doing these and make sure everything above is done
-    // NOTE: rename the files
-    // NOTE: reformat the files
-
-    //pos is the id number
-    pos++;
+async function format(currFile){
+    console.log(currFile + " : Format");
+    // Save file names to a file for the formatting script to see.
 }
 
 
 
 
-
-
-function gcd (a, b) {
-  return (b == 0) ? a : gcd (b, a%b);
-}
-
-async function findShow(nameProcess){
-    var strippedName = nameProcess.replace(/[^A-Z0-9]+/ig, '').slice(0, -3).toLowerCase();
-    for(var i=0; Object.size(movieIndex) > i; i++){
-        if(movieIndex[i].episodic == true){
-            var tally = 0;
-            strippedSeriesName = movieIndex[i].showInfo["seriesTitle"].match(/[A-Z0-9]{1,}/ig)
-            for(var a=0; strippedSeriesName.length > a; a++){
-                if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
-                    //match a number of times
-                    tally++;
-                } else {
-                    break;
-                }
-            }
-            if(tally == strippedSeriesName.length){
-                console.log("Found existing series");
-                return movieIndex[i].showInfo["seriesTitle"];
-                break;
-            } else {
-                console.log(red + "No existing series found")
-                const showSearch = await userInput("Please input series name: ");
-                console.log(reset);
-                return customSearch(nameProcess, showSearch);
-            }
-        }
-        //console.log(movieIndex[i].showInfo["seriesTitle"])
-    }
-}
-
-function customSearch(nameProcess, showSearch){
-    for(var i=0; Object.size(movieIndex) > i; i++){
-        if(movieIndex[i].episodic == true){
-            var strippedName = movieIndex[i].showInfo["seriesTitle"].replace(/[^A-Z0-9]+/ig, '').slice(0, -3).toLowerCase();
-            var tally = 0;
-            strippedSeriesName = showSearch.match(/[A-Z0-9]{1,}/ig)
-            for(var a=0; strippedSeriesName.length > a; a++){
-                if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
-                    //match a number of times
-                    tally++;
-                } else {
-                    break;
-                }
-            }
-            if(tally == strippedSeriesName.length){
-                console.log("Found existing show: " + strippedSeriesName);
-                return movieIndex[i].showInfo["seriesTitle"];
-                break;
-            } else {
-                console.log(magenta + "Search Failed, Setting '" + showSearch + "' As show name" + reset);
-                return showSearch;
-            }
-        }
-        //console.log(movieIndex[i].showInfo["seriesTitle"])
-    }
-}
-
-
-
-
-
-
-
-
-//Get the size of the movieIndex
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size-1;
-};
-
+//Forgotten Function land
 function roundTo(n, digits) {
     var negative = false;
     if (digits === undefined) {
@@ -380,24 +393,4 @@ function roundTo(n, digits) {
         n = (n * -1).toFixed(2);
     }
     return n;
-}
-
-function readTextFile(file){
-    fs.readFile(file, 'utf8', function(err, data) {
-        if (err) throw err;
-        console.log('OK: ' + file);
-        return data;
-    });
-}
-
-function userInput(query) {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
-
-    return new Promise(resolve => rl.question(query, ans => {
-        rl.close();
-        resolve(ans);
-    }))
 }
