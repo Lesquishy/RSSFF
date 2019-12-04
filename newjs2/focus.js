@@ -31,7 +31,7 @@ function loadFocus(id) {
         length = length - 1;
         for (var l = 0; l < length; l++){
             if (local[l].showInfo.seriesTitle == title) {//Part of this show
-
+                console.log("A Part of this show");
                 var image = local[l].image;
                 var desc = local[l].desc;
                 var runtime = local[l].runTime.hours + "hr " + local[l].runTime.mins + "mins";
