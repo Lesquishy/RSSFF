@@ -3,6 +3,10 @@
 const fs = require("fs");
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
+const fetch = require('node-fetch');
+const Bluebird = require('bluebird');
+
+fetch.Promise = Bluebird;
 
 
 // Settings
@@ -10,12 +14,11 @@ const requiredFiles = ["./data/", "./files/", "./files/posters/", "./data/AAmovi
 const requireCleanFiles = ["./data/FormatFiles.json"]; // The files that the script needs to be empty at the start
 const jsonFile = './data/AAmovieIndex.json'; // Where the Movie metadata will be saved
 const dir = './files'; // DIR that will be scanned
-const postersDir = './files/posters/';
 const sortExtKeepWhite = ["mp4"]; // Whitelist for streamable extensions
 const sortExtFormatWhite = ["mkv", "avi"]; // Whitelist for Formatable extesions
 const fileBlack = ["AAindex.js", "posters"]; // A file blacklist. The script will ignore the folders and files/
 const extBlack = ["txt", "php", "css", "scss", "json", "md", "js", "zip"]; // Extension blacklist. The script will ignore these file types
-const skip = false; // Choose to skip file renaming.
+const skip = true; // Choose to skip file renaming.
 
 
 // Blank variable setters
@@ -209,27 +212,19 @@ async function renameShow(currFile, showID){
     var showName = indexJSON[showID].title; // Gets the name of the show
     var episodeNum = currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].replace('e',''); // Gets the episode number
     var season = currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].replace('s',''); // Gets the season number
-    var outputName = showName.replace(" ", "_") + "_S" + season + "E" + episodeNum + "." + currFile.substr(currFile.length - 3); // final file name
+    var outputName = showName.replace(" ", "_") + "_s" + season + "e" + episodeNum + "." + currFile.substr(currFile.length - 3); // final file name
     var fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
-    var cont = false;
 
     if (skip !== true) {
-        fs.rename(currFile, fileLocation+outputName, function (err) {
+        fs.rename(currFile, fileLocation+outputName, async function (err) {
             if (err) throw err;
             console.log(green + "Finished Renaming Show to : " + fileLocation+outputName + reset);
-            cont = true;
+            await collectMetaData(fileLocation+outputName, true, showName, showID);
         });
     } else {
         console.log(yellow + "Skipped file renaming" + reset);
         console.log("Would have renamed to : " + fileLocation+outputName);
-    }
-
-    // metadata
-    while (true) {
-        if (cont == true) {
-            await collectMetaData(fileLocation+outputName, true, showName, showID);
-            break;
-        }
+        await collectMetaData(currFile, true, showName, showID);
     }
 
 }
@@ -240,7 +235,7 @@ async function renameShow(currFile, showID){
 async function collectMetaData(currentFile, episodic, seriesTitle, showID) {
     // -----------------
     console.log(magenta + "Starting Meta Data" + reset); // State Message
-    console.log(blue + "Working File : " + reset + currFile); // State Message
+    console.log(blue + "Working File : " + reset + currentFile); // State Message
     // -----------------
     // Collect, process and save the movie metadata
     // This collects the movie data
@@ -249,9 +244,6 @@ async function collectMetaData(currentFile, episodic, seriesTitle, showID) {
         if(err) {
             console.log(err);return;
         }
-        // -----------------
-        console.log(magenta + "Finished Collecting Meta Data" + reset); // State Message
-        // -----------------
         await metaDataExport(currentFile, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio, episodic, seriesTitle, showID)
     });
 }
@@ -270,7 +262,7 @@ async function showMatchCheck(currFile, showName){
             episodeNumFind = parseInt(currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].substr(1));
             seasonFind = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1));
         } catch (e) {
-            notEpisode = true
+            notEpisode = true;
         }
 
         if (episodeNumFind !== null && notEpisode == false) {
@@ -316,9 +308,37 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
     const viewCount = 0;
     const magnet = "";
 
+    //OMDB json Read
+
+    var omdbLink = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3"
+
+
+
+
+
+
+
+
+
+
+
+
+    /*var midOmdbJson = await omdb(omdbLink)
+    console.log(midOmdbJson)
+    console.log("^Here");
+    var omdbJSON = JSON.parse(midOmdbJson)
+
+
+    let settings = { method: "Get" };
+    fetch(omdbLink, settings)
+        .then(res => res.json())
+        .then((json) => {omdbJSON = JSON.parse(json); });*/
+
+
+
     // One liner variables
     var fileName = currFile.split('/')[(currFile.split('/').length-1)]; // Trim dir
-    var image = postersDir + fileName;
+    var image = "Something";
     var fileLocation = currFile;
     var title = seriesTitle;
     //var title = currFile.split('/')[(currFile.split('/').length-1)].slice(0, -4) // Trim the dir and extension
@@ -330,8 +350,8 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
 
     // Episodic info
     if (episodic == true) {
-        var episodeNum = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1))
-        var season = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1))
+        var episodeNum = parseInt(currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].substr(1));
+        var season = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1));
         showInfo = {seriesTitle,"episode":"",episodeNum,season};
     }
 
@@ -357,6 +377,13 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
     var yyyy = today.getFullYear();
 
     dateAdded = dd + '.' + mm + '.' + yyyy;
+
+
+    // Use OMDB to find
+    // Description
+    // Genres
+    // Episode title
+    // Episode Description
 
     // Write this data
 
@@ -386,6 +413,11 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
     console.log(tempOut)
 
 
+    // -----------------
+    console.log(magenta + "Finished Meta Data" + reset); // State Message
+    // -----------------
+
+
 }
 
 
@@ -398,7 +430,12 @@ async function format(currFile){
 
 
 
-//Forgotten Function land
+
+
+
+
+
+
 function roundTo(n, digits) {
     var negative = false;
     if (digits === undefined) {
