@@ -35,7 +35,6 @@
         </div>
 
         <div class="viewport">
-            <div class="loading2"><img src="./images/loading.svg"></div>
             <div class="resultsContainer">
 
             </div>
@@ -46,11 +45,11 @@
             <div class="focus">
                 <header class="header">Seven Deadly Sins</header>
                 <article class="main">
-                    <p>Length: 184mins</p>
-                    <p>Size: 1854gb</p>
-                    <p>Genre: Romance, Action, Running</p>
+                    <p class="focusRuntime">Length: 184mins</p>
+                    <p class="focusSize">Size: 1854gb</p>
+                    <p class="focusGenre">Genre: Romance, Action, Running</p>
                     <br>
-                    <p>Some random stuff about the show in question: Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                    <p class="focusDesc">Description <br> Testing some stuff</p>
                 </article>
                 <aside class="aside aside-1"><img class="focusImg" src="https://yts.lt/assets/images/movies/beta_test_2016/medium-cover.jpg" onerror="imgError(this, ' + l + ');" /></aside>
                 <aside class="aside aside-2">
@@ -84,7 +83,10 @@
                     </div>
                 </aside>
                 <footer class="footer">Download Movie</footer>
+
+                <div class="loading2"><img src="./images/loading.svg"/></div>
             </div>
+            <div onclick="closeFocus()" class="focusGray"></div>
         </div>
 
 
