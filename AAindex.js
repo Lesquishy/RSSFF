@@ -3,7 +3,10 @@
 const fs = require("fs");
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
-const http = require('http')
+const http = require('http');
+define(["jquery"], function($) {
+
+});
 
 
 // Settings
@@ -309,7 +312,7 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
 
     await $.getJSON("http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3", function(omdbJSON) {
 
-        
+
     });
 
     // One liner variables
