@@ -28,14 +28,15 @@
                 <a href="#upcoming" id="upcoming" onclick="changeActive(this.id)" class="navBtn">Coming Soon!</a>
             </div>
 
+            <img class="fire" src="./images/best.gif"/>
+
             <div class="searchBox">
                 <input class="searchInput" type="text" placeholder="Search here..." name="search">
-                <button class="searchBtn" onclick="searchLoad();"><i class="material-icons md-36">search</i></button>
+                <button class="searchBtn" onclick="searchLoad();"><i class="searchIcon material-icons md-36">search</i></button>
             </div>
         </div>
 
         <div class="viewport">
-            <div class="loading2"><img src="./images/loading.svg"></div>
             <div class="resultsContainer">
 
             </div>
@@ -46,28 +47,21 @@
             <div class="focus">
                 <header class="header">Seven Deadly Sins</header>
                 <article class="main">
-                    <p>Length: 184mins</p>
-                    <p>Size: 1854gb</p>
-                    <p>Genre: Romance, Action, Running</p>
+                    <p class="focusRuntime">Length: 184mins</p>
+                    <p class="focusSize">Size: 1854gb</p>
+                    <p class="focusGenre">Genre: Romance, Action, Running</p>
                     <br>
-                    <p>Some random stuff about the show in question: Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                    <p class="focusDesc">Description <br> Testing some stuff</p>
                 </article>
                 <aside class="aside aside-1"><img class="focusImg" src="https://yts.lt/assets/images/movies/beta_test_2016/medium-cover.jpg" onerror="imgError(this, ' + l + ');" /></aside>
                 <aside class="aside aside-2">
                     <div class='seasonNav'>
-                    	<ul>
-                    		<li onclick="changeSeason(this.id);" id="Season1" class='seriesBtn'><a>Season 1</a></li>
-                            <li onclick="changeSeason(this.id);" id="Season2" class='seriesBtn'><a>Season 2</a></li>
-                            <li onclick="changeSeason(this.id);" id="Season3" class='seriesBtn'><a>Season 3</a></li>
-                            <li onclick="changeSeason(this.id);" id="Season4" class='seriesBtn'><a>Season 4</a></li>
-                            <li onclick="changeSeason(this.id);" id="Season5" class='seriesBtn'><a>Season 5</a></li>
-                            <li onclick="changeSeason(this.id);" id="Season6" class='seriesBtn'><a>Season 6</a></li>
-                            <li onclick="changeSeason(this.id);" id="Season7" class='seriesBtn'><a>Season 7</a></li>
-                            <li onclick="changeSeason(this.id);" id="Season8" class='seriesBtn'><a>Season 8</a></li>
+                    	<ul class="seasonUl">
+                    		<!--<li onclick="changeSeason(this.id);" id="Season1" class='seriesBtn'><a>Season 1</a></li>-->
                     	</ul>
                     </div>
                     <div class='episodeNav'>
-                        <ul>
+                        <ul class="episodeUl">
                     		<li class='seriesBtn'><a>Episode 1</a></li>
                     		<li class='seriesBtn'><a>Episode 2</a></li>
                             <li class='seriesBtn'><a>Episode 3</a></li>
@@ -84,7 +78,10 @@
                     </div>
                 </aside>
                 <footer class="footer">Download Movie</footer>
+
+                <div class="loading2"><img src="./images/loading.svg"/></div>
             </div>
+            <div onclick="closeFocus()" class="focusGray"></div>
         </div>
 
 

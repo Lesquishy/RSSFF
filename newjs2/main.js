@@ -31,13 +31,6 @@ $(document).ready( function (){
     }
 });
 
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function changeSeason(id) {
-    $(".seasonActive").toggleClass("seasonActive");
-    $("#" + id).toggleClass("seasonActive");
-}
-
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
