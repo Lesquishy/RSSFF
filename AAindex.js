@@ -310,9 +310,16 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
 
     //OMDB json Read
 
-    await $.getJSON("http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3", function(omdbJSON) {
+    const fetch = require('node-fetch');
 
+    let url = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
 
+    let settings = { method: "Get" };
+
+    fetch(url, settings)
+        .then(res => res.json())
+        .then((omdbJson) => {
+            // do something with JSON
     });
 
     // One liner variables
