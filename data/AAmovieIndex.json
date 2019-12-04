@@ -9,6 +9,7 @@
     "fileName":"Name of the file. No path to where it is. Has extension",
     "magnet":"magnet-link",
     "image":"../file/posters/poster.png",
+    "imdbLink":"Link to the IMDB website",
     "desc":"The movie Description",
     "genre":"The film genres (Should be array)",
     "resolution":"the resolution of both dimensions 1920x1080",
@@ -22,13 +23,9 @@
     "showInfo":{
       "seriesTitle":"name of the tv show",
       "episode":"the episode name",
+      "episodeDesc":"A description of the episode",
       "episodeNum":"episode Number. (Should be int)",
       "season":"season Number that the episode is in. (Should be int)"
-    },
-    "formatted":"If its been formatted (Should be bool)",
-    "formatInfo":{
-      "time":"(hours):(mins):(seconds)",
-      "oldFormat":"The old format before it was reformatted. EG 'mkv'"
     }
   },
   "0":{
@@ -40,6 +37,7 @@
     "fileName":"deadpool.mp4",
     "magnet":"magnet-link",
     "image":"./file/posters/poster.png",
+    "imdbLink":"https://www.imdb.com/title/tt2467372/",
     "desc":"A murder spree with Ryan Renolds",
     "genre":["action", "romance"],
     "resolution":"1920x1080",
@@ -53,14 +51,9 @@
     "showInfo":{
       "seriesTitle":"",
       "episode":"",
+      "episodeDesc":"",
       "episodeNum":0,
       "season":0
-    },
-    "formatted":true,
-    "formatInfo":{
-      "formatted":"true",
-      "time":{"hours":2, "mins":54, "sec":7},
-      "oldFormat":"mkv"
     }
 },
 "1":{
@@ -72,6 +65,7 @@
     "fileName":"deadpool.mp4",
     "magnet":"magnet-link",
     "image":"./file/posters/poster.png",
+    "imdbLink":"https://www.imdb.com/title/tt2467372/",
     "desc":"A murder spree with Ryan Renolds",
     "genre":["action", "romance"],
     "resolution":"1920x1080",
@@ -85,14 +79,9 @@
     "showInfo":{
       "seriesTitle":"Brooklyn Nine-Nine",
       "episode":"Space Monkey Fights Back",
+      "episodeDesc":"A description of the episode",
       "episodeNum":2,
       "season":2
-    },
-    "formatted":true,
-    "formatInfo":{
-      "formatted":"true",
-      "time":{"hours":2, "mins":54, "sec":7},
-      "oldFormat":"mkv"
     }
 },
   "2":{
@@ -104,6 +93,7 @@
     "fileName":"deadpool.mp4",
     "magnet":"magnet-link",
     "image":"./file/posters/poster.png",
+    "imdbLink":"https://www.imdb.com/title/tt2467372/",
     "desc":"A murder spree with Ryan Renolds",
     "genre":["action", "romance"],
     "resolution":"1920x1080",
@@ -117,14 +107,9 @@
     "showInfo":{
       "seriesTitle":"Brooklyn Nine-Nine",
       "episode":"Space Monkey Fights Back",
+      "episodeDesc":"A description of the episode",
       "episodeNum":2,
       "season":32
-    },
-    "formatted":true,
-    "formatInfo":{
-      "formatted":"true",
-      "time":{"hours":2, "mins":54, "sec":7},
-      "oldFormat":"mkv"
     }
 },
 "3":{
@@ -136,6 +121,7 @@
   "fileName":"deadpool.mp4",
   "magnet":"magnet-link",
   "image":"./file/posters/poster.png",
+  "imdbLink":"https://www.imdb.com/title/tt2467372/",
   "desc":"A murder spree with Ryan Renolds",
   "genre":["action", "romance"],
   "resolution":"1920x1080",
@@ -149,14 +135,9 @@
   "showInfo":{
     "seriesTitle":"Brooklyn Nine-Nine",
     "episode":"Space Monkey Fights Back",
+    "episodeDesc":"A description of the episode",
     "episodeNum":3,
     "season":2
-  },
-  "formatted":true,
-  "formatInfo":{
-    "formatted":"true",
-    "time":{"hours":2, "mins":54, "sec":7},
-    "oldFormat":"mkv"
   }
 },
 "4":{
@@ -168,6 +149,7 @@
   "fileName":"deadpool.mp4",
   "magnet":"magnet-link",
   "image":"./file/posters/poster.png",
+  "imdbLink":"https://www.imdb.com/title/tt2467372/",
   "desc":"A murder spree with Ryan Renolds",
   "genre":["action", "romance"],
   "resolution":"1920x1080",
@@ -181,14 +163,9 @@
   "showInfo":{
     "seriesTitle":"",
     "episode":"",
+    "episodeDesc":"",
     "episodeNum":0,
     "season":0
-  },
-  "formatted":true,
-  "formatInfo":{
-    "formatted":"true",
-    "time":{"hours":2, "mins":54, "sec":7},
-    "oldFormat":"mkv"
   }
 }
 
