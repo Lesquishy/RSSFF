@@ -62,5 +62,6 @@ function activeTab(id) {
 }
 
 function test() {
-    $(".focus").slideToggle();
+    $(".focus").slideToggle(300);
+    $(".focusContainer").fadeToggle(300);
 }
