@@ -307,9 +307,6 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
 
     //OMDB json Read
 
-<<<<<<< HEAD
-    var omdbLink = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3"
-=======
     var response;
     var omdbLink = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
     var rawFile = new XMLHttpRequest();
@@ -327,25 +324,6 @@ async function metaDataExport(currFile, duration, size, width, height, frameRate
 
     omdbJSON = JSON.parse(omdbResult);
 
-
-
-
-
-
-
-
-    /*var midOmdbJson = await omdb(omdbLink)
-    console.log(midOmdbJson)
-    console.log("^Here");
-    var omdbJSON = JSON.parse(midOmdbJson)
-
-
-    let settings = { method: "Get" };
-    fetch(omdbLink, settings)
-        .then(res => res.json())
-        .then((json) => {omdbJSON = JSON.parse(json); });*/
-
->>>>>>> 580549e943eaa787e9c7b8d87d6382989f0a4139
 
 
     // One liner variables
