@@ -37,3 +37,11 @@ Array.prototype.diff = function(arr2) {
     }
     return ret;
 };
+
+
+$(function() {
+    $(".newResults").mousewheel(function(event, delta) {
+        this.scrollLeft = $(".newResults").DeltaX
+        event.preventDefault();
+    });
+});

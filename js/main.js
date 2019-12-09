@@ -31,21 +31,24 @@ $(document).ready( function (){
     }
 });
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
 
 function changeActive(id) {
+
+    if (id == "home" && $("#home").hasClass("active") == false) {
+        console.log("Home")
+    }
+
+    else if (id == "browse" && $("#browse").hasClass("active") == false) {
+        console.log("Browse")
+    }
+
+    else if (id == "upcoming" && $("#upcoming").hasClass("active") == false) {
+        console.log("Upcoming")
+    }
+
+
+
+
     $(".active").removeClass("active");
     $("#" + id).toggleClass("active");
 }
@@ -57,4 +60,19 @@ function activeTab(id) {
 function test() {
     $(".focus").slideToggle(300);
     $(".focusContainer").fadeToggle(300);
+}
+
+function startLoading() {
+    $(".loading3").fadeToggle();
+
+}
+
+function stopLoading() {
+    setTimeout(function() {
+        $(".loading3").fadeToggle();
+    }, 200);
+}
+
+function loadHome() {
+
 }
