@@ -8,10 +8,14 @@ function loadBrowse() {
 
 //This is called when the user has searched for something
 async function searchLoad() {
+    startLoading();
     data = {};
     loadNumber = 0;
     query = $(".searchInput").val();
+    query = query.toLowerCase();
+    
     $(".searchResult").remove();
+    $(".homePageContainer").html("");
 
     if (loadLocal == true && loadYts == true) {
         console.log("searchLoad");
@@ -63,6 +67,8 @@ function localParse() {
     for (var l = 0; l < length; l++){
 
         var keywords = local[l].keyWords;
+        keywords = keywords.map(function(x){ return x.toLowerCase() });
+
         var searchArray = query.split(" ");
 
         var searched = searchArray.diff(keywords);

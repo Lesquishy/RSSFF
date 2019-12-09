@@ -23,4 +23,5 @@ function displaySearch(result) {
             }, 100);
         }
     }
+    stopLoading();
 }
