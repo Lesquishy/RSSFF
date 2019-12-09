@@ -1,99 +1,156 @@
-//Code for the focus/expand of the movies
-//Toggles the "Expanded" result, manages the visual function calls and the rss function calls
-//It by default will show a message such as "[blank] not found" for each value
-//When called (to open) it will call setFocusResult() to change these values to be the data in the movie arrays then call displayInfo() and show it on screen
-//Then when called again (to close) it will call displayInfo() to hide it, and set the values back to the "[blank] not found"
+//This file contains the code for the focus tab, and associated functions
 
-function resultExpand(id) {
-    resultDisplayTest = true;
-    console.log("Result Expand Run");
-    if (resultDisplayed === true) {//If the result is already expanded
-        resetFocusResult();
-        displayInfo();
-        resultDisplayed = false;
-    }else if (resultDisplayed === false){//If the result not yet expanded
-        setFocusResult(id);
-        displayInfo();
-        resultDisplayed = true;
-    }else {//Something went terribly wrong
-        message("toggleInfo", "resultDisplayed returned incorrect value", "m");
-    }
-}
+function loadFocus(id) {
+    console.log("LoadFocus!");
+    console.log(id);
+    var title = $("#title" + id).html();
+    console.log(title);
+    console.log(local);
 
-function removeExpand() {
-    if (resultDisplayed === true) {//If the result is already expanded
-        resetFocusResult();
-        displayInfo();
-        resultDisplayed = false;
-    }
-}
+    //pops up the focus window with a loading screen
+    $(".focus").slideToggle(300);
+    $(".focusContainer").fadeToggle(300);
 
-
-
-//This sets the info in the focus popup
-function setFocusResult(id) {
-    if ($("#tab1").hasClass("active") == true) {
-
-    }else if ($("#tab2").hasClass("active") == true) {
-        if (imageNULLId == id) {
-            $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
-        }else {$("#focusImg").attr("src",reSearch.data.movies[id].medium_cover_image);}
-        $("#focusTitle").text(reSearch.data.movies[id].title);
-        $("#focusDesc").text(reSearch.data.movies[id].description_full);
-        $("#focusTime").text(reSearch.data.movies[id].runtime + " minutes");
-        genres = reSearch.data.movies[id].genres;
-        console.log("Genres = " + genres);
+    if (data[id].episodic == true) {//Is a TV show
+        console.log("Tv show");
+        $(".focusImg").attr('src', data[id].image);
+        $(".header").html(data[id].title);
+        $(".focusRuntime").html("Runtime: " + local[id].runTime.hours + "hr " + local[id].runTime.mins + "mins");
+        $(".focusSize").html("Size: " + data[id].size);
+        var genres = data[id].genres;
         genres = genres.join(", ");
-        console.log("Genres are: " + genres);
-        $("#focusGenre").text(genres);
+        $(".focusGenre").html("Genre: " + genres);
+        $(".focusDesc").html("Summary: <br>" + data[id].desc);
+        console.log("firstest");
 
-        //Gets the torrent link with the most seeders
-        torrents = reSearch.data.movies[id].torrents;
-        var testMax = [];
-        for (var i = 0; i < torrents.length; i++){
-            testMax.push(torrents[i].seeds);
+        //variables for use in displaying the seasons and episodes
+        seasonContainer = {};
+
+        //Now parse the info for the episodes and seasons
+        var length = Object.keys(local).length;
+        length = length - 1;
+        for (var l = 0; l < length; l++){
+            if (local[l].showInfo.seriesTitle == title) {//Part of this show
+                console.log("A Part of this show");
+                var image = local[l].image;
+                var desc = local[l].desc;
+                var runtime = local[l].runTime.hours + "hr " + local[l].runTime.mins + "mins";
+                var genres = local[l].genre;
+                var file = local[l].fileLocation;
+                var size = local[l].size;
+
+                var season = local[l].showInfo.season;
+                var episode = local[l].showInfo.episodeNum;
+
+                if (seasonContainer[season] != undefined) {//This season exists in the object
+                    console.log("Season Exists");
+                    if (seasonContainer[season][episode] != undefined) {//This episode exists, do not add it.
+                        console.log("episode Exists");
+                    }else {//Add only the episode
+                        console.log("log");
+                        $.extend(seasonContainer[season],{
+                            [episode]: {
+                                "title": local[l].showInfo.episode,
+                                "desc": local[l].showInfo.episodeDesc,
+                                "size": size,
+                                "length": runtime,
+                                "genres": genres,
+                                "file": file
+                            }
+                        });
+                    }
+
+
+
+                }else {//Add this season and episode to the object
+
+                    console.log("log #2");
+                    $.extend(seasonContainer,{
+                        [season]: {
+                            [episode]: {
+                                "title": local[l].showInfo.episode,
+                                "desc": local[l].showInfo.episodeDesc,
+                                "size": size,
+                                "length": runtime,
+                                "genres": genres,
+                                "file": file
+                            },
+                        }
+                    });
+                }
+
+
+            }
         }
-        var maxVal= Math.max(...testMax);
-        console.log("max Val" + maxVal);
-        var max = testMax.indexOf(maxVal);
-        console.log("max is:" + max);
-        $("#focusLink").attr("href", reSearch.data.movies[id].torrents[max].url);
-        $("#focusSize").text(reSearch.data.movies[id].torrents[max].size);
-    }else if ($("#tab3").hasClass("active") == true) {
-        if (imageNULLId == id) {
-            console.log("wefrwfw");
-            $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
-        }else {$("#focusImg").attr("src",img[id]);}
-        $("#focusTitle").text(title[id]);
-        $("#focusDesc").text(desc[id]);
-        $("#focusTime").text(time[id]);
-        $("#focusGenre").text(genre[id]);
-        $("#focusLink").text(link[id]);
-        $("#focusSize").text(size[id]);
-    }else {message("toggleInfo", "no tab is active", "m");}
-    //To not override the 404 image
+        console.log(seasonContainer);
+
+        //Display the data learned from the show, starting with the first episode
+
+        $(".seasonUl").html("");
+        $(".episodeUl").html("");
+        var length = Object.keys(seasonContainer).length;
+        console.log("Seasons: " + length);
+        for (var l = 1; l <= length; l++){
+            if (l == 1) {
+                $(".seasonUl").append('<li onclick="changeSeason(this.id);" id="Season' + l + '" class="seriesBtn seasonActive"><a>Season ' + l + '</a></li>');
+
+            }else {
+                $(".seasonUl").append('<li onclick="changeSeason(this.id);" id="Season' + l + '" class="seriesBtn"><a>Season ' + l + '</a></li>');
+            }
+        }
+
+        var episodes = Object.keys(seasonContainer[1]).length;
+        console.log("Episodes: " + episodes)
+        for (var l = 1; l <= episodes; l++){
+            console.log("episode loaded")
+            $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+
+        }
+
+    }else {//A movie
+        console.log("movie");
+        $(".focusImg").attr('src', data[id].image);
+        $(".header").html(data[id].title);
+        $(".focusRuntime").html("Runtime: " + data[id].runtime);
+        $(".focusSize").html("Size: " + data[id].size);
+        var genres = data[id].genres;
+        genres = genres.join(", ");
+        $(".focusGenre").html("Genre: " + genres);
+        $(".focusDesc").html("Summary: <br>" + data[id].desc);
+
+        //$(".aside-2").html("");//clears the season list ready for the stream
+
+        //show a stream button or something
+    }
 }
 
-function displayInfo() {
-    $("#grey").fadeToggle(anispeed);
-    $(".resultFocus").toggleClass("focusShown");
-    $(".resultFocus").slideToggle(anispeed);
+function changeSeason(id) {
+    console.log("ChangeSeason()")
+    $(".seasonActive").toggleClass("seasonActive");
+    $("#" + id).toggleClass("seasonActive");
+    var season = id.replace(/\D/g,'');
+    console.log(seasonContainer);
+    console.log(season);
+    var episodes = Object.keys(seasonContainer[season]).length;
+    $(".episodeUl").html("");
+
+    for (var l = 1; l <= episodes; l++){
+        console.log("Wow");
+        $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+    }
 }
 
-function resetFocusResult() {
-    setTimeout(function() {
-        $("#focusImg").attr("src", "https://tnstateparks.com/assets/images/hero-images/4777/300x500.png");
-        $("#focusTitle").text("There was an error displaying this value");
-        $("#focusDesc").text("There was an error displaying this value");
-        $("#focusTime").text("There was an error displaying this value");
-        $("#focusGenre").text("There was an error displaying this value");
-        $("#focusSize").text("There was an error displaying this value");
-    }, 200);
+//______________________________________________________HERE_________________________________________________
+function changeEpisode(id) {
+    var episode = id.replace(/\D/g,'');
 }
 
 
+function closeFocus() {
+    $(".focus").slideToggle(300);
+    $(".focusContainer").fadeToggle(300);
+}
 
-
-
-
-//
+function displayFocus() {
+    //just some stuff rtemove it
+}
