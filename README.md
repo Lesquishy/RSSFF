@@ -1,84 +1,56 @@
 # RSSFF
 
-THIS IS A WIP
-Expect Nothing great. There are a lot of moving parts that have to work together nicely.
+THIS IS A WIP!! It isn't complete, Some items are incomplete.
+There are a lot of moving parts that have to work together nicely. If you encounter a problem. Use this github page and submit a bug.
 
-Used to view and auto collect movies for torrent. Using customizeable RSS feeds from your favorite sites. With keywords to look out for, It'll auto save movies from their title and store them to collect later. Using a separate script it'll also show you all your previously downloaded films for a movie database all in one place.
+## What it Does
+Its primary usage is to locally host your movies or TV shows to stream to other devices.
+This includes anything you can cast to or anything with a web browser. EG Chromecast, Smart TV's, Smartphone, PC's and more.
 
-Its main purpose is to view manage all my movies. It has the added benifit of being able to search for movies from external sites. It'll also manage episodic shows.
+Designed to be lightweight, load times is guaranteed to surpass your standard streaming services.
 
-It's based on 2 stages (so far).
-One to manage the inflow of movies. This includes checking their format and file name, Then it'll add the processed movies to the index.
+As well as handling streaming, It will manage your ingest of films too. Simply add the film file to the site, It will do the rest including:
+    - Reformatting
+    - Sourcing poster images
+    - Collecting metadata like:
+        - File size
+        - Runtime
+        - Resolution
+        - IMDB link
+    - Managing TV Shows
+    - Deleting Double ups
+    - And more!
 
-The other stage is the site. It'll use the previously mentioned index to display all the local movies. While using exsisting API's or RSS feeds to find new movies.
+Need to take the film with you? Each film can be individually downloaded to your current machine for offline watching.
 
-Idealy, You could do the first stage from the site. Start a download, Rename and reformat the new movie, add it to the index to be displayed on the site
+The site includes an admin page to have finer control over what goes on. Including...
+    - Hide films from the site
+    - Adding custom keywords to films for easier search's or custom search results.
+    - Edit film information EG Descriptions, Title and genres
+    - File management to easily save space and delete films.
+    - Extensive log reports allow you to see how many times a show has been watched, What users searched and more.
 
-## To do for site
-Tasks
-- Settings menu with lock. (User? Just password defined?)
-  - Whitelist filter for the desired stored movies.
-  - Blacklist to hide movies from search list.
-- More comments to make it easier to read XD.
-- Design the settings menu.
-- Fix search box result positioning.
-- Json file read / write for found and stored movies.
-- Search to search the Json for found movies.
-- Save the poster images
-- Add info to the json
-  - add descriptions
-  - add genres
-  - add keyWords
-  - add poster images?
+## Automatic Sourcing
+While all that are good thing to have. What if you want EVERYTHING to be easy and intuitive to use... Including sourcing your movies.
+From the admin page, You can enable an RSS feed. This allows you to have easy access to 14,000 high quality movies to download for your collection.
 
-In progress / known problems
-- Movie tiles with info from searched results
-- Change name banner
-- Search filters improvements
-- reload YTS tab on focus change
-- Fix result limiter
-- Script to add movies to database, rename files and refomat files
+When you search for a movie with RSS enabled, it will show results from your local server and potential downloads too.
+With one click, If you don't already have the film, The download will start. Depending on your internet speed, The film could be ready to stream by the time you've made popcorn.
 
-Done
-- Search
-  - Search box to search yts site
-  - Added multiple tabs to search different areas.
-- Movie tiles with displayed info from RSS
-- Basic backend structure
-- Basic Visual structure.
+In the admin page, You can disable automatic downloads and use a request system. Instead of downloading films instantly, it will send a prompt to the admin page for the admin user to either accept or decline the request. If accepted, It will then proceed and download the film
+
+### Word of the wise..
+** Please note that automatic sourcing is illegal. It torrents inappropriately sourced films. But as this project is centered around managing movies, We wanted to make every aspect of it easy, even if only for the notorious users.
+By default it is off. We do not condone, nor promote the usage of it. Use at your own risk.
 
 
-## To do for indexer
-Tasks
-- write to the json file (without replaceing everything on it)
-- Easily changeable input and output directories
-- Rename files
-- Reformat files
+## How to Install
+You'll need
+    - Nodejs
+    - Webhost with PHP (apache2, wamp or xampp work fine)
 
-In progress / known problems
-- add more data to write to the index
-  - formatting info
-
-Done
-- Collect information from metadata
-  - Name
-  - Run time
-  - Size
-  - Resolution
-  - Ratio
-  - Framerate
-  - locallyStored
-  - file Location
-  - title (not name. the var name is the fileName)
-  - Detect if its episodic and the proceeding info
-- Process the metadata
-  - Duration
-  - Size
-  - Resolution
-  - Framerate
-- Prepare metadata for output
-- Read existing info from the index
-- File filtering for
-  - File blacklist
-  - Extension blacklist
-  - Existing files
+(1): Clone this repository to the location of your webserver. EG: '/var/www/'
+(2): Add your movies to the 'files' directory
+(3): Start the web webserver
+(4): Open 2 terminals in the location of the repository
+(5): run 'node ./index.js' and in the other terminal 'node ./format.js'
