@@ -3,19 +3,29 @@
 
 //This function loads the browse page
 function loadBrowse() {
-
+    $(".browseContainer").fadeToggle(200);
+    browsing = true;
+    searchLoad();
 }
 
 //This is called when the user has searched for something
 async function searchLoad() {
+    query = $(".searchInput").val();
+    if (query.length < 1) {
+        if (browsing == true) {
+            browsing = false;
+            //dont worry
+        }else {
+            return;
+        }
+    }
+
     startLoading();
     data = {};
     loadNumber = 0;
-    query = $(".searchInput").val();
     query = query.toLowerCase();
-    
+
     $(".searchResult").remove();
-    $(".homePageContainer").html("");
 
     if (loadLocal == true && loadYts == true) {
         console.log("searchLoad");
@@ -24,7 +34,17 @@ async function searchLoad() {
         console.log(localData);
 
         var result = await ytsSearch();
-        displaySearch(result);
+
+        if (result == undefined) {
+            console.log("hidden true")
+            hidden = true;
+            $(".resultsContainer").fadeOut(200);
+            stopLoading();
+        }else {
+            hidden = false;
+            $(".resultsContainer").fadeIn(200);
+            displaySearch(result);
+        }
 
     }
 
@@ -197,12 +217,8 @@ async function ytsData(searchParam) {
             resultLength = result.data.movies.length;
             finalResult = result;
         }else {
-            console.log("not a single movie");
-            reSearch = result;
-            $(".searchNull").empty();
-            $(".searchNull").append('<p class="searchNullResponse">Sorry! Your search did not return any results :(</p>');
-            $(".searchNull").fadeIn();
-            toggleSearchLoad();
+            finalResult = 0;
+            return(finalResult);
         }
     });
     console.log("data gotten");
@@ -212,6 +228,9 @@ async function ytsData(searchParam) {
 
 function ytsParse(result) {
     console.log("ytsParse()");
+    if (result == 0) {
+        return;
+    }
 
     for (var l = 0; l < resultLength; l++){
 

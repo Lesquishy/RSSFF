@@ -10,6 +10,8 @@ var loadNumber = 0;
 var query = "";
 var shows = [];
 var local;
+var browsing = false;
+var hidden = false;
 
 
 // adds .visible and .invisible
@@ -38,10 +40,8 @@ Array.prototype.diff = function(arr2) {
     return ret;
 };
 
-
-$(function() {
-    $(".newResults").mousewheel(function(event, delta) {
-        this.scrollLeft = $(".newResults").DeltaX
-        event.preventDefault();
-    });
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        searchLoad();
+    }
 });

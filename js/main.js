@@ -26,7 +26,7 @@ $(document).ready( function (){
         console.log("preloading the Home Page");
         //load the home page
 
-        //loadHome();
+        loadHome();
         activeTab("#home");
     }
 });
@@ -35,11 +35,13 @@ $(document).ready( function (){
 function changeActive(id) {
 
     if (id == "home" && $("#home").hasClass("active") == false) {
-        console.log("Home")
+        $(".browseContainer").fadeOut(200);
+        loadHome();
     }
 
     else if (id == "browse" && $("#browse").hasClass("active") == false) {
-        console.log("Browse")
+        $(".homePageContainer").fadeOut(200);
+        loadBrowse();
     }
 
     else if (id == "upcoming" && $("#upcoming").hasClass("active") == false) {
@@ -74,5 +76,5 @@ function stopLoading() {
 }
 
 function loadHome() {
-
+    $(".homePageContainer").fadeToggle(200);
 }

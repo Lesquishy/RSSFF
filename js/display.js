@@ -15,7 +15,7 @@ function displaySearch(result) {
     }
     loadingSearch = false;
     if (loadLocal == true) {
-        loadBrowse();
+
     }else {
         if (unload == true) {
             setTimeout(function() {

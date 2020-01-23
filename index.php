@@ -8,13 +8,12 @@
       <link rel="stylesheet" href="./css/rss.css">
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"/>
-      <script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
+      <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
       <script type="text/javascript" src="./js/var.js"></script>
       <script type="text/javascript" src="./js/main.js"></script>
       <script type="text/javascript" src="./js/extract.js"></script>
       <script type="text/javascript" src="./js/focus.js"></script>
       <script type="text/javascript" src="./js/display.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
 
       <title>RSSFF</title> <!-- RSS Feed Filter -->
     </head>
@@ -29,18 +28,10 @@
                 <a href="#upcoming" id="upcoming" onclick="changeActive(this.id)" class="navBtn">Coming Soon!</a>
             </div>
 
-            <img class="fire" src="./images/best.gif"/>
-
-            <div class="searchBox">
-                <input class="searchInput" type="text" placeholder="Search here..." name="search">
-                <button class="searchBtn" onclick="searchLoad();"><i class="searchIcon material-icons md-36">search</i></button>
-            </div>
+            <!--<img class="fire" src="./images/best.gif"/>-->
         </div>
 
         <div class="viewport">
-            <div class="resultsContainer">
-
-            </div>
 
             <div class="homePageContainer">
 
@@ -52,10 +43,6 @@
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Deeiwv</div></div>
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Movie Div</div></div>
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Maovie Div</div></div>
-                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test eMove Div</div></div>
-                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Movie Div</div></div>
-                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">faMoie Div</div></div>
-                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Movie Div</div></div>
 
                     </div>
                 </div>
@@ -68,6 +55,18 @@
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Deeiwv</div></div>
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Movie Div</div></div>
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Maovie Div</div></div>
+
+                    </div>
+                </div>
+
+                <div class="contContainer">
+                    <p class="sectionTitle">Something Else:</p>
+                    <div class="browseResults">
+
+                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Movie Div</div></div>
+                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Deeiwv</div></div>
+                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Movie Div</div></div>
+                        <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Maovie Div</div></div>
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test eMove Div</div></div>
                         <div class="browseResult" onclick="" id=""><img class="browseImg" src="./images/not-found.jpg" onerror="" /><div class="browseTitle" id="">Test Movie Div</div></div>
 
@@ -75,6 +74,26 @@
                 </div>
                 <br>
                 <br>
+            </div>
+
+            <div class="browseContainer">
+                <div class="searchBox">
+                    <button class="searchSetBtn" onclick="searchLoad();"><i class="searchIcon material-icons md-48">filter_list</i></button>
+                    <input class="searchInput" id="searchInput" type="text" placeholder="Search here..." name="search">
+                    <button class="searchBtn" onclick="searchLoad();"><i class="searchIcon material-icons md-48">search</i></button>
+                </div>
+                <div class="searchSetContainer">
+                    <select id="genreDrop" class="searchDrop">
+                        <option value="" class="searchDropSub">Apples</option>
+                        <option value="" class="searchDropSub">Apples</option>
+                        <option value="" class="searchDropSub">Apples</option>
+                        <option  value="" class="searchDropSub">Apples</option>
+                    </select>
+                </div>
+                <div class="searchPls">Sorry there were no results :/</div>
+                <div class="resultsContainer">
+
+                </div>
             </div>
         </div>
 
@@ -90,30 +109,21 @@
                 </article>
                 <aside class="aside aside-1"><img class="focusImg" src="https://yts.lt/assets/images/movies/beta_test_2016/medium-cover.jpg" onerror="imgError(this, ' + l + ');" /></aside>
                 <aside class="aside aside-2">
-                    <!--
+
+
                     <div class='seasonNav'>
                     	<ul class="seasonUl">
-                    		<li onclick="changeSeason(this.id);" id="Season1" class='seriesBtn'><a>Season 1</a></li>
+                    		<li onclick="changeSeason(this.id);" id="Season1" class='seriesBtn'><a>Something Went Wrong</a></li>
                     	</ul>
                     </div>
                     <div class='episodeNav'>
                         <ul class="episodeUl">
-                    		<li class='seriesBtn'><a>Episode 1</a></li>
-                    		<li class='seriesBtn'><a>Episode 2</a></li>
-                            <li class='seriesBtn'><a>Episode 3</a></li>
-                            <li class='seriesBtn'><a>Episode 4</a></li>
-                            <li class='seriesBtn'><a>Episode 1</a></li>
-                    		<li class='seriesBtn'><a>Episode 2</a></li>
-                            <li class='seriesBtn'><a>Episode 3</a></li>
-                            <li class='seriesBtn'><a>Episode 4</a></li>
-                            <li class='seriesBtn'><a>Episode 1</a></li>
-                    		<li class='seriesBtn'><a>Episode 2</a></li>
-                            <li class='seriesBtn'><a>Episode 3</a></li>
-                            <li class='seriesBtn'><a>Episode 4</a></li>
+                    		<li class='seriesBtn'><a>Something Went Wrong</a></li>
                     	</ul>
                     </div>
-                -->
 
+
+                <!--
                 <div class="movieNav">
                     <p class="similarTag">Similar Movies</p>
                     <div class="similarContainer">
@@ -123,7 +133,7 @@
                         <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
 
                 </div>
-
+            -->
 
                 </aside>
                 <footer class="footer">
@@ -138,6 +148,6 @@
 
         <div class="loading"><img src="./images/loading.svg"/></div>
         <div class="loading3"><img src="./images/loading.svg"/></div>
-        <a class="testBtn" onclick="test()">Test</a>
+        <!--<a class="testBtn" onclick="test()">Test</a>-->
     </body>
 </html>
