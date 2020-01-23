@@ -9,11 +9,12 @@ const readline = require('readline');
 
 
 // Settings
-const requiredFiles = ["./data/", "./files/", "./files/posters/", "./data/AAmovieIndex.json", "./data/FormatFiles.json" ]; // Required files
+const requiredFiles = ["./data/", "./files/", "./files/posters/", "./data/AAmovieIndex.json", "./data/FormatFiles.json", "./files/Episodic_Shows/" ]; // Required files
 const requireCleanFiles = ["./data/FormatFiles.json"]; // The files that the script needs to be empty at the start
 const jsonFile = './data/AAmovieIndex.json'; // Where the Movie metadata will be saved
 const dir = './files'; // DIR that will be scanned
-const postersLocation = './files/posters/'
+const tvShowLocation = dir + '/Episodic_Shows/'; // Where the Episodic shows should be stored
+const postersLocation = './files/posters/' // Where the poster photos will be stored
 const sortExtKeepWhite = ["mp4"]; // Whitelist for streamable extensions
 const sortExtFormatWhite = ["mkv", "avi"]; // Whitelist for Formatable extesions
 const fileBlack = ["AAindex.js", "posters"]; // A file blacklist. The script will ignore the folders and files/
@@ -43,7 +44,7 @@ console.log(magenta + "\nStarting File Check" + reset); //State message
 for (var i = 0; i < requiredFiles.length; i++) {
     if (!fs.existsSync(requiredFiles[i])) {
         // ---------------
-        console.log(yellow + "File Missing : " + requiredFiles[i] + reset); //State message
+        console.log(yellow + "File Missing : " + requiredFiles[i] + reset); // State message
         // ---------------
         if (requiredFiles[i].slice(-1) == "/") {
             fs.mkFileSync(requiredFiles[i]);
@@ -55,7 +56,7 @@ for (var i = 0; i < requiredFiles.length; i++) {
             });
         }
         // ---------------
-        console.log(yellow + "File Created : " + requiredFiles[i] + reset); //State message
+        console.log(yellow + "File Created : " + requiredFiles[i] + reset); // State message
         // ---------------
     }
 }
@@ -66,7 +67,7 @@ for (var i = 0; i < requireCleanFiles.length; i++) {
 }
 
 // ---------------
-console.log(magenta + "Finished File Check\n" + reset); //State message
+console.log(magenta + "Finished File Check\n" + reset); // State message
 // ---------------
 
 
@@ -75,7 +76,7 @@ console.log(magenta + "Finished File Check\n" + reset); //State message
 //New New File seatching
 //This will get every file that is in the dir
 // ---------------
-console.log(magenta + "Starting Scan" + reset); //State message
+console.log(magenta + "Starting Scan" + reset); // State message
 // ---------------
 var readJSON = function(dir, done) {
     var results = [];
@@ -193,10 +194,9 @@ async function checkForDoubleUps(currFile, duration, size, width, height, frameR
             }
         } catch (e) {
             if (match == -1) {
-                console.log(magenta + "Starting Double Up Check" + reset); //State message
-                console.log(blue + "Working File : " + reset + currFile); // State Message
                 try {
-                    if (parseInt(currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].replace('e','')) > 0) {
+                    var ifQuery = parseInt(currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].replace('e',''))
+                    if ( ifQuery > 0 ) {
                         // Definately episodic. Whats the show name?
                         console.log(blue + "New episodic show found" + reset);
                         var userShowName = await userInput(red + "Please input series name : " + reset);
@@ -235,9 +235,8 @@ async function checkForDoubleUps(currFile, duration, size, width, height, frameR
                 } catch (e) {
                     console.log(e)
                     console.log(green + "Movie is not in the index" + reset) // State message
-                    // Movie rename here
+                    renameMovie(currFile)
                 }
-                console.log(magenta + "Finished Double Up Check\n" + reset); // State Message
             }
             break;
         }
@@ -245,83 +244,6 @@ async function checkForDoubleUps(currFile, duration, size, width, height, frameR
     }
 
 }
-
-
-async function renameShow(currFile, showID, customShowName){
-    //--------------------
-    console.log(magenta + "Starting Renaming Show" + reset ); //State message
-    console.log(blue + "Working File : " + reset + currFile); // State Message
-    //--------------------
-
-    var showName;
-
-    if (showID == false) {
-        showName = customShowName;
-    } else {
-        showName = indexJSON[showID].title; // Gets the name of the show
-    }
-
-    //Rename a file thats a show
-    var episodeNum = currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].replace('e',''); // Gets the episode number
-    var season = currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].replace('s',''); // Gets the season number
-    var outputName = showName.replace(" ", "_") + "_s" + season + "e" + episodeNum + "." + currFile.substr(currFile.length - 3); // final file name
-    var fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
-
-    if (skip !== true) {
-        fs.rename(currFile, fileLocation+outputName, async function (err) {
-            if (err) throw err;
-            console.log(green + "Finished Renaming Show to : " + fileLocation+outputName + reset);
-            await collectMetaData(fileLocation+outputName, true, showName, showID);
-        });
-    } else {
-        console.log(yellow + "Skipped file renaming" + reset);
-        console.log("Would have renamed to : " + fileLocation+outputName);
-        await collectMetaData(currFile, true, showName, showID);
-    }
-
-}
-
-async function renameMovie(currFile){
-    //--------------------
-    console.log(magenta + "Starting Renaming Movie" + reset ); //State message
-    console.log(blue + "Working File : " + reset + currFile); // State Message
-    //--------------------
-    // Rename a movie
-    var fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
-
-
-    if (skip !== true) {
-        fs.rename(currFile, fileLocation+outputName, async function (err) {
-            if (err) throw err;
-            console.log(green + "Finished Renaming Movie to : " + fileLocation+outputName + reset);
-            await collectMetaData(fileLocation+outputName, true, showName, showID);
-        });
-    } else {
-        console.log(yellow + "Skipped file renaming" + reset);
-        console.log("Would have renamed to : " + fileLocation+outputName);
-        await collectMetaData(currFile, true, showName, showID);
-    }
-
-}
-
-
-
-
-async function collectMetaData(currentFile, episodic, seriesTitle, showID) {
-    // -----------------
-    console.log(magenta + "Starting Meta Data" + reset); // State Message
-    console.log(blue + "Working File : " + reset + currentFile); // State Message
-    // -----------------
-    // Collect, process and save the movie metadata
-    // This collects the movie data
-    await ffmpeg.ffprobe(currentFile, async function(err, data) {
-        //error catching
-        if(err) {console.log(err);return;}
-        await metaDataExport(currentFile, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio, episodic, seriesTitle, showID)
-    });
-}
-
-
 
 async function showMatchCheck(currFile, showName){
 
@@ -370,6 +292,124 @@ async function showMatchCheck(currFile, showName){
         z++;
     }
 }
+
+
+// RENAME SHOW
+
+async function renameShow(currFile, showID, customShowName){
+    //--------------------
+    console.log(magenta + "Starting Renaming Show" + reset ); //State message
+    console.log(blue + "Working File : " + reset + currFile); // State Message
+    //--------------------
+
+    var showName;
+
+    if (showID == false) {
+        showName = customShowName;
+    } else {
+        showName = indexJSON[showID].title; // Gets the name of the show
+    }
+
+    //Rename a file thats a show
+    var episodeNum = currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].replace('e',''); // Gets the episode number
+    var season = currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].replace('s',''); // Gets the season number
+    var outputName = showName.replace(" ", "_") + "_s" + season + "e" + episodeNum + "." + currFile.substr(currFile.length - 3); // final file name
+    var fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
+
+    if (skip !== true) {
+        fs.rename(currFile, fileLocation+outputName, async function (err) {
+            if (err) throw err;
+            console.log(green + "Finished Renaming Show to : " + fileLocation+outputName + reset);
+            await collectMetaData(fileLocation+outputName, true, showName, showID);
+        });
+    } else {
+        console.log(yellow + "Skipped file renaming" + reset);
+        console.log("Would have renamed to : " + fileLocation+outputName);
+        await showDirectoryConstruction(currFile, true, showName, showID);
+    }
+
+}
+
+
+//  RENAME A MOVIE
+
+async function renameMovie(currFile){
+    //--------------------
+    console.log(magenta + "Starting Renaming Movie" + reset ); //State message
+    console.log(blue + "Working File : " + reset + currFile); // State Message
+    //--------------------
+    var fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
+    var fileName = currFile.split('/')[(currFile.split('/').length-1)];; // Gets the file name
+    var trimmed = fileName.substring(0, fileName.indexOf(fileName.match(/(19|20)([0-9][0-9])/g)[0]));
+    if(fileName.slice(-1) == "."){
+        trimmed = trimmed.substring(0, trimmed.length - 1);
+    }
+    trimmed = trimmed.replace(".", "_");
+    console.log(trimmed);
+
+    // NOTE: I was here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+    // Decides if it should actually change the file names
+    // Allowes debugging without actually effecting the file structure
+    if (skip !== true) {
+        fs.rename(currFile, fileLocation+outputName, async function (err) {
+            if (err) throw err;
+            console.log(green + "Finished Renaming Movie to : " + fileLocation+outputName + reset);
+            await collectMetaData(fileLocation+outputName, true, showName, showID);
+        });
+    } else {
+        console.log(yellow + "Skipped file renaming" + reset);
+        //console.log("Would have renamed to : " + fileLocation+outputName);
+        //await showDirectoryConstruction(currFile, true, showName, showID);
+    }
+
+}
+
+
+
+async function showDirectoryConstruction(currentFile, episodic, seriesTitle, showID) {
+
+    var seasonFolder = "/Season_" + parseInt(currentFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1));
+    var showFolder = seriesTitle.replace(" ", "_").toLowerCase();
+
+    if (skip !== true) {
+        if (!fs.existsSync(showFolder)){
+            fs.mkdirSync(showFolder);
+        }
+        if (!fs.existsSync(seasonFolder)){
+            fs.mkdirSync(seasonFolder);
+        }
+    } else {
+        console.log(yellow + "Skipped making folders" + reset);
+        console.log("Would have made : ");
+        console.log(tvShowLocation + showFolder);
+        console.log(tvShowLocation + showFolder + seasonFolder + "\n");
+    }
+
+    var outputLocation = tvShowLocation + showFolder + seasonFolder;
+
+    await collectMetaData(currentFile, episodic, seriesTitle, showID)
+}
+
+
+async function collectMetaData(currentFile, episodic, seriesTitle, showID) {
+    // -----------------
+    console.log(magenta + "Starting Meta Data" + reset); // State Message
+    console.log(blue + "Working File : " + reset + currentFile); // State Message
+    // -----------------
+    // Collect, process and save the movie metadata
+    // This collects the movie data
+    await ffmpeg.ffprobe(currentFile, async function(err, data) {
+        //error catching
+        if(err) {console.log(err);return;}
+        await metaDataExport(currentFile, data.format.duration, data.format.size, data.streams[0].width, data.streams[0].height, data.streams[0].avg_frame_rate, data.streams[0].display_aspect_ratio, episodic, seriesTitle, showID)
+    });
+}
+
+
+
+
 
 async function metaDataExport(currFile, duration, size, width, height, frameRate, ratio, episodic, seriesTitle, showID){
 
