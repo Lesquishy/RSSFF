@@ -181,12 +181,11 @@
 
 .resultsContainer {
     position: absolute;
+    left: 0px;
     top: 60px;
     width: 100%;
     max-height: calc(100% - 60px);
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
+    display: inline-block;
     overflow-y: scroll;
     color: #333;
     transition: color .3s ease;
@@ -195,18 +194,22 @@
 }
 
 .searchResult {
-  background: #222;
-  width: 260px;
-  height: 420px;
-  text-align: center;
-  font-size: 40px;
-  margin: 10px;
-  color: white;
-  overflow: hidden;
-  border-radius: 5px;
-  -webkit-box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
+    background: #222;
+    width: 260px;
+    height: 420px;
+    text-align: center;
+    font-size: 40px;
+    margin: 10px;
+    color: white;
+    overflow: hidden;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
+}
+
+.searchResultFlex {
+    display: inline-block;
 }
 
 .resultImg {
@@ -283,7 +286,6 @@ box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
     overflow-y: scroll;
     text-decoration: none;
     border-left: 2px solid gray;
-    border-radius: 5px;
 }
 
 .seriesBtn {
@@ -310,11 +312,17 @@ box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
 }
 
 .seasonActive {
-    width: calc(100% - 2px);
+    width: calc(100% + 2px);
     border: 2px solid gray;
-    border-right: 2px solid #222;
+    border-right: 2px solid #3c3c3c;
+    box-sizing: border-box;
     z-index: 50;
     transition: 0.2s all;
+    background: #3c3c3c;
+}
+
+.episodeActive {
+    background: #3c3c3c;
 }
 
 .dropArrow {
@@ -425,6 +433,11 @@ box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
 
 .focusBtnSymbol {
     transform: translate(0px, 10px);
+}
+
+.btnDisable {
+    cursor: default;
+    text-decoration: line-through;
 }
 
 
@@ -659,6 +672,12 @@ box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
     cursor: pointer;
     background: none;
     color: inherit;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.searchSetBtn:hover {
+    color: rgb(0,130,230);
 }
 
 .searchSetContainer {
@@ -672,6 +691,16 @@ box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
     -webkit-box-shadow: 0px 10px 13px 0px rgba(34,34,34,1);
     -moz-box-shadow: 0px 10px 13px 0px rgba(34,34,34,1);
     box-shadow: 0px 10px 13px 0px rgba(34,34,34,1);
+}
+
+.setActive {
+    transform: rotateX(180deg);
+    color: rgb(0,130,230);
+}
+
+.searchDropTitle {
+    color: white;
+    font-size: 20px;
 }
 
 

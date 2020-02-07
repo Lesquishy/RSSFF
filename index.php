@@ -78,16 +78,31 @@
 
             <div class="browseContainer">
                 <div class="searchBox">
-                    <button class="searchSetBtn" onclick="searchLoad();"><i class="searchIcon material-icons md-48">filter_list</i></button>
+                    <button class="searchSetBtn" onclick="searchSetLoad();"><i class="searchIcon material-icons md-48">filter_list</i></button>
                     <input class="searchInput" id="searchInput" type="text" placeholder="Search here..." name="search">
                     <button class="searchBtn" onclick="searchLoad();"><i class="searchIcon material-icons md-48">search</i></button>
                 </div>
                 <div class="searchSetContainer">
+                    <p class="searchDropTitle">Genre: </p>
                     <select id="genreDrop" class="searchDrop">
-                        <option value="" class="searchDropSub">Apples</option>
-                        <option value="" class="searchDropSub">Apples</option>
-                        <option value="" class="searchDropSub">Apples</option>
-                        <option  value="" class="searchDropSub">Apples</option>
+                        <option value="" selected>None</option>
+                        <option value="crime" class="searchDropSub">Crime</option>
+                        <option value="drama" class="searchDropSub">Drama</option>
+                        <option value="mystery" class="searchDropSub">Mystery</option>
+                        <option  value="thriller" class="searchDropSub">Thriller</option>
+                        <option  value="action" class="searchDropSub">Action</option>
+                        <option  value="comedy" class="searchDropSub">Comedy</option>
+                        <option  value="family" class="searchDropSub">Family</option>
+                        <option  value="adventure" class="searchDropSub">Adventure</option>
+                        <option  value="animation" class="searchDropSub">Animation</option>
+                    </select>
+
+                    <p class="searchDropTitle">Quality: </p>
+                    <select id="qualityDrop" class="searchDrop">
+                        <option value="" selected>None</option>
+                        <option value="720p" class="searchDropSub">720p</option>
+                        <option value="1080p" class="searchDropSub">1080p</option>
+                        <option value="4k" class="searchDropSub">4k</option>
                     </select>
                 </div>
                 <div class="searchPls">Sorry there were no results :/</div>
@@ -110,35 +125,35 @@
                 <aside class="aside aside-1"><img class="focusImg" src="https://yts.lt/assets/images/movies/beta_test_2016/medium-cover.jpg" onerror="imgError(this, ' + l + ');" /></aside>
                 <aside class="aside aside-2">
 
-
-                    <div class='seasonNav'>
-                    	<ul class="seasonUl">
-                    		<li onclick="changeSeason(this.id);" id="Season1" class='seriesBtn'><a>Something Went Wrong</a></li>
-                    	</ul>
+                    <div class="tvNav">
+                        <div class='seasonNav'>
+                        	<ul class="seasonUl">
+                        		<li onclick="changeSeason(this.id);" id="Season1" class='seriesBtn'><a>Something Went Wrong</a></li>
+                        	</ul>
+                        </div>
+                        <div class='episodeNav'>
+                            <ul class="episodeUl">
+                        		<li class='seriesBtn'><a>Something Went Wrong</a></li>
+                        	</ul>
+                        </div>
                     </div>
-                    <div class='episodeNav'>
-                        <ul class="episodeUl">
-                    		<li class='seriesBtn'><a>Something Went Wrong</a></li>
-                    	</ul>
+
+
+                    <div class="movieNav">
+                        <p class="similarTag">Similar Movies</p>
+                        <div class="similarContainer">
+                            <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
+                            <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
+                            <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
+                            <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
+
+                        </div>
                     </div>
-
-
-                <!--
-                <div class="movieNav">
-                    <p class="similarTag">Similar Movies</p>
-                    <div class="similarContainer">
-                        <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
-                        <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
-                        <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
-                        <div class="similarResult" onclick="" id=""><img class="similarImg" src="./images/not-found.jpg" onerror="" /><div class="similarTitle" id="">Test Movie Div</div></div>
-
-                </div>
-            -->
 
                 </aside>
                 <footer class="footer">
-                        <a class="focusBtn">Stream <i class="material-icons md-36 focusBtnSymbol">play_arrow</i></a>
-                        <a class="focusBtn">Download <i class="material-icons md-36 focusBtnSymbol">get_app</i></a>
+                        <a id="streamBtn" class="focusBtn">Stream <i class="material-icons md-36 focusBtnSymbol">play_arrow</i></a>
+                        <a id="downloadBtn" class="focusBtn" download>Download <i class="material-icons md-36 focusBtnSymbol">get_app</i></a>
                 </footer>
 
                 <div class="loading2"><img src="./images/loading.svg"/></div>

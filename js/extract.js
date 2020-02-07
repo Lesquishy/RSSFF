@@ -94,6 +94,7 @@ function localParse() {
         var searched = searchArray.diff(keywords);
         if (searched.length >= 1) { //If this movie/TV Show is what you searched for
             //Check if it is a tv show or a movie
+            console.log(local[l].episodic)
             var tv = local[l].episodic;
             if (tv == true) { //If this result is a part of a tv show
 
@@ -131,6 +132,7 @@ function localParse() {
                     loadNumber++;
                 }
             }else {// This is a movie
+                console.log("It is a movie LOLWE(FGNEWTHGWEGT)HNA")
                 var title = local[l].title;
                 var image = local[l].image;
                 console.log(image);
@@ -210,7 +212,7 @@ async function ytsSearch() {
 
 async function ytsData(searchParam) {
     console.log("ytsData()");
-    await $.getJSON("https://yts.lt/api/v2/list_movies.jsonp?"+searchParam, function(result) {
+    await $.getJSON("https://yts.mx/api/v2/list_movies.jsonp?"+searchParam, function(result) {
         if (result.data.movie_count != 0) {
             console.log("at least 1 movie");
             $(".searchNull").fadeOut(200);
@@ -269,4 +271,10 @@ function ytsParse(result) {
         loadNumber++;
     }
     return(data);
+}
+
+
+//Returns 4 related movies for the user to watch
+function relatedMovies(id) {
+
 }

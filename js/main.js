@@ -78,3 +78,8 @@ function stopLoading() {
 function loadHome() {
     $(".homePageContainer").fadeToggle(200);
 }
+
+function searchSetLoad() {
+    $(".searchSetContainer").slideToggle(200);
+    $(".searchSetBtn").toggleClass("setActive")
+}
