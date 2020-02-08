@@ -1,18 +1,19 @@
 //This file contains the code for the focus tab, and associated functions
 
-function loadFocus(id) {
+async function loadFocus(id) {
     console.log("LoadFocus!");
-    console.log(id);
     var title = $("#title" + id).html();
-    console.log(title);
-    console.log(local);
 
     //pops up the focus window with a loading screen
     $(".focus").slideToggle(300);
     $(".focusContainer").fadeToggle(300);
 
     if (data[id].episodic == true) {//Is a TV show
-        console.log("Tv show");
+        $(".tvNav").visible();
+        $(".movieNav").invisible();
+
+        console.log("Focus TV Show");
+
         $(".focusImg").attr('src', data[id].image);
         $(".header").html(data[id].title);
         $(".focusRuntime").html("Runtime: " + local[id].runTime.hours + "hr " + local[id].runTime.mins + "mins");
@@ -108,7 +109,11 @@ function loadFocus(id) {
         }
 
     }else {//A movie
-        console.log("movie");
+        $(".tvNav").invisible();
+        $(".movieNav").visible();
+
+        console.log("Focus Movie");
+
         $(".focusImg").attr('src', data[id].image);
         $(".header").html(data[id].title);
         $(".focusRuntime").html("Runtime: " + data[id].runtime);
@@ -118,9 +123,19 @@ function loadFocus(id) {
         $(".focusGenre").html("Genre: " + genres);
         $(".focusDesc").html("Summary: <br>" + data[id].desc);
 
-        //$(".aside-2").html("");//clears the season list ready for the stream
 
-        //show a stream button or something
+        //https://yts.lt/api/v2/movie_suggestions.json
+
+        if (data[id].local == true) {
+            $("#streamBtn").attr("href", data[id].file);
+            $("#downloadBtn").attr("href", data[id].file);
+        } else if (data[id].local == false) {
+            $("#streamBtn").toggleClass("btnDisable");
+            $("#streamBtn").attr("href", "");
+            $("#downloadBtn").attr("href", data[id].torrent);
+        }
+
+        relatedMovies();
     }
 }
 
@@ -143,6 +158,11 @@ function changeSeason(id) {
 //______________________________________________________HERE_________________________________________________
 function changeEpisode(id) {
     var episode = id.replace(/\D/g,'');
+    $(".episodeActive").toggleClass("episodeActive");
+    $("#" + id).toggleClass("episodeActive");
+
+    $("#streamBtn").attr("href", data[id].file);
+    $("#downloadBtn").attr("href", data[id].file);
 }
 
 

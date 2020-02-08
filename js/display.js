@@ -11,11 +11,11 @@ function displaySearch(result) {
         }else {
             image = result[l].image;
         }
-        $('.resultsContainer').append('<div class="searchResult" onclick="loadFocus(this.id)" id="' + l + '"><img class="resultImg" src="' + image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle" id="title' + l + '">' + result[l].title + '</div>');
+        $('.resultsContainer').append('<div class="searchResultFlex"><div class="searchResult" onclick="loadFocus(this.id)" id="' + l + '"><img class="resultImg" src="' + image + '" onerror="imgError(this, ' + l + ');" /><div class="resultTitle" id="title' + l + '">' + result[l].title + '</div></div></div>');
     }
     loadingSearch = false;
     if (loadLocal == true) {
-        loadBrowse();
+
     }else {
         if (unload == true) {
             setTimeout(function() {

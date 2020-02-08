@@ -3,19 +3,29 @@
 
 //This function loads the browse page
 function loadBrowse() {
-
+    $(".browseContainer").fadeToggle(200);
+    browsing = true;
+    searchLoad();
 }
 
 //This is called when the user has searched for something
 async function searchLoad() {
+    query = $(".searchInput").val();
+    if (query.length < 1) {
+        if (browsing == true) {
+            browsing = false;
+            //dont worry
+        }else {
+            return;
+        }
+    }
+
     startLoading();
     data = {};
     loadNumber = 0;
-    query = $(".searchInput").val();
     query = query.toLowerCase();
-    
+
     $(".searchResult").remove();
-    $(".homePageContainer").html("");
 
     if (loadLocal == true && loadYts == true) {
         console.log("searchLoad");
@@ -24,7 +34,17 @@ async function searchLoad() {
         console.log(localData);
 
         var result = await ytsSearch();
-        displaySearch(result);
+
+        if (result == undefined) {
+            console.log("hidden true")
+            hidden = true;
+            $(".resultsContainer").fadeOut(200);
+            stopLoading();
+        }else {
+            hidden = false;
+            $(".resultsContainer").fadeIn(200);
+            displaySearch(result);
+        }
 
     }
 
@@ -74,6 +94,7 @@ function localParse() {
         var searched = searchArray.diff(keywords);
         if (searched.length >= 1) { //If this movie/TV Show is what you searched for
             //Check if it is a tv show or a movie
+            console.log(local[l].episodic)
             var tv = local[l].episodic;
             if (tv == true) { //If this result is a part of a tv show
 
@@ -111,6 +132,7 @@ function localParse() {
                     loadNumber++;
                 }
             }else {// This is a movie
+                console.log("It is a movie LOLWE(FGNEWTHGWEGT)HNA")
                 var title = local[l].title;
                 var image = local[l].image;
                 console.log(image);
@@ -190,19 +212,15 @@ async function ytsSearch() {
 
 async function ytsData(searchParam) {
     console.log("ytsData()");
-    await $.getJSON("https://yts.lt/api/v2/list_movies.jsonp?"+searchParam, function(result) {
+    await $.getJSON("https://yts.mx/api/v2/list_movies.jsonp?"+searchParam, function(result) {
         if (result.data.movie_count != 0) {
             console.log("at least 1 movie");
             $(".searchNull").fadeOut(200);
             resultLength = result.data.movies.length;
             finalResult = result;
         }else {
-            console.log("not a single movie");
-            reSearch = result;
-            $(".searchNull").empty();
-            $(".searchNull").append('<p class="searchNullResponse">Sorry! Your search did not return any results :(</p>');
-            $(".searchNull").fadeIn();
-            toggleSearchLoad();
+            finalResult = 0;
+            return(finalResult);
         }
     });
     console.log("data gotten");
@@ -212,6 +230,9 @@ async function ytsData(searchParam) {
 
 function ytsParse(result) {
     console.log("ytsParse()");
+    if (result == 0) {
+        return;
+    }
 
     for (var l = 0; l < resultLength; l++){
 
@@ -250,4 +271,10 @@ function ytsParse(result) {
         loadNumber++;
     }
     return(data);
+}
+
+
+//Returns 4 related movies for the user to watch
+function relatedMovies(id) {
+
 }

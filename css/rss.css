@@ -152,48 +152,7 @@
     color: gray;
 }
 
-.searchBox {
-    width: 400px;
-    position: fixed;
-    right: 100px;
-    height: 30px;
-    top: 15px;
-    color: white;
-    border-bottom: 2px solid white;
-    z-index: 21;
-}
 
-.searchInput {
-    width: 90%;
-    height: 100%;
-    position: absolute;
-    border: 0;
-    appearance: none;
-    outline: none;
-    font-size: 22px;
-    padding-left: 5px;
-    background: none;
-    color: inherit;
-}
-
-.searchBtn {
-    width: 10%;
-    height: 100%;
-    position: absolute;
-    right: 0px;
-    border: 0;
-    appearance: none;
-    outline: none;
-    cursor: pointer;
-    background: none;
-    color: inherit;
-}
-
-.searchIcon {
-    position: absolute;
-    right: 0px;
-    top: -3px;
-}
 
 .testBtn {
     position: fixed;
@@ -222,12 +181,11 @@
 
 .resultsContainer {
     position: absolute;
+    left: 0px;
+    top: 60px;
     width: 100%;
-    max-height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: space-between;
+    max-height: calc(100% - 60px);
+    display: inline-block;
     overflow-y: scroll;
     color: #333;
     transition: color .3s ease;
@@ -236,13 +194,22 @@
 }
 
 .searchResult {
-  background: #222;
-  width: 260px;
-  height: 420px;
-  text-align: center;
-  font-size: 40px;
-  margin: 10px;
-  color: white;
+    background: #222;
+    width: 260px;
+    height: 420px;
+    text-align: center;
+    font-size: 40px;
+    margin: 10px;
+    color: white;
+    overflow: hidden;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 17px -2px rgba(0,0,0,0.75);
+}
+
+.searchResultFlex {
+    display: inline-block;
 }
 
 .resultImg {
@@ -319,7 +286,6 @@
     overflow-y: scroll;
     text-decoration: none;
     border-left: 2px solid gray;
-    border-radius: 5px;
 }
 
 .seriesBtn {
@@ -346,11 +312,17 @@
 }
 
 .seasonActive {
-    width: calc(100% - 2px);
+    width: calc(100% + 2px);
     border: 2px solid gray;
-    border-right: 2px solid #222;
+    border-right: 2px solid #3c3c3c;
+    box-sizing: border-box;
     z-index: 50;
     transition: 0.2s all;
+    background: #3c3c3c;
+}
+
+.episodeActive {
+    background: #3c3c3c;
 }
 
 .dropArrow {
@@ -463,12 +435,20 @@
     transform: translate(0px, 10px);
 }
 
+.btnDisable {
+    cursor: default;
+    text-decoration: line-through;
+}
+
 
 /* ---------------------------------- HOME AND BROWSE PAGE ------------------------------ */
 
 .homePageContainer {
+    display: none;
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .newContainer {
@@ -482,18 +462,16 @@
     width: 100%;
     height: 385px;
     position: relative;
-    margin-top: 25px;
 }
 
 .sectionTitle {
     color: white;
     font-size: 28px;
     width: 100%;
-    left: 0px;
-    top: 32px;
-    text-align: left;
+    top: 26px;
+    text-align: center;
     position: absolute;
-    background: #383838;
+    background: #222;
     padding: 5px;
     z-index: 10;
 }
@@ -506,8 +484,18 @@
     bottom: 0px;
     color: #333;
     transition: color .3s ease;
-    background: #383838;
+    background: rgba(34,34,34,1);
+    /*
+    background: -moz-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(49,49,49,1) 24%, rgba(49,49,49,1) 65%, rgba(34,34,34,1) 90%, rgba(34,34,34,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(34,34,34,1)), color-stop(24%, rgba(49,49,49,1)), color-stop(65%, rgba(49,49,49,1)), color-stop(90%, rgba(34,34,34,1)), color-stop(100%, rgba(34,34,34,1)));
+    background: -webkit-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(49,49,49,1) 24%, rgba(49,49,49,1) 65%, rgba(34,34,34,1) 90%, rgba(34,34,34,1) 100%);
+    background: -o-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(49,49,49,1) 24%, rgba(49,49,49,1) 65%, rgba(34,34,34,1) 90%, rgba(34,34,34,1) 100%);
+    background: -ms-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(49,49,49,1) 24%, rgba(49,49,49,1) 65%, rgba(34,34,34,1) 90%, rgba(34,34,34,1) 100%);
+    background: linear-gradient(to bottom, rgba(34,34,34,1) 0%, rgba(49,49,49,1) 24%, rgba(49,49,49,1) 65%, rgba(34,34,34,1) 90%, rgba(34,34,34,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222222', endColorstr='#222222', GradientType=0 );
+    */
     display: flex;
+    justify-content: center;
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -524,6 +512,8 @@
   margin: 10px;
   color: white;
   flex: 0 0 auto;
+  border-radius: 3px;
+  overflow: hidden;
 }
 
 .browseImg {
@@ -533,7 +523,7 @@
 }
 
 .browseTitle {
-  background: #222;
+  background: #313131;
   width: calc(100% - 10px);
   line-height: 25px;
   height: 25px;
@@ -547,6 +537,7 @@
   overflow: hidden;
   display: block;
   white-space: nowrap;
+  border-radius: 0px 0px 3px 3px;
 }
 
 .movieNav {
@@ -602,6 +593,114 @@
 
 .similarTag {
     margin-top: 15px;
+}
+
+
+
+/* ------------- Browse Page ----------------- */
+
+.browseContainer {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.searchBox {
+    width: calc(100% - 60px);
+    position: absolute;
+    left: 0px;
+    height: 60px;
+    top: 0px;
+    z-index: 21;
+    text-align: left;
+    padding-left: 70px;
+    color: white;
+}
+
+.searchInput {
+    width: calc(100% - 150px);
+    height: 100%;
+    position: absolute;
+    border: 0;
+    appearance: none;
+    outline: none;
+    font-size: 30px;
+    padding-left: 5px;
+    background: none;
+    color: inherit;
+}
+
+.searchBtn {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: 0px;
+    border: 0;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    background: none;
+    color: inherit;
+}
+
+.searchIcon {
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    left: -2px;
+}
+
+.searchPls {
+    position: absolute;
+    top: 400px;
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    font-size: 60px;
+    color: #333;
+    text-align: center;
+}
+
+.searchSetBtn {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 0px;
+    border: 0;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.searchSetBtn:hover {
+    color: rgb(0,130,230);
+}
+
+.searchSetContainer {
+    display: none;
+    height: 200px;
+    width: 100%;
+    background: #333;
+    position: absolute;
+    top: 60px;
+    z-index: 22;
+    -webkit-box-shadow: 0px 10px 13px 0px rgba(34,34,34,1);
+    -moz-box-shadow: 0px 10px 13px 0px rgba(34,34,34,1);
+    box-shadow: 0px 10px 13px 0px rgba(34,34,34,1);
+}
+
+.setActive {
+    transform: rotateX(180deg);
+    color: rgb(0,130,230);
+}
+
+.searchDropTitle {
+    color: white;
+    font-size: 20px;
 }
 
 
