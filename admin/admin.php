@@ -25,10 +25,17 @@
     </head>
 
     <body>
-        <div class="mainContent">
+        <nav class="nav">
+            <a class="navLink"><span class="tooltiptext">Return to selection</span><i class="navIcon material-icons md-48">exit_to_app</i></a>
+        </nav>
+        <div class="selectionContent">
+
+        </div>
+
+        <div class="userContent">
             <div class="selectMenu">
+                <input class="searchBox" name="movieSearch" placeholder="Search for a movie..." type="text"/>
                 <div class="movieMenu">
-                    <input class="menuBtn" name="movieSearch" placeholder="Search for a movie..." type="text"/>
                     <a class="menuBtn">Movie 1</a>
                     <a class="menuBtn">Movie 2</a>
                     <a class="menuBtn">Movie 3</a>
@@ -40,6 +47,10 @@
             <div class="contentViewer">
 
             </div>
+        </div>
+
+        <div class="mediaContent">
+
         </div>
     </body>
 </html>
