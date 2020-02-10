@@ -46,7 +46,21 @@ const magenta = "\x1b[35m"; // State Change Message
 
 // Blank variable setters
 var rawFiles = [];
+var omdbJSON;
 var indexJSON;
+var duration;
+var size;
+var width;
+var height;
+var frameRate;
+var ratio;
+var episodeNum;
+var seasonNum;
+var episodic;
+var title;
+var fileLocation;
+var extension;
+var fileName;
 
 //starter
 initilize();
@@ -97,7 +111,20 @@ function readFiles(){
     }
 }
 
-function beforeStart(){
+function beforeStart(poss){
+    // Reset all global variables
+    rawFiles = [];
+    indexJSON = JSON.parse("{}");
+    duration = "";
+    size = "";
+    width = "";
+    height = "";
+    framerate = "";
+    ratio = "";
+    episodeNum = "";
+    seasonNum = "";
+    episodic = "";
+
     //Read all the files
     var getDirectories = function (src, callback) {
       glob(src + '/**/*', callback);
@@ -109,26 +136,20 @@ function beforeStart(){
         process.exit();
       } else {
           //res
-          start(res, 0);
+          start(res, poss);
       }
     });
 }
 
 async function start(rawFiles, pos){
-    // var reset
     var stop = false;
 
     currFile = rawFiles[pos];
-    console.log("These");
-    console.log(currFile.slice(-4).includes("."));
-    console.log(currFile);
+    console.log("Current File: "+currFile);
     if (currFile == undefined || currFile == "" || currFile == null) {
         stop == true;
     }
     if(currFile.slice(-4).includes(".") && sortExtKeepWhite.indexOf(currFile.slice(-3)) > -1 && stop !== true){ // Is this a file
-        var episodeNum;
-        var seasonNum;
-        var episodic;
         try {
             episodeNum = parseInt(currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].substr(1));
             seasonNum = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1));
@@ -142,7 +163,6 @@ async function start(rawFiles, pos){
             }
             //Check for double ups
             if (episodic == false) {
-                console.log("here");
                 for (var i = 0; i < Object.size(indexJSON); i++) {
                     if(currFile.contains(indexJSON[toString(i)]["title"])){
                         console.log(yellow + "Movie already found with that name. Skipping" + reset);
@@ -248,13 +268,12 @@ async function start(rawFiles, pos){
             if (episodic !== true) {
                 // Movie rename
                 var trimmed = currFile.split('/')[(currFile.split('/').length-1)];; // Gets the file name;
-                var fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
-                var extension = currFile.substr(currFile.length - 4);
-                var fileName;
+                fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
+                extension = currFile.substr(currFile.length - 4);
                 try {
                     trimmed = fileName.substring(0, fileName.indexOf(fileName.match(/(19|20)([0-9][0-9])/g)[0]));
                 } catch (e) {
-                    console.log(yellow + "No year found. Skipping trimming. Check Repo for update..." + reset);
+                    console.log(yellow + "No year found. Presumed already named correctly" + reset);
                     trimmed = trimmed.substring(0, trimmed.length - 4);
                 } finally {
                     fileName = trimmed;
@@ -266,14 +285,15 @@ async function start(rawFiles, pos){
                 }
 
 
-                var justName = trimmed;
-                var outputName = fileLocation+trimmed+extension;
+                title = trimmed;
+                var outputName = fileLocation+title+extension;
 
                 // Decides if it should actually change the file names
                 // Allowes debugging without actually effecting the file structure
                 if (skip !== true) {
                     fs.rename(currFile, outputName, async function (err) {
                         if (err) throw err;
+                        currFile = fileLocation+outputName;
                     });
                 } else {
                     console.log(yellow + "Skipped file renaming" + reset);
@@ -281,93 +301,33 @@ async function start(rawFiles, pos){
                 }
             } else {
                 // Show rename
-                fileName = seriesTitle;
+                fileName = seriesTitle+"_e"+episodeNum+"s"+seasonNum;
+                title = seriesTitle;
                 if (skip !== true) {
-                    fs.rename(currFile, filelocation+outputName, function(err){
+                    fs.rename(currFile, filelocation+fileName, function(err){
                         if (err) {console.log(err);}
+                        currFile = fileLocation+fileName;
                     });
                 } else {
                     console.log(yellow + "Skipped file renaming" + reset);
                     console.log("Would have renamed to : " + fileLocation+outputName);
-                    await showDirectoryConstruction(currFile, true, showName, showID);
                 }
             }
-            console.log(fileName + " files Name");
 
             // Collect metadata
-            var duration;
-            var size;
-            var width;
-            var height;
-            var framerate;
-            var ratio;
             await ffmpeg.ffprobe(currFile, async function(err, data) {
+
                 //error catching
                 if(err) {console.log(err);return;}
+
+                //Outputs we want
                 duration = data.format.duration;
                 size = data.format.size;
                 width = data.streams[0].width;
                 height = data.streams[0].height;
                 framerate = data.streams[0].avg_frame_rate;
                 ratio = data.streams[0].display_aspect_ratio;
-
-                // Metadata processing
-
-                //default values
-                const locallyStored = true; // We're searching locally so this doesnt change
-                const viewCount = 0;
-                const magnet = "";
-                var showInfo;
-                let settings = { method: "Get" };
-
-                if (episodic == true) {
-                    //OMDB json Read
-                    let url = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
-                    var data;
-                    await fetch(url, settings)
-                        .then(res => res.json())
-                        .then((data) => { omdbJSON = data;
-                    });
-                } else {
-                    //OMDB json Read
-                    let url = "http://www.omdbapi.com/?t=" + title.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
-                    var data;
-                    await fetch(url, settings)
-                        .then(res => res.json())
-                        .then((data) => { omdbJSON = data;
-                    });
-                }
-
-                // One liner variables
-
-                var desc = omdbJSON.Plot;
-                var genre = omdbJSON.Genre;
-                var fileLocation = currFile;
-                var title = seriesTitle;
-
-                // duration
-                var hours = Math.floor(duration / 3600) % 24;
-                duration -= hours * 3600;
-                var mins = Math.floor(duration / 60) % 60;
-                duration -= mins * 60;
-                var secs = Math.round(duration % 60);
-                var runTime = {"hours":hours, "mins":mins, "secs":secs};
-
-                // What variables we have
-                // fileName
-                // runTime
-                // episodeNum
-                // seasonNum
-                // extension
-                // filelocation
-                // desc
-                // genre
-                // locallyStored
-                // viewCount
-                // Magnet
-                // Episodic
-                // Show info
-
+                passthrough(duration, size, width, height, framerate, ratio, pos, rawFiles)
             });
 
         }
@@ -380,10 +340,141 @@ async function start(rawFiles, pos){
     } else {
         // unrecognizeable file
         // Probably folder
-        console.log("We dont recognise this file : Probably folder");
-        start(rawFiles, pos + 1);
+        console.log("We dont recognise this file: Probably folder");
+        start(rawFiles, pos+1);
     }
 }
+
+async function passthrough(a, b, c, d, e, f, pos, rawFiles){
+    duration = a;
+    size = b;
+    width = c;
+    height = d;
+    frameRate = e;
+    ratio = f;
+
+    //default values
+    const locallyStored = true; // We're searching locally so this doesnt change
+    const viewCount = 0;
+    const magnet = "";
+    var showInfo = JSON.parse("{}");
+    const streamable = true;
+    const searchable = true;
+    var image = "";
+    const keyWords = "";
+    let settings = { method: "Get" };
+
+    // Date added
+    var dateAdded = new Date();
+    var dd = String(dateAdded.getDate()).padStart(2, '0');
+    var mm = String(dateAdded.getMonth() + 1).padStart(2, '0');
+    var yyyy = dateAdded.getFullYear();
+
+    dateAdded = dd + '/' + mm + '/' + yyyy;
+
+    if (episodic == true) {
+        // OMDB json Read
+        let url = "http://www.omdbapi.com/?t=" + seriesTitle.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
+        var data;
+        await fetch(url, settings)
+            .then(res => res.json())
+            .then((data) => { omdbJSON = data;
+        });
+    } else {
+        // OMDB json Read
+        let url = "http://www.omdbapi.com/?t=" + fileName.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
+        var data;
+        await fetch(url, settings)
+            .then(res => res.json())
+            .then((data) => { omdbJSON = data;
+        });
+    }
+
+
+
+    // One liner variables
+    var desc = omdbJSON.Plot;
+    var genre = omdbJSON.Genre;
+    var imdbLink = "https://www.imdb.com/title/"+omdbJSON.imdbID;
+    size = roundTo(size / 1073741823.9999983, 2); // Size to gb 2dp
+    var resolution = width  + "x" + height; //width and height to 0000x0000
+    var fileLocation = currFile;
+
+    // duration
+    var hours = Math.floor(duration / 3600) % 24;
+    duration -= hours * 3600;
+    var mins = Math.floor(duration / 60) % 60;
+    duration -= mins * 60;
+    var secs = Math.round(duration % 60);
+    var runTime = {"hours":hours, "mins":mins, "secs":secs};
+
+    // Frame rate to FPS
+    if(frameRate.indexOf('/') > -1){
+        var array = frameRate.split('/'), a = array[0], b = array[1];
+        frameRate = roundTo(a / b, 2);
+    }
+
+    //Download poster image
+    try {
+        var posterSource = omdbJSON.Poster.substring(0, omdbJSON.Poster.length -7) + "1000" + omdbJSON.Poster.substring(omdbJSON.Poster.length -4);
+        image = postersLocation + title.replace(" ", "_")+".jpg";
+        await download(posterSource, image, function(){});
+    } catch (e) {
+        console.log(red + "Film not found on OMDB. Skipping Poster" + reset);
+        console.log(e);
+    }
+
+
+
+    var tempOut = {title, runTime, locallyStored, streamable, size, fileLocation, fileName, magnet, image, imdbLink, desc, genre, resolution, ratio, keyWords, framerate, dateAdded, searchable, viewCount, episodic, showInfo}
+    var filmCount = Object.size(indexJSON)
+    indexJSON[filmCount+1] = tempOut;
+    var jsonContent = JSON.stringify(indexJSON);
+
+    // log the outputs
+    console.log(tempOut);
+
+    try {
+      const data = fs.writeFileSync(jsonFile, jsonContent);
+      if (pos < Object.size(rawFiles)) {
+          start(rawFiles, pos+1); // Start again
+      } else {
+          console.log("Loop complete");
+      }
+    } catch (err) {
+        console.log(red + "Failed to write to json. Killing script" + reset);
+        console.error(err);
+        process.exit();
+    }
+    // What variables we have
+    // title !
+    // runTime
+    // locallyStored
+    // streamable !
+    // size
+    // filelocation
+    // fileName
+    // Magnet
+    // image !
+    // imdbLink !
+    // desc
+    // genre
+    // resolution !
+    // ratio !
+    // keywords !
+    // framerate
+    // dateAdded
+    // searchable
+    // viewCount
+    // Episodic
+    // Show info
+        // seriesTitle
+        // episode !
+        // episodeDesc !
+        // episodeNum
+        // season !
+}
+
 
 
 
@@ -408,16 +499,10 @@ function roundTo(n, digits) {
     return n;
 }
 
-
-
-
-
-// Forgotten Functions
-
 // Time out.
 function sleep(time, action){
     setTimeout(function () {
-        action();
+        action(0);
     }, time * 1000);
 }
 
