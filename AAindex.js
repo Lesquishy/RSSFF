@@ -27,7 +27,7 @@ const readline = require('readline');
 const glob = require('glob')
 
 // Settings
-const skip = true;
+const skip = false;
 const requiredFiles = ["./data/", "./files/", "./files/posters/", "./data/AAmovieIndex.json", "./data/FormatFiles.json", "./files/Episodic_Shows/" ]; // Required files
 const requireCleanFiles = ["./data/FormatFiles.json"]; // The files that the script needs to be empty at the start
 const jsonFile = './data/AAmovieIndex.json'; // Where the Movie metadata will be saved
@@ -61,6 +61,10 @@ var title;
 var fileLocation;
 var extension;
 var fileName;
+var seriesTitle;
+var tempOut;
+var filmCount;
+var jsonContent;
 
 //starter
 initilize();
@@ -88,7 +92,6 @@ function initilize() {
 
     for (var i = 0; i < requireCleanFiles.length; i++) {
         fs.closeSync(fs.openSync(requireCleanFiles[i], 'w'));
-        console.log(green + 'Files were successfully cleared.' + reset);
     }
     readFiles();
 }
@@ -102,12 +105,12 @@ function readFiles(){
             }
             indexJSON = JSON.parse(data);
         }); // Reads the json file
-        sleep(1, beforeStart)
+        beforeStart(0);
     } catch(e) {
         console.log(yellow + "Error reading JSON. Assuming Empty" + reset);
         console.log(e);
         var indexJSON = JSON.parse("{}");
-        sleep(0.1, beforeStart)
+        beforeStart(0);
     }
 }
 
@@ -119,11 +122,12 @@ function beforeStart(poss){
     size = "";
     width = "";
     height = "";
-    framerate = "";
+    frameRate = "";
     ratio = "";
     episodeNum = "";
     seasonNum = "";
     episodic = "";
+    seriesTitle = "";
 
     //Read all the files
     var getDirectories = function (src, callback) {
@@ -143,13 +147,14 @@ function beforeStart(poss){
 
 async function start(rawFiles, pos){
     var stop = false;
-
-    currFile = rawFiles[pos];
-    console.log("Current File: "+currFile);
-    if (currFile == undefined || currFile == "" || currFile == null) {
+    if (rawFiles.length > pos) {
+        currFile = rawFiles[pos];
+    } else {
+        indexJSON[filmCount+1] = tempOut;
+        const data = fs.writeFileSync(jsonFile, jsonContent);
         stop == true;
     }
-    if(currFile.slice(-4).includes(".") && sortExtKeepWhite.indexOf(currFile.slice(-3)) > -1 && stop !== true){ // Is this a file
+    if(stop !== true && currFile.slice(-4).includes(".") && sortExtKeepWhite.indexOf(currFile.slice(-3)) > -1){ // Is this a file
         try {
             episodeNum = parseInt(currFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0].substr(1));
             seasonNum = parseInt(currFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0].substr(1));
@@ -157,13 +162,9 @@ async function start(rawFiles, pos){
         } catch (e) {
             episodic = false;
         } finally {
-            if (episodic == true) {
-                console.log(episodeNum);
-                console.log(seasonNum);
-            }
             //Check for double ups
             if (episodic == false) {
-                for (var i = 0; i < Object.size(indexJSON); i++) {
+                for (var i = 0; i <= Object.size(indexJSON); i++) {
                     if(currFile.contains(indexJSON[toString(i)]["title"])){
                         console.log(yellow + "Movie already found with that name. Skipping" + reset);
                         stop = true;
@@ -174,106 +175,81 @@ async function start(rawFiles, pos){
                 }
 
             } else {
-                // is episodic
-                // Search all known places for show
-                // Basic double up check
-                for (var i = 0; i < Object.size(indexJSON); i++) {
-                    currSearch = currFile.replace("_", " ")
-                    if(currFile.contains(indexJSON[toString(i)]["title"]) && episodeNum == indexJSON[toString(i)]["showInfo"]["episodeNum"] && seasonNum == indexJSON[toString(i)]["showInfo"]["season"]){
-                        console.log(yellow + "Show found with exsisting episode in this season" + reset);
-                        console.log(currFile + "\n");
-                        stop = true;
-                        break;
+                // Series stuff
+                var processCurrFile = currFile.split('/')[(currFile.split('/').length-1)];
+                var posA = processCurrFile.indexOf(processCurrFile.match(/(e[0-9][0-9]|e[0-9]){1,}/g)[0]);
+                var posB = processCurrFile.indexOf(processCurrFile.match(/(s[0-9][0-9]|s[0-9]){1,}/g)[0]);
+                if (posA > 0 && posB > 0) {
+                    if (posA > posB) {
+                        seriesTitle = processCurrFile.substring(0, posB);
+                    } else {
+                        seriesTitle = processCurrFile.substring(0, posA);
                     }
-                    if (currFile.contains(indexJSON[toString(i)]["title"])) {
-                        showTitle = indexJSON[toString(i)]["title"];
+                    seriesTitle = seriesTitle.replace(".", "_");
+                    if(seriesTitle.slice(-1) == "_"){
+                        seriesTitle = seriesTitle.substring(0, seriesTitle.length - 1);
                     }
                 }
 
-                // Extended search for series using the local JSON
-                var strippedName = currFile.replace(/(e[0-9][0-9]|e[0-9]){1,}/g, "")
-                strippedName = currFile.replace(/[^A-Z]+/ig, '').slice(0, -3).toLowerCase();
-                for(var i=0; Object.size(movieIndex) > i; i++){
-                    if(indexJSON[i].episodic == true){
-                        var tally = 0;
-                        strippedSeriesName = indexJSON[i].showInfo["seriesTitle"].match(/[A-Z]{1,}/ig)
-                        for(var a=0; strippedSeriesName.length > a; a++){
-                            if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
-                                //match a number of times
-                                tally++;
-                            } else {
+                var seriesNameCompare = seriesTitle.replace("_", " ");
+                seriesNameCompare = seriesNameCompare.toLowerCase();
+                var z = 0;
+                var states = {"ownShow":false, "ownEpisode":false, "showID":-1};
+                while (true) {
+                    if (z == Object.size(indexJSON)){
+                        // Stop.
+                        break;
+                    }
+                    if (episodic == true) {
+                        // It is a show find if we have the episode
+                        if(indexJSON[z].episodic == true && indexJSON[z].title.toLowerCase() == seriesNameCompare){
+                            // we got the show
+                            states.ownShow = true;
+                            states.showID = z;
+                            if (indexJSON[z.toString()].showInfo["season"] == seasonNum && indexJSON[z.toString()].showInfo["episodeNum"] == episodeNum) {
+                                states.ownEpisode = true;
                                 break;
                             }
                         }
-                        if(tally == strippedSeriesName.length){
-                            console.log("Found existing series in local JSON");
-                            var seriesTitle = movieIndex[i].showInfo["seriesTitle"];
-                            break;
-                        } else {
-                            console.log(yellow  + "No existing series found" + reset);
+                    }
+                    z++;
+                }
+                if (states.ownShow == true && states.ownEpisode == false) {
+                    // we own the show not the episode
+                    // keep seriesTitle the same. its all good
+                } else if (states.ownShow == true && states.ownEpisode == true) {
+                    // We own the show and that episode
+                    // skip the rest of the jump. gtfo
+                    stop = true;
+                } else {
+                    // No records of that show in index
+                    // search OMDB
+                    let settings = { method: "Get" };
+                    let url = "http://www.omdbapi.com/?t=" + seriesNameCompare.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
+                    var data;
+                    var omdbSearch;
+                    await fetch(url, settings)
+                        .then(res => res.json())
+                        .then((data) => { omdbSearch = data;
+                    });
+                    if (omdbSearch) {
 
-                            // Try match with OMDB
-                            // OMDB json Read
-                            try {
-                                let url = "http://www.omdbapi.com/?t=" + strippedName.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
-                                var data;
-                                await fetch(url, settings)
-                                    .then(res => res.json())
-                                    .then((data) => { omdbJSON = data;
-                                });
-                            } catch (e) {
-                                console.log(red + "Error Collectiing OMDB data" + reset);
-
-                                // Get user input for finding the series.
-                                console.log(red);
-                                const showSearch = await userInput("Please input series name: ");
-                                console.log(reset);
-
-                                // Basically the same as above
-                                for(var i=0; Object.size(movieIndex) > i; i++){
-                                    if(indexJSON[i].episodic == true){
-                                        var tally = 0;
-                                        strippedSeriesName = indexJSON[i].showInfo["seriesTitle"].match(/[A-Z]{1,}/ig)
-                                        for(var a=0; strippedSeriesName.length > a; a++){
-                                            if(strippedName.includes(strippedSeriesName[a].toLowerCase())){
-                                                //match a number of times
-                                                tally++;
-                                            } else {
-                                                break;
-                                            }
-                                        }
-                                        if(tally == strippedSeriesName.length){
-                                            // match
-                                            console.log(green + "User Input Matched against local JSON" + reset);
-                                            seriesTitle = movieIndex[i].showInfo["seriesTitle"];
-                                            break;
-                                        } else {
-                                            seriesTitle = strippedName;
-                                        }
-                                    }
-                                }
-                            }
-
-
-                        }
                     }
                 }
-
-                // Continue
             }
         }
         // break point to allow skipping of all this jargon
         if (stop !== true) {
+            var outputName;
             // Rename the file
             if (episodic !== true) {
                 // Movie rename
-                var trimmed = currFile.split('/')[(currFile.split('/').length-1)];; // Gets the file name;
+                var trimmed = currFile.split('/')[(currFile.split('/').length-1)]; // Gets the file name;
                 fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
                 extension = currFile.substr(currFile.length - 4);
                 try {
-                    trimmed = fileName.substring(0, fileName.indexOf(fileName.match(/(19|20)([0-9][0-9])/g)[0]));
+                    trimmed = trimmed.substring(0, trimmed.indexOf(trimmed.match(/(19|20)([0-9][0-9])/g)[0]));
                 } catch (e) {
-                    console.log(yellow + "No year found. Presumed already named correctly" + reset);
                     trimmed = trimmed.substring(0, trimmed.length - 4);
                 } finally {
                     fileName = trimmed;
@@ -286,14 +262,14 @@ async function start(rawFiles, pos){
 
 
                 title = trimmed;
-                var outputName = fileLocation+title+extension;
+                outputName = fileLocation+title+extension;
 
                 // Decides if it should actually change the file names
                 // Allowes debugging without actually effecting the file structure
                 if (skip !== true) {
-                    fs.rename(currFile, outputName, async function (err) {
+                    fs.rename(currFile, outputName, function (err) {
                         if (err) throw err;
-                        currFile = fileLocation+outputName;
+                        currFile = outputName;
                     });
                 } else {
                     console.log(yellow + "Skipped file renaming" + reset);
@@ -301,18 +277,28 @@ async function start(rawFiles, pos){
                 }
             } else {
                 // Show rename
+                fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/";
+                extension = currFile.substr(currFile.length - 4);
+                if (seasonNum < 10) {
+                    seasonNum = "0" + seasonNum;
+                }
+                if (episodeNum < 10) {
+                    episodeNum = "0" + episodeNum;
+                }
                 fileName = seriesTitle+"_e"+episodeNum+"s"+seasonNum;
                 title = seriesTitle;
+                outputName = fileLocation+fileName+extension
                 if (skip !== true) {
-                    fs.rename(currFile, filelocation+fileName, function(err){
+                    fs.rename(currFile, outputName, function(err){
                         if (err) {console.log(err);}
-                        currFile = fileLocation+fileName;
+                        currFile = outputName;
                     });
                 } else {
                     console.log(yellow + "Skipped file renaming" + reset);
-                    console.log("Would have renamed to : " + fileLocation+outputName);
+                    console.log("Would have renamed to : " + outputName);
                 }
             }
+            currFile = outputName;
 
             // Collect metadata
             await ffmpeg.ffprobe(currFile, async function(err, data) {
@@ -325,11 +311,13 @@ async function start(rawFiles, pos){
                 size = data.format.size;
                 width = data.streams[0].width;
                 height = data.streams[0].height;
-                framerate = data.streams[0].avg_frame_rate;
+                frameRate = data.streams[0].avg_frame_rate;
                 ratio = data.streams[0].display_aspect_ratio;
-                passthrough(duration, size, width, height, framerate, ratio, pos, rawFiles)
+                passthrough(duration, size, width, height, frameRate, ratio, pos, rawFiles)
             });
 
+        } else {
+            start(rawFiles, pos+1);
         }
 
 
@@ -340,8 +328,11 @@ async function start(rawFiles, pos){
     } else {
         // unrecognizeable file
         // Probably folder
-        console.log("We dont recognise this file: Probably folder");
-        start(rawFiles, pos+1);
+        if (rawFiles.length > pos) {
+            start(rawFiles, pos+1);
+        } else {
+            initilize();
+        }
     }
 }
 
@@ -363,6 +354,7 @@ async function passthrough(a, b, c, d, e, f, pos, rawFiles){
     var image = "";
     const keyWords = "";
     let settings = { method: "Get" };
+    var omdbJSON;
 
     // Date added
     var dateAdded = new Date();
@@ -380,6 +372,9 @@ async function passthrough(a, b, c, d, e, f, pos, rawFiles){
             .then(res => res.json())
             .then((data) => { omdbJSON = data;
         });
+        var season = seasonNum;
+        seriesTitle = seriesTitle.replace("_", " ");
+        showInfo = {seriesTitle, episodeNum, season}
     } else {
         // OMDB json Read
         let url = "http://www.omdbapi.com/?t=" + fileName.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
@@ -424,18 +419,16 @@ async function passthrough(a, b, c, d, e, f, pos, rawFiles){
         console.log(e);
     }
 
+    title = title.replace("_", " ");
 
-
-    var tempOut = {title, runTime, locallyStored, streamable, size, fileLocation, fileName, magnet, image, imdbLink, desc, genre, resolution, ratio, keyWords, framerate, dateAdded, searchable, viewCount, episodic, showInfo}
-    var filmCount = Object.size(indexJSON)
+    tempOut = {title, runTime, locallyStored, streamable, size, fileLocation, fileName, magnet, image, imdbLink, desc, genre, resolution, ratio, keyWords, frameRate, dateAdded, searchable, viewCount, episodic, showInfo}
+    filmCount = Object.size(indexJSON);
     indexJSON[filmCount+1] = tempOut;
-    var jsonContent = JSON.stringify(indexJSON);
+    jsonContent = JSON.stringify(indexJSON);
 
     // log the outputs
-    console.log(tempOut);
 
     try {
-      const data = fs.writeFileSync(jsonFile, jsonContent);
       if (pos < Object.size(rawFiles)) {
           start(rawFiles, pos+1); // Start again
       } else {
@@ -506,7 +499,7 @@ function sleep(time, action){
     }, time * 1000);
 }
 
-//Get the size of the movieIndex
+//Get the size of the indexJSON
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
@@ -518,8 +511,6 @@ Object.size = function(obj) {
 // Download something from a Link
 var download = async function(uri, filename, callback){
   request.head(uri, function(err, res, body){
-    console.log(magenta + "Downloading Poster Image" + reset);
-    console.log('content-type:', res.headers['content-type']);
 
     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
   });
