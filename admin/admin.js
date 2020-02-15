@@ -1,4 +1,5 @@
 //This file gets the local movies and displays them
+//Test
 
 var link = "../data/movieIndex.json";
 
