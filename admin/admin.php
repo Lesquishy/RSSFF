@@ -36,16 +36,30 @@
             <div class="selectMenu">
                 <input class="searchBox" name="movieSearch" placeholder="Search for a movie..." type="text"/>
                 <div class="movieMenu">
-                    <a class="menuBtn">Movie 1</a>
-                    <a class="menuBtn">Movie 2</a>
-                    <a class="menuBtn">Movie 3</a>
-                    <a class="menuBtn">Movie 4</a>
-                    <a class="menuBtn">Movie 5</a>
-                    <a class="menuBtn">Movie 6</a>
+                    <a onclick="" id="1" class="menuBtn active">Something Went Wrong</a>
                 </div>
             </div>
             <div class="contentViewer">
-
+                <div class="editor">
+                    <div class="editContainerSmall"><div class="editName">Title: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Runtime: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Size: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerLarge"><div class="editName">Description: </div><textarea class="editTextLarge">A big boi with a big hat did some things i think</textarea></div>
+                    <div class="editContainerSmall"><div class="editName">Genres: </div><input class="editTextSmall" value="Action, Comedy, Family" /></div>
+                    <div class="editContainerSmall"><div class="editName">File Location: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">File Name: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Keywords: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Magnet Link: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Image Location: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">IMDB Link: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Ratio: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Framerate: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Date Added: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Resolution: </div><input class="editTextSmall" value="Gone with the wind" /></div>
+                    <div class="editContainerSmall"><div class="editName">Searchable: </div><input type="checkbox" class="editCheckbox" /></div>
+                    <div class="editContainerSmall"><div class="editName">Episodic: </div><input type="checkbox" class="editCheckbox" /></div>
+                    <div class="editContainerSmall"><div class="editName">Locally Stored: </div><input type="checkbox" class="editCheckbox" /></div>
+                </div>
             </div>
         </div>
 

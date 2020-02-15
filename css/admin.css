@@ -2,6 +2,7 @@
     padding: 0px;
     margin: 0px;
     font-family: "Oswald";
+    box-sizing: border-box;
 }
 
 body {
@@ -12,6 +13,10 @@ body {
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
+
+.movieMenu::-webkit-scrollbar{width:5px}
+.movieMenu::-webkit-scrollbar-track{background:#aaa;;}
+.movieMenu::-webkit-scrollbar-thumb{background:gray;}
 
 .loginForm {
     width: 400px;
@@ -54,7 +59,8 @@ body {
 }
 
 .loginSubmit {
-    width: 360px;
+    width: 355px;
+    margin-left: -5px;
     height: 40px;
     background: #ddd;
     color: black;
@@ -83,21 +89,40 @@ body {
     background: #ccc;
     left: 0px;
     bottom: 0px;
-    -webkit-box-shadow: inset 0px 0px 18px -4px rgba(0,0,0,0.75);
--moz-box-shadow: inset 0px 0px 18px -4px rgba(0,0,0,0.75);
-box-shadow: inset 0px 0px 18px -4px rgba(0,0,0,0.75);
+    direction: rtl;
+    overflow-y: scroll;
+}
+
+.movieMenu > * {
+    direction: ltr;
 }
 
 .menuBtn {
     width: 100%;
-    height: 40px;
+    height: 50px;
     display: block;
-    background: #bbb;
+    background: linear-gradient(90deg, #eee 50%, #ddd 50%);
+    background-size: 200%;
+    background-position: 100%;
     font-size: 20px;
     outline: none;
     border: none;
-    margin-bottom: 10px;
-    padding-left: 5px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.menuBtn:hover {
+    padding-left: 15px;
+}
+
+.active {
+    background-position: 0%;
+    height: 70px;
+    padding-top: 20px;
 }
 
 .searchBox {
@@ -118,13 +143,13 @@ box-shadow: inset 0px 0px 18px -4px rgba(0,0,0,0.75);
     position: fixed;
     right: 0px;
     bottom: 0px;
-    background: yellow;
+    background: #eee;
 }
 
 .nav {
     height: 60px;
     width: 100%;
-    background: #eee;
+    background: #ddd;
 }
 
 .navLink {
@@ -166,6 +191,73 @@ box-shadow: inset 0px 0px 18px -4px rgba(0,0,0,0.75);
 
 .navLink:hover .tooltiptext {
   visibility: visible;
+}
+
+/* Editor Code */
+
+.editor {
+    width: 50%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.editContainerSmall {
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+.editContainerLarge {
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+.editName {
+    display: inline;
+    position: absolute;
+    height: 100%;
+    font-size: 30px;
+    width: 200px;
+    text-align: right;
+}
+
+.editTextSmall {
+    position: absolute;
+    top: 10px;
+    width: 250px;
+    left: 205px;
+    height: 30px;
+    font-size: 20px;
+    border: 2px solid gray;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.editTextLarge {
+    position: absolute;
+    width: 250px;
+    top: 10px;
+    left: 205px;
+    height: 180px;
+    font-size: 20px;
+    padding: 5px;
+    border: 2px solid gray;
+    resize: none;
+    border-radius: 5px;
+}
+
+.editCheckbox {
+    position: absolute;
+    top: 10px;
+    left: 205px;
+    height: 30px;
+    width: 30px;
+    font-size: 20px;
+    border: 2px solid gray;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 
