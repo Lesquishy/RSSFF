@@ -656,9 +656,6 @@ Object.size = function(obj) {
 // Download something from a Link
 var download = async function(uri, filename, callback){
   request.head(uri, function(err, res, body){
-    console.log(magenta + "Downloading Poster Image" + reset);
-    console.log('content-type:', res.headers['content-type']);
-
     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
   });
 };
