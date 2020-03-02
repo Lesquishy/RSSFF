@@ -10,25 +10,41 @@ This includes anything you can cast to or anything with a web browser. EG Chrome
 Designed to be lightweight, load times is guaranteed to surpass your standard streaming services.
 
 As well as handling streaming, It will manage your ingest of films too. Simply add the film file to the site, It will do the rest including:
+
     - Reformatting
+    
     - Sourcing poster images
+    
     - Collecting metadata like:
+    
         - File size
+        
         - Runtime
+        
         - Resolution
+        
         - IMDB link
+        
     - Managing TV Shows
+    
     - Deleting Double ups
+    
     - And more!
 
 Need to take the film with you? Each film can be individually downloaded to your current machine for offline watching.
 
 The site includes an admin page to have finer control over what goes on. Including...
+
     - Hide films from the site
+    
     - Adding custom keywords to films for easier search's or custom search results.
+    
     - Edit film information EG Descriptions, Title and genres
+    
     - File management to easily save space and delete films.
+    
     - Extensive log reports allow you to see how many times a show has been watched, What users searched and more.
+    
 
 ## Automatic Sourcing
 While all that are good thing to have. What if you want EVERYTHING to be easy and intuitive to use... Including sourcing your movies.
@@ -46,11 +62,18 @@ By default it is off. We do not condone, nor promote the usage of it. Use at you
 
 ## How to Install
 You'll need
+
     - Nodejs
+    
     - Webhost with PHP (apache2, wamp or xampp work fine)
+    
 
 (1): Clone this repository to the location of your webserver. EG: '/var/www/'
+
 (2): Add your movies to the 'files' directory
-(3): Start the web webserver
+
+(3): Start the webserver
+
 (4): Open 2 terminals in the location of the repository
+
 (5): run 'node ./index.js' and in the other terminal 'node ./format.js'
