@@ -15,7 +15,7 @@
 // Collect meta data
 // Process metadata
 // collect OMDB data and poster image
-// add to json file
+// add to json file.
 
 // The requires
 const fs = require("fs");
@@ -76,7 +76,7 @@ function initilize() {
             console.log(yellow + "File Missing : " + requiredFiles[i] + reset); // State message
             // ---------------
             if (requiredFiles[i].slice(-1) == "/") {
-                fs.mkFileSync(requiredFiles[i]);
+                fs.mkdirSync(requiredFiles[i]);
                 console.log('Directory was created successfully.');
             } else {
                 fs.writeFile(requiredFiles[i], "", function (err) {
