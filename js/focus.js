@@ -104,9 +104,16 @@ async function loadFocus(id) {
         console.log("Episodes: " + episodes)
         for (var l = 1; l <= episodes; l++){
             console.log("episode loaded")
-            $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+            if (l == 1) {
+                $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn episodeActive"><a>Episode ' + l + '</a></li>');
+
+            }else {
+                $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+            }
 
         }
+        $("#streamBtn").attr("href", seasonContainer[1][1].file);
+        $("#downloadBtn").attr("href", seasonContainer[1][1].file);
 
     }else {//A movie
         $(".tvNav").invisible();
@@ -143,16 +150,24 @@ function changeSeason(id) {
     console.log("ChangeSeason()")
     $(".seasonActive").toggleClass("seasonActive");
     $("#" + id).toggleClass("seasonActive");
-    var season = id.replace(/\D/g,'');
+    seasonSelected = id.replace(/\D/g,'');
     console.log(seasonContainer);
-    console.log(season);
-    var episodes = Object.keys(seasonContainer[season]).length;
+    console.log(seasonSelected);
+    var episodes = Object.keys(seasonContainer[seasonSelected]).length;
     $(".episodeUl").html("");
 
     for (var l = 1; l <= episodes; l++){
         console.log("Wow");
-        $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+        if (l == 1) {
+            $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn episodeActive"><a>Episode ' + l + '</a></li>');
+
+        }else {
+            $(".episodeUl").append('<li onclick="changeEpisode(this.id)" id="Episode' + l + '" class="seriesBtn"><a>Episode ' + l + '</a></li>');
+        }
     }
+
+    $("#streamBtn").attr("href", seasonContainer[seasonSelected][1].file);
+    $("#downloadBtn").attr("href", seasonContainer[seasonSelected][1].file);
 }
 
 //______________________________________________________HERE_________________________________________________
@@ -161,8 +176,11 @@ function changeEpisode(id) {
     $(".episodeActive").toggleClass("episodeActive");
     $("#" + id).toggleClass("episodeActive");
 
-    $("#streamBtn").attr("href", data[id].file);
-    $("#downloadBtn").attr("href", data[id].file);
+    console.log(seasonSelected)
+    console.log(seasonContainer[seasonSelected][episode]);
+    $("#streamBtn").attr("href", seasonContainer[seasonSelected][episode].file);
+    $("#downloadBtn").attr("href", seasonContainer[seasonSelected][episode].file);
+    console.log("Changed episode");
 }
 
 
