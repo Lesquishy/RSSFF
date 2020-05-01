@@ -24,7 +24,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const fetch = require('node-fetch');
 const request = require('request');
 const readline = require('readline');
-const glob = require('glob')
+const glob = require('glob');
 
 // Settings
 const skip = false;
@@ -151,7 +151,9 @@ async function start(rawFiles, pos){
         currFile = rawFiles[pos];
     } else {
         indexJSON[filmCount+1] = tempOut;
-        const data = fs.writeFileSync(jsonFile, jsonContent);
+        if (jsonContent !== undefined) {
+          fs.writeFileSync(jsonFile, jsonContent);
+        }
         stop == true;
     }
     if(stop !== true && currFile.slice(-4).includes(".") && sortExtKeepWhite.indexOf(currFile.slice(-3)) > -1){ // Is this a file
