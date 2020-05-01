@@ -25,6 +25,7 @@ const fetch = require('node-fetch');
 const request = require('request');
 const readline = require('readline');
 const glob = require('glob');
+const ffprobe = ('node-ffprobe');
 
 // Settings
 const skip = false;
