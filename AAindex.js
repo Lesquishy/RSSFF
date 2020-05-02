@@ -248,7 +248,12 @@ async function start(rawFiles, pos){
                 fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/"; // Gets the location of the file
                 extension = currFile.substr(currFile.length - 4);
                 try {
-                    trimmed = trimmed.substring(0, trimmed.indexOf(trimmed.match(/(19|20)([0-9][0-9])/g)[0]));
+                    if (trimmed.substring(0, trimmed.indexOf(trimmed.match(/(19|20)([0-9][0-9])/g)[0])) !==  "") {
+						trimmed = trimmed.substring(0, trimmed.indexOf(trimmed.match(/(19|20)([0-9][0-9])/g)[0]));
+					} else {
+                        throw "Movie Name == Year"
+                    }
+                    
                 } catch (e) {
                     trimmed = trimmed.substring(0, trimmed.length - 4);
                 } finally {
