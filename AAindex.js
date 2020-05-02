@@ -145,6 +145,8 @@ function beforeStart(poss){
 
 async function start(rawFiles, pos){
     var stop = false;
+    console.log(pos)
+    console.log(rawFiles.length)
     if (rawFiles.length > pos) {
         currFile = rawFiles[pos];
     } else {
@@ -163,7 +165,7 @@ async function start(rawFiles, pos){
             //Check for double ups
             if (episodic == false) {
                 for (var i = 0; i <= Object.size(indexJSON); i++) {
-                    if(currFile.contains(indexJSON[toString(i)]["title"])){
+                    if(currFile.includes(indexJSON[i]["title"])){
                         console.log(yellow + "Movie already found with that name. Skipping" + reset);
                         stop = true;
                         break;
