@@ -1,5 +1,3 @@
-//Rugs the Chef Cooking up your movies
-
 // Plan of action
 // Focus on promises. The scrpt shouldnt proceed without the promis being met.
 // This allowed the script to work on one film at a time.
@@ -15,7 +13,7 @@
 // Collect meta data
 // Process metadata
 // collect OMDB data and poster image
-// add to json file.
+// add to json file
 
 // The requires
 const fs = require("fs");
@@ -24,8 +22,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const fetch = require('node-fetch');
 const request = require('request');
 const readline = require('readline');
-const glob = require('glob');
-const ffprobe = ('node-ffprobe');
+const glob = require('glob')
 
 // Settings
 const skip = false;
@@ -77,7 +74,7 @@ function initilize() {
             console.log(yellow + "File Missing : " + requiredFiles[i] + reset); // State message
             // ---------------
             if (requiredFiles[i].slice(-1) == "/") {
-                fs.mkdirSync(requiredFiles[i]);
+                fs.mkFileSync(requiredFiles[i]);
                 console.log('Directory was created successfully.');
             } else {
                 fs.writeFile(requiredFiles[i], "", function (err) {
@@ -152,9 +149,7 @@ async function start(rawFiles, pos){
         currFile = rawFiles[pos];
     } else {
         indexJSON[filmCount+1] = tempOut;
-        if (jsonContent !== undefined) {
-          fs.writeFileSync(jsonFile, jsonContent);
-        }
+        const data = fs.writeFileSync(jsonFile, jsonContent);
         stop == true;
     }
     if(stop !== true && currFile.slice(-4).includes(".") && sortExtKeepWhite.indexOf(currFile.slice(-3)) > -1){ // Is this a file
@@ -209,7 +204,7 @@ async function start(rawFiles, pos){
                             // we got the show
                             states.ownShow = true;
                             states.showID = z;
-                            if (indexJSON[z.toString()].showInfo["season"] == seasonNum && indexJSON[z.toString()].showInfo["episodeNum"] == episodeNum) {
+                            if (indexJSON[z.toString()].showInfo['season'] == seasonNum && indexJSON[z.toString()].showInfo['episodeNum'] == episodeNum) {
                                 states.ownEpisode = true;
                                 break;
                             }
@@ -290,7 +285,7 @@ async function start(rawFiles, pos){
                 }
                 fileName = seriesTitle+"_e"+episodeNum+"s"+seasonNum;
                 title = seriesTitle;
-                outputName = fileLocation+fileName+extension
+                outputName = fileLocation+fileName+extension;
                 if (skip !== true) {
                     fs.rename(currFile, outputName, function(err){
                         if (err) {console.log(err);}
@@ -377,7 +372,7 @@ async function passthrough(a, b, c, d, e, f, pos, rawFiles){
         });
         var season = seasonNum;
         seriesTitle = seriesTitle.replace("_", " ");
-        showInfo = {seriesTitle, episodeNum, season}
+        showInfo = {seriesTitle, episodeNum, season};
     } else {
         // OMDB json Read
         let url = "http://www.omdbapi.com/?t=" + fileName.replace(" ", "+") + "&plot=full&apikey=ca1e71d3";
@@ -514,10 +509,12 @@ Object.size = function(obj) {
 // Download something from a Link
 var download = async function(uri, filename, callback){
   request.head(uri, function(err, res, body){
-
+    if (err) {
+			console.log(err);
+		}
     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
   });
-};
+}
 
 function userInput(query) {
     const rl = readline.createInterface({
@@ -528,5 +525,5 @@ function userInput(query) {
     return new Promise(resolve => rl.question(query, ans => {
         rl.close();
         resolve(ans);
-    }))
+    }));
 }
