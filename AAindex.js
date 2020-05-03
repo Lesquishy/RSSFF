@@ -17,20 +17,21 @@
 
 // The requires
 const fs = require("fs");
-const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
 const fetch = require('node-fetch');
 const request = require('request');
 const readline = require('readline');
-const glob = require('glob')
+const glob = require('glob');
 
 // Settings
 const skip = false;
-const requiredFiles = ["./data/", "./files/", "./files/posters/", "./data/AAmovieIndex.json", "./data/FormatFiles.json", "./files/Episodic_Shows/" ]; // Required files
-const requireCleanFiles = ["./data/FormatFiles.json"]; // The files that the script needs to be empty at the start
-const jsonFile = './data/AAmovieIndex.json'; // Where the Movie metadata will be saved
+
 const dir = './files'; // DIR that will be scanned
-const postersLocation = './files/posters/' // Where the poster photos will be stored
+const showsFolder = dir+"/Episodic_Shows/"; // Location Of the Episodic Shows
+const jsonFile = './data/AAmovieIndex.json'; // Where the Movie metadata will be saved
+const postersLocation = './files/posters/'; // Where the poster photos will be stored
+const requiredFiles = ["./data/", dir+"/", postersLocation, jsonFile, "./data/FormatFiles.json", "./files/Episodic_Shows/" ]; // Required files
+const requireCleanFiles = ["./data/FormatFiles.json"]; // The files that the script needs to be empty at the start
 const sortExtKeepWhite = ["mp4"]; // Whitelist for streamable extensions
 const sortExtFormatWhite = ["mkv", "avi"]; // Whitelist for Formatable extesions
 
@@ -145,8 +146,6 @@ function beforeStart(poss){
 
 async function start(rawFiles, pos){
     var stop = false;
-    console.log(pos)
-    console.log(rawFiles.length)
     if (rawFiles.length > pos) {
         currFile = rawFiles[pos];
     } else {
@@ -251,7 +250,7 @@ async function start(rawFiles, pos){
                     if (trimmed.substring(0, trimmed.indexOf(trimmed.match(/(19|20)([0-9][0-9])/g)[0])) !==  "") {
 						trimmed = trimmed.substring(0, trimmed.indexOf(trimmed.match(/(19|20)([0-9][0-9])/g)[0]));
 					} else {
-                        throw "Movie Name == Year"
+                        throw "Movie Name == Year";
                     }
                     
                 } catch (e) {
@@ -283,6 +282,22 @@ async function start(rawFiles, pos){
             } else {
                 // Show rename
                 fileLocation = currFile.substring(0, currFile.lastIndexOf("/")) + "/";
+                //Generate File location
+                try {
+                    if (!fs.existsSync(showsFolder + seriesTitle)) {
+                      // Make The Folder
+                      fs.mkdirSync(showsFolder + seriesTitle);
+                    }
+                } catch(err) {
+                }
+                try {
+                    if (!fs.existsSync(showsFolder + seriesTitle + "/" + seasonNum)) {
+                      // Make the Folder
+                      fs.mkdirSync(showsFolder + seriesTitle + "/Season_" + seasonNum);
+                    }
+                } catch(err) {
+                }
+                fileLocation = showsFolder + seriesTitle + "/Season_" + seasonNum + "/";
                 extension = currFile.substr(currFile.length - 4);
                 if (seasonNum < 10) {
                     seasonNum = "0" + seasonNum;
