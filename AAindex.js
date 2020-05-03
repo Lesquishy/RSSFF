@@ -75,7 +75,7 @@ function initilize() {
             console.log(yellow + "File Missing : " + requiredFiles[i] + reset); // State message
             // ---------------
             if (requiredFiles[i].slice(-1) == "/") {
-                fs.mkFileSync(requiredFiles[i]);
+                fs.mkdirSync(requiredFiles[i]);
                 console.log('Directory was created successfully.');
             } else {
                 fs.writeFile(requiredFiles[i], "", function (err) {
@@ -169,7 +169,7 @@ async function start(rawFiles, pos){
                         stop = true;
                         break;
                     } else {
-                        console.log("Movie not found");
+                        //console.log("Movie not found");
                     }
                 }
 
