@@ -357,7 +357,7 @@ async function start(rawFiles, pos){
 }
 
 async function passthrough(a, b, c, d, e, f, pos, rawFiles){
-    concole.log("Made it")
+    console.log("Made it");
     duration = a;
     size = b;
     width = c;
